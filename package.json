@@ -1,0 +1,1 @@
+{"name":"saudi-legal-opportunities","private":true,"scripts":{"dev":"node preview.mjs","build":"node validate.mjs"},"type":"module"}

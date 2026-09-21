@@ -1,0 +1,10 @@
+.sites-runtime/
+node_modules/
+.DS_Store
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+/site.tar.gz
