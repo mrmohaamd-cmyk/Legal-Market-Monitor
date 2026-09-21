@@ -41,6 +41,8 @@ for (const token of ['--eds-color-text-primary', '--eds-color-action-primary', '
 }
 assert(!/target\s*=\s*['"]_blank['"]/.test(await readFile('dist/app.js', 'utf8')), 'External opportunity links must not require a new browsing context.');
 assert((await readFile('dist/app.js', 'utf8')).includes("link.target = '_top'"), 'External opportunity links must request the host browsing context.');
+assert(!(await readFile('dist/app.js', 'utf8')).includes("'/opportunities.json'"), 'The opportunity feed must use a portable relative path for subpath hosting.');
+assert(!(await readFile('dist/app.js', 'utf8')).includes("'/task-config.json'"), 'The task configuration must use a portable relative path for subpath hosting.');
 const app = await readFile('dist/app.js', 'utf8');
 assert(!/copy official link|copy last recorded link/i.test(app), 'Opportunity records must not expose a copy-link action.');
 assert(app.indexOf('card.append(top);') < app.indexOf('renderActions(record, status, card);'), 'The official action must follow the status and precede the opportunity facts.');
