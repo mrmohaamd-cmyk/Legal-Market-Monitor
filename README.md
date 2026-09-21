@@ -1,6 +1,6 @@
 # Saudi Elite Legal Opportunities
 
-One public static page combines a curated Saudi early-career opportunity explorer with an existing ChatGPT monitoring task. ChatGPT remains the scheduler. No application server, database, accounts, API keys or analytics are used in production.
+A public static page for curated Saudi early-career legal opportunities. The canonical public deployment is GitHub Pages, built directly from this repository's `main` branch. A separate private GitHub Actions monitor checks official sources each day and opens a review issue when it detects a material change. No application server, database, accounts, API keys or analytics are used in production.
 
 ## Brand premise
 
@@ -12,9 +12,9 @@ This is not a law-firm site and should not simulate one. It is an independent mo
 
 To refresh the feed, recheck each source, update its record and verification timestamp, run validation, and publish. Do not advance a timestamp without actually checking the official source. A standing or “general opportunity” must be described as such and must not be presented as confirmed immediate headcount.
 
-## Current activation state
+## Optional public alert setup
 
-`dist/task-config.json` has `taskUrl: null`. The page truthfully shows manual setup instructions and a working copy/download path. A canonical shared task link has NOT been retrieved or verified. Do not label the recipient-copy journey complete until a real recipient successfully schedules it.
+`dist/task-config.json` has `taskUrl: null`. The page therefore shows manual setup instructions and a working copy/download path rather than claiming that a shared task works. This optional ChatGPT alert route is separate from the owner's independent GitHub monitoring and does not control publication of the site.
 
 ## Connect the real task
 
@@ -32,27 +32,31 @@ Editing the original task does not automatically update the shared snapshot. Ope
 - `dist/opportunities.json`: structured, first-party opportunity records and freshness evidence.
 - `dist/task-config.json`: public title, prompt, cadence, time zone, optional native endpoint. Never put secrets here.
 - `dist/setup-instructions.txt`: downloadable manual fallback. Regenerate when the prompt changes; validation checks it matches the copy action.
-- `dist/og.png`: generated social artwork, 1730 × 909; Open Graph/X metadata uses the Site's absolute origin. Platforms may crop or cache it; actual WhatsApp rendering remains a device test.
-- `preview.mjs` and `qa.html`: dependency-free local verification server and a 390 × 844 iframe fixture; neither is deployed. Start through Sites supervised preview.
+- `dist/og.png`: generated social artwork, 1730 × 909; Open Graph/X metadata uses the GitHub Pages origin. Platforms may crop or cache it; actual WhatsApp rendering remains a device test.
+- `preview.mjs` and `qa.html`: dependency-free local verification server and a 390 × 844 iframe fixture; neither is deployed.
 - `validate.mjs`: source checks plus controlled integration tests. Synthetic task URLs are test data only.
-- `vercel.json`: optional static Vercel deployment configuration. Vercel was unavailable in this session; no Vercel deployment is claimed. Update canonical/OG origins if moving host.
+- `vercel.json`: optional static Vercel deployment configuration. No Vercel deployment is claimed. Update canonical/OG origins if moving host.
 
-Only `dist/` is public. Source is retained in the Site's private Git repository. Preserve `.openai/hosting.json` project identity when publishing updates.
+Only `dist/` is deployed publicly. Preserve `.openai/hosting.json` only for the retained ChatGPT Sites copy; it does not control GitHub Pages.
 
 ## Source control and publishing
 
-The live page is currently deployed through ChatGPT Sites. Its Sites-managed repository remains necessary for that deployment flow; GitHub is **not** a deployment source unless the hosting arrangement is deliberately changed and verified.
+The public GitHub repository at `https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor` is the canonical source of truth and deployment source. Its `Deploy independent site` workflow publishes `dist/` to GitHub Pages on every push to `main`:
 
-The public GitHub repository at `https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor` is the external project mirror and durable project record. It contains the complete tracked source, including the static `dist/` directory and `.openai/hosting.json`, but never secrets, local runtime files, dependency caches, or deployment archives. There is no automatic synchronisation with ChatGPT Sites.
+`https://mrmohaamd-cmyk.github.io/Legal-Market-Monitor/`
+
+The prior ChatGPT Sites address remains live as an untouched legacy copy. It is not part of the publishing path and has no automatic synchronisation with GitHub. Do not treat it as a current deployment after this cutover unless a deliberate mirror process is introduced.
+
+The private [Legal Market Monitor Alerts repository](https://github.com/mrmohaamd-cmyk/-legal-market-monitor-alerts) is the independent scheduled discovery service. It reads the public feed from `main`, checks its official sources and selected first-party careers routes at 08:00 Asia/Riyadh, and opens a private review issue only when a material change needs attention. It never publishes a vacancy or changes the public site automatically: a source change is evidence to review, not proof of a suitable open role.
 
 ### Future update workflow
 
-1. Edit the source and refresh any opportunity facts from their official source.
-2. Run `npm run build` and resolve all validation failures.
-3. Commit the verified source and push it to GitHub.
-4. Push the same commit to the Sites-managed repository and publish through ChatGPT Sites.
+1. Review any alert against the primary source and update the public feed only with verified facts.
+2. Create a branch in this repository, edit the source, and run `npm run build`.
+3. Open and review a pull request. Confirm that the source URL, location, eligibility, status and deadline are accurately represented.
+4. Merge the approved pull request into `main`. GitHub Pages deploys the validated `dist/` directory automatically.
 
-Keeping the two repositories on the same commit preserves a clear, auditable correspondence between the GitHub mirror and the deployed source. Do not force-push either repository or treat a GitHub push alone as a live-site publication.
+This is a one-way, review-gated process: `main` is published; GitHub Pages does not edit the repository; the monitor only raises a private review signal. An automatically generated cross-repository publishing pull request is intentionally not configured, because it would require a separate credential with write access to the public repository and could expose unverified opportunity claims. If that automation is wanted later, use a least-privilege GitHub App or fine-grained token stored as a GitHub Actions secret—never in the repository.
 
 ## Recovery
 
