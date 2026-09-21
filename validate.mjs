@@ -22,7 +22,8 @@ for (const path of ['/style.css', '/tokens.css', '/app.js', '/task-config.json',
   await access('dist' + path);
 }
 
-assert(html.includes('<script type="module" src="/app.js"></script>'), 'The client script must remain a module.');
+assert(html.includes('<script type="module" src="app.js"></script>'), 'The client script must remain a portable module reference.');
+assert(html.includes('href="style.css"'), 'The stylesheet must remain portable for subpath hosting.');
 assert(!/target\s*=\s*['"]_blank['"]/.test(html), 'Public HTML must not require a new browsing context.');
 assert(!/opens in a new tab/i.test(html), 'Link labels must not promise a new tab.');
 assert(html.includes('id="opportunities"'), 'The opportunity finder must remain addressable.');
