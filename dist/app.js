@@ -1,5 +1,7 @@
-const configPath = '/task-config.json';
-const opportunitiesPath = '/opportunities.json';
+// Relative paths keep the static site portable when it is hosted beneath a
+// repository subpath (for example, GitHub Pages) as well as at a domain root.
+const configPath = 'task-config.json';
+const opportunitiesPath = 'opportunities.json';
 const $ = (id) => document.getElementById(id);
 
 const currentStatuses = new Set(['open', 'open_no_deadline', 'closing_soon']);
