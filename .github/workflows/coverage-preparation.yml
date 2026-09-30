@@ -1,0 +1,29 @@
+name: Prepare reviewed coverage patch
+on:
+  push:
+    branches: [fix/pinsent-and-saudi-coverage-20260930]
+    paths: [scripts/prepare-coverage.mjs]
+permissions:
+  contents: write
+jobs:
+  prepare:
+    if: github.ref == 'refs/heads/fix/pinsent-and-saudi-coverage-20260930'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/pinsent-and-saudi-coverage-20260930
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/prepare-coverage.mjs
+      - run: npm run build
+      - name: Commit only reviewed feature-branch patch files
+        run: |
+          git add dist/task-config.json dist/setup-instructions.txt dist/opportunities.json dist/index.html dist/app.js dist/coverage-audit.json validate.mjs
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'legal-market-monitor[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Publish reviewed Pinsent record and expand Saudi employer registry'
+          git push origin HEAD:fix/pinsent-and-saudi-coverage-20260930
