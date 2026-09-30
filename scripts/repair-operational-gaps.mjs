@@ -1,0 +1,21 @@
+// Temporary exact-anchor patch preparation. Removed before merge; no feed facts or dates change.
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+const replace = (text, before, after) => { assert(text.includes(before), 'Missing reviewed anchor: ' + before); return text.replace(before, after); };
+let css = await readFile('dist/style.css', 'utf8');
+css = replace(css, "@import url('/tokens.css');", "@import url('tokens.css');");
+await writeFile('dist/style.css', css);
+let app = await readFile('dist/app.js', 'utf8');
+app = replace(app, "function pageUrl() {\n  return new URL('/', window.location.href).href;\n}", "export function sharePageUrl(locationHref) {\n  const url = new URL(locationHref);\n  url.search = '';\n  url.hash = '';\n  if (url.pathname.endsWith('/index.html')) url.pathname = url.pathname.slice(0, -10);\n  return url.href;\n}\n\nfunction pageUrl() {\n  return sharePageUrl(window.location.href);\n}");
+app = replace(app, 'A ChatGPT-powered monitor.', 'An independent, source-reviewed monitor.');
+app = replace(app, 'export function sourceValue(value) {', "export function getVerificationAction(record) {\n  const href = safeHttpsUrl(record.source_url);\n  return href ? { href, label: 'Check ' + record.firm_name + ' posting', accessibleName: 'Check current availability at the last recorded official source for ' + record.role_title } : getFallbackAction(record);\n}\n\nexport function sourceValue(value) {");
+app = replace(app, 'const fallbackAction = getFallbackAction(record);', "const fallbackAction = status === 'verification_pending' ? getVerificationAction(record) : getFallbackAction(record);");
+app = replace(app, "provenance.append(makeElement('span', '', record.source_type));", "provenance.append(makeElement('span', '', 'Last source review: ' + formatDateTime(record.last_verified_at)));\n  provenance.append(makeElement('span', '', record.source_type));");
+app = replace(app, "  watch.hidden = false;\n  title.textContent", "  watch.hidden = false;\n  watch.open = groups.current.length === 0 && groups.watch.length > 0;\n  title.textContent");
+app = replace(app, "'There are no source-checked opportunities in the current feed. Set up the monitor below for future changes.'", "(groups.watch.length ? 'No freshly verified openings are available. ' + groups.watch.length + ' previously recorded opportunity or recruitment route needs review below; this does not establish that applications are closed.' : 'No current records are available in this curated feed. This is not a claim that the monitored firms have no vacancies.')");
+await writeFile('dist/app.js', app);
+let validation = await readFile('validate.mjs', 'utf8');
+validation = replace(validation, "@import url('/tokens.css');", "@import url('tokens.css');");
+validation += "\nconst { sharePageUrl, getVerificationAction } = await import('./dist/app.js');\nassert.equal(sharePageUrl('https://owner.github.io/Legal-Market-Monitor/?ref=share#opportunities'), 'https://owner.github.io/Legal-Market-Monitor/');\nassert.equal(sharePageUrl('https://example.com/index.html#x'), 'https://example.com/');\nassert.equal(sharePageUrl('https://example.com/'), 'https://example.com/');\nassert.equal(getVerificationAction(pinsentRecord).href, pinsentRecord.source_url);\nassert(!getVerificationAction(pinsentRecord).label.startsWith('Apply'));\nassert(app.includes('Last source review: '));\nassert(app.includes('watch.open = groups.current.length === 0 && groups.watch.length > 0'));\nconsole.log('PASS: repository-subpath sharing, portable token import, dated verification links and honest overdue-record access.');\n";
+await writeFile('validate.mjs', validation);
+console.log('Applied reviewed operational fixes. Opportunity facts, statuses and verification timestamps unchanged.');
