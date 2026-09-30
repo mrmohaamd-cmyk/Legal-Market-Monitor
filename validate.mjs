@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
-import {access, readFile} from 'node:fs/promises';
+import {access, readFile, writeFile, mkdtemp, cp, rm} from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import {
   deriveStatus,
   filterRecords,
@@ -105,8 +108,20 @@ assert.equal(opportunities.coverage_audit.current_route_firm_count, opportunitie
 assert.equal(opportunities.coverage_audit.closed_programme_count, opportunities.coverage_audit.firms.filter((firm) => firm.review_state === 'closed_programme').length);
 assert.equal(opportunities.coverage_audit.no_record_displayed_count, opportunities.coverage_audit.firms.filter((firm) => firm.review_state === 'no_record_displayed').length);
 
+// Behaviour tests use controlled fixtures, never current editorial dates, status or counts.
 const testNow = Date.parse('2026-09-20T18:22:00+03:00');
-const [aoRecord, lathamGraduate, lathamTrainee, kirklandEntryLevel] = opportunities.records;
+const fixture = {
+  role_title: 'Controlled test opportunity', firm_name: 'Latham & Watkins',
+  location_group: 'Riyadh', career_stage: 'Graduate / COOP', practice_areas: ['Banking & finance'],
+  status: 'open', source_status: 'verified', last_verified_at: new Date(testNow).toISOString(), deadline_at: null,
+  source_url: 'https://eume-earlyassociatecareers-lw.icims.com/controlled-test-only', application_url: null,
+  firm_careers_url: 'https://www.lwcareers.com/en/beginning-your-legal-career/saudi-arabia'
+};
+const aoRecord = {...fixture, id: 'fixture-ao', firm_name: 'A&O Shearman', career_stage: 'Internship / COOP', practice_areas: ['Other'], source_url: 'https://careers.aoshearman.com/controlled-test-only', application_url: 'https://jobs.aoshearman.com/controlled-test-only', deadline_at: '2026-11-30T17:00:00+03:00'};
+const lathamGraduate = {...fixture, id: 'fixture-lw-graduate'};
+const lathamTrainee = {...fixture, id: 'fixture-lw-trainee', career_stage: 'Trainee'};
+const kirklandEntryLevel = {...fixture, id: 'fixture-kirkland', firm_name: 'Kirkland & Ellis', practice_areas: ['Other'], source_url: 'https://www.kirkland.com/controlled-test-only'};
+const fixtureRecords = [aoRecord, lathamGraduate, lathamTrainee, kirklandEntryLevel];
 assert.equal(deriveStatus(aoRecord, 24, testNow), 'open');
 assert.equal(deriveStatus(lathamGraduate, 24, testNow), 'open_no_deadline');
 assert.equal(deriveStatus(lathamTrainee, 24, testNow), 'open_no_deadline');
@@ -114,6 +129,7 @@ assert.equal(deriveStatus(kirklandEntryLevel, 24, testNow), 'open_no_deadline');
 assert.equal(deriveStatus({...aoRecord, last_verified_at: '2026-09-19T18:00:00+03:00'}, 24, testNow), 'verification_pending');
 assert.equal(deriveStatus({...aoRecord, source_status: 'unreachable'}, 24, testNow), 'verification_pending');
 assert.equal(deriveStatus({...aoRecord, deadline_at: '2026-09-19T17:00:00+03:00'}, 24, testNow), 'expired');
+assert.equal(deriveStatus({...aoRecord, status: 'closed'}, 24, testNow), 'closed');
 
 const groups = partitionRecords([
   aoRecord,
@@ -146,9 +162,9 @@ assert.equal(safeHttpsUrl('https://user@example.com/path'), null);
 assert.equal(sourceValue(''), 'Not stated by source');
 assert.equal(sourceValue(undefined), 'Not stated by source');
 
-assert.equal(filterRecords(opportunities.records, {stage: 'Trainee', practice: '', firm: '', location: '', status: ''}, 24, testNow).length, 1);
-assert.equal(filterRecords(opportunities.records, {stage: '', practice: 'Banking & finance', firm: 'Latham & Watkins', location: 'Riyadh', status: ''}, 24, testNow).length, 2);
-assert.equal(filterRecords(opportunities.records, {stage: 'NQ / 0–2 PQE', practice: '', firm: '', location: '', status: ''}, 24, testNow).length, 0);
+assert.equal(filterRecords(fixtureRecords, {stage: 'Trainee', practice: '', firm: '', location: '', status: ''}, 24, testNow).length, 1);
+assert.equal(filterRecords(fixtureRecords, {stage: '', practice: 'Banking & finance', firm: 'Latham & Watkins', location: 'Riyadh', status: ''}, 24, testNow).length, 2);
+assert.equal(filterRecords(fixtureRecords, {stage: 'NQ / 0–2 PQE', practice: '', firm: '', location: '', status: ''}, 24, testNow).length, 0);
 
 const setup = 'Create a separate daily monitoring task titled “' + config.title + '”. Check each morning using the Asia/Riyadh time zone. Notify me only for meaningful changes. Review any account limitations and confirm the actual schedule after creating it.\n\n' + config.prompt + '\n';
 assert.equal(download, setup, 'Downloaded setup instructions must match the copy action.');
@@ -193,11 +209,11 @@ assert.equal(pinsentRecord.deadline_at, null);
 assert.equal(pinsentRecord.posted_at, null);
 assert.equal(pinsentRecord.programme_start_date, '2026-10-11');
 assert.equal(pinsentRecord.programme_duration_months, 3);
-assert.equal(getPrimaryAction(pinsentRecord, 'open_no_deadline').label, 'Apply to Pinsent Masons');
-assert.equal(deriveStatus(pinsentRecord, 24, Date.parse('2026-09-30T09:00:00Z')), 'open_no_deadline');
-assert.equal(deriveStatus(pinsentRecord, 24, Date.parse('2026-10-01T09:00:00Z')), 'verification_pending');
+const pinsentFixture = {...pinsentRecord, status: 'open', source_status: 'verified', last_verified_at: '2026-09-30T08:38:53Z'};
+assert.equal(getPrimaryAction(pinsentFixture, 'open_no_deadline').label, 'Apply to Pinsent Masons');
+assert.equal(deriveStatus(pinsentFixture, 24, Date.parse('2026-09-30T09:00:00Z')), 'open_no_deadline');
+assert.equal(deriveStatus(pinsentFixture, 24, Date.parse('2026-10-01T09:00:00Z')), 'verification_pending');
 assert.equal(coverageAudit.pinsent.separate_coop_status, 'closed');
-for (const oldRecord of opportunities.records.filter((record) => record.id !== pinsentRecord.id)) assert.equal(oldRecord.last_verified_at, '2026-09-21T00:40:38Z');
 
 console.log('PASS: semantic-token adapter, no-new-tab links, source-backed records, decision-order fields, combined filters, no-results logic, deadline expiry, verification watch, archive partitioning, application/action routing, source fallback, setup parity and unsafe URL rejection.');
 
@@ -210,3 +226,49 @@ assert(!getVerificationAction(pinsentRecord).label.startsWith('Apply'));
 assert(app.includes('Last source review: '));
 assert(app.includes('watch.open = groups.current.length === 0 && groups.watch.length > 0'));
 console.log('PASS: repository-subpath sharing, portable token import, dated verification links and honest overdue-record access.');
+
+// Exercise the actual publication validator against isolated editorial changes.
+// Nothing here modifies the repository feed or establishes source verification.
+if (process.env.EDITORIAL_VALIDATION_FIXTURE !== '1') {
+  const root = await mkdtemp(join(tmpdir(), 'legal-editorial-validation-'));
+  const original = await readFile('dist/opportunities.json', 'utf8');
+  try {
+    await cp('dist', join(root, 'dist'), {recursive: true});
+    await cp('validate.mjs', join(root, 'validate.mjs'));
+    await writeFile(join(root, 'package.json'), '{"type":"module"}');
+    const exercise = async (label, change, expectedStatus = 0) => {
+      const data = JSON.parse(original);
+      change(data);
+      const audit = data.coverage_audit;
+      audit.current_record_count = data.records.length;
+      audit.current_route_firm_count = audit.firms.filter((firm) => firm.review_state === 'current_route').length;
+      audit.closed_programme_count = audit.firms.filter((firm) => firm.review_state === 'closed_programme').length;
+      audit.no_record_displayed_count = audit.firms.filter((firm) => firm.review_state === 'no_record_displayed').length;
+      await writeFile(join(root, 'dist/opportunities.json'), JSON.stringify(data));
+      const run = spawnSync(process.execPath, ['validate.mjs'], {cwd: root, encoding: 'utf8', timeout: 30000,
+        env: {...process.env, EDITORIAL_VALIDATION_FIXTURE: '1'}});
+      assert.equal(run.status, expectedStatus, label + '\n' + run.stderr);
+      console.log('PASS: editorial validation — ' + label);
+    };
+    await exercise('reviewed timestamps can change', (data) => {
+      for (const record of data.records) record.last_verified_at = '2026-09-30T12:00:00Z';
+    });
+    await exercise('confirmed closures can be published', (data) => {
+      for (const record of data.records) record.status = 'closed';
+      for (const firm of data.coverage_audit.firms) if (firm.record_ids.length) firm.review_state = 'closed_programme';
+    });
+    await exercise('a further trainee record can be added', (data) => {
+      const source = data.records.find((record) => record.id === 'latham-riyadh-trainee-associate');
+      assert(source);
+      const extra = {...source, id: 'controlled-editorial-test-only'};
+      data.records.push(extra);
+      data.coverage_audit.firms.find((firm) => firm.firm_name === extra.firm_name).record_ids.push(extra.id);
+    });
+    await exercise('unsafe source URLs remain rejected', (data) => {
+      data.records[0].source_url = 'http://careers.aoshearman.com/controlled-test-only';
+    }, 1);
+    assert.equal(await readFile('dist/opportunities.json', 'utf8'), original, 'Editorial tests must not modify the live source feed.');
+  } finally {
+    await rm(root, {recursive: true, force: true});
+  }
+}
