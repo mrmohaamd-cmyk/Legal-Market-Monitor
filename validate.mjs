@@ -17,6 +17,8 @@ const tokens = await readFile('dist/tokens.css', 'utf8');
 const config = JSON.parse(await readFile('dist/task-config.json', 'utf8'));
 const opportunities = JSON.parse(await readFile('dist/opportunities.json', 'utf8'));
 const download = await readFile('dist/setup-instructions.txt', 'utf8');
+const coverageAudit = JSON.parse(await readFile('dist/coverage-audit.json', 'utf8'));
+const additions = coverageAudit.additions;
 
 for (const path of ['/style.css', '/tokens.css', '/app.js', '/task-config.json', '/opportunities.json', '/setup-instructions.txt', '/og.png']) {
   await access('dist' + path);
@@ -53,8 +55,8 @@ assert(css.includes('position: sticky'), 'The opportunity action must remain car
 
 assert.equal(opportunities.verification_window_hours, 24);
 assert(opportunities.records.length >= 3, 'The feed must contain real records or be an honest zero state.');
-const sourceHosts = new Set(['careers.aoshearman.com', 'eume-earlyassociatecareers-lw.icims.com', 'www.kirkland.com']);
-const applicationHosts = new Set(['jobs.aoshearman.com']);
+const sourceHosts = new Set(['www.pinsentmasons.com', 'careers.aoshearman.com', 'eume-earlyassociatecareers-lw.icims.com', 'www.kirkland.com']);
+const applicationHosts = new Set(['ehpy.fa.em5.oraclecloud.com', 'jobs.aoshearman.com']);
 const recordIds = new Set();
 for (const record of opportunities.records) {
   for (const key of [
@@ -84,8 +86,8 @@ for (const record of opportunities.records) {
   }
 }
 
-assert.equal(opportunities.coverage_audit.target_firm_count, 33, 'The backfill must cover the 33 mapped firms.');
-assert.equal(opportunities.coverage_audit.firms.length, 33, 'Every mapped firm must be represented in the backfill ledger.');
+assert.equal(opportunities.coverage_audit.target_firm_count, config.target_firms.length, 'The backfill must cover the 33 mapped firms.');
+assert.equal(opportunities.coverage_audit.firms.length, config.target_firms.length, 'Every mapped firm must be represented in the backfill ledger.');
 assert.deepEqual(
   opportunities.coverage_audit.firms.map((firm) => firm.firm_name).sort(),
   config.target_firms.map((firm) => firm.name).sort(),
@@ -162,14 +164,14 @@ const riyadhMapFirms = [
   'White & Case'
 ];
 assert(Array.isArray(config.target_firms), 'The monitor must retain a machine-readable target-firm universe.');
-assert.equal(config.target_firms.length, riyadhMapFirms.length, 'The target universe must include every mapped Riyadh firm exactly once.');
-assert.deepEqual(config.target_firms.map((firm) => firm.name), riyadhMapFirms, 'The target-firm universe must match the supplied Riyadh map.');
+assert.equal(config.target_firms.length, riyadhMapFirms.length + additions.length, 'The target universe must include every mapped Riyadh firm exactly once.');
+assert.deepEqual(config.target_firms.slice(0, riyadhMapFirms.length).map((firm) => firm.name), riyadhMapFirms, 'The target-firm universe must match the supplied Riyadh map.');
 for (const firm of config.target_firms) {
   assert(Array.isArray(firm.search_terms) && firm.search_terms.length, 'Each target firm needs at least one usable search term.');
   assert(config.prompt.includes(firm.name), 'The copied monitoring prompt must name ' + firm.name + '.');
   assert(html.includes(firm.name.replaceAll('&', '&amp;')), 'The published coverage disclosure must name ' + firm.name + '.');
 }
-assert(html.includes('complete 33-firm Riyadh target universe'), 'The coverage disclosure must explain that the entire mapped universe is searched.');
+assert(html.includes('41-firm target registry'), 'The coverage disclosure must explain that the entire mapped universe is searched.');
 assert(!html.includes('chatgpt.com/share/'));
 assert.equal(validTaskUrl('https://chatgpt.com/s/synthetic-test-only'), true);
 for (const value of [
@@ -180,5 +182,21 @@ for (const value of [
   'https://chatgpt.com/s/test?next=evil',
   'https://user@chatgpt.com/s/test'
 ]) assert.equal(validTaskUrl(value), false, 'Task URL rejection failed for ' + value);
+
+assert.equal(additions.length, 8);
+assert.equal(new Set(config.target_firms.map((firm) => firm.name)).size, 41);
+for (const addition of additions) assert(config.target_firms.some((firm) => firm.name === addition.name));
+const pinsentRecord = opportunities.records.find((record) => record.id === 'pinsent-masons-riyadh-internship-2026');
+assert(pinsentRecord);
+assert.equal(pinsentRecord.application_url, 'https://ehpy.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1004/jobs/preview/3672');
+assert.equal(pinsentRecord.deadline_at, null);
+assert.equal(pinsentRecord.posted_at, null);
+assert.equal(pinsentRecord.programme_start_date, '2026-10-11');
+assert.equal(pinsentRecord.programme_duration_months, 3);
+assert.equal(getPrimaryAction(pinsentRecord, 'open_no_deadline').label, 'Apply to Pinsent Masons');
+assert.equal(deriveStatus(pinsentRecord, 24, Date.parse('2026-09-30T09:00:00Z')), 'open_no_deadline');
+assert.equal(deriveStatus(pinsentRecord, 24, Date.parse('2026-10-01T09:00:00Z')), 'verification_pending');
+assert.equal(coverageAudit.pinsent.separate_coop_status, 'closed');
+for (const oldRecord of opportunities.records.filter((record) => record.id !== pinsentRecord.id)) assert.equal(oldRecord.last_verified_at, '2026-09-21T00:40:38Z');
 
 console.log('PASS: semantic-token adapter, no-new-tab links, source-backed records, decision-order fields, combined filters, no-results logic, deadline expiry, verification watch, archive partitioning, application/action routing, source fallback, setup parity and unsafe URL rejection.');
