@@ -1,50 +1,258 @@
 {
-  "generated_at": "2026-09-21T00:40:38Z",
+  "generated_at": "2026-09-30T08:38:53Z",
   "verification_window_hours": 24,
-  "coverage": "Curated early-career legal opportunities based in Saudi Arabia. The feed is not exhaustive. All 33 firms on the Riyadh map were included in the 21 September 2026 backfill scan.",
+  "coverage": "41-firm target registry, not an exhaustive market census or 41 fully automated vacancy feeds. Public roles require first-party verification and review. Individual verification timestamps control freshness.",
   "coverage_audit": {
     "backfill_at": "2026-09-21T00:40:38Z",
-    "target_firm_count": 33,
-    "current_record_count": 4,
-    "current_route_firm_count": 3,
+    "target_firm_count": 41,
+    "current_record_count": 5,
+    "current_route_firm_count": 4,
     "closed_programme_count": 1,
-    "no_record_displayed_count": 29,
-    "scope_note": "Every mapped firm was included in this one-off backfill. A firm with no displayed record did not have a source-verified, Saudi-based early-career route suitable for this feed at the time of this scan; this is not a statement that the firm has no vacancy.",
+    "no_record_displayed_count": 36,
+    "scope_note": "The registry retains the original 33 targets and adds eight Saudi-employer targets reviewed on 30 September 2026. Original backfill: 21 September; Pinsent internship verified separately on 30 September. Published-route bookkeeping is not a claim of current freshness: check each card. No record displayed does not mean no vacancy. Configured targets, readable sources and complete vacancy discovery are different; some sources require manual review.",
     "firms": [
-      {"firm_name":"A&O Shearman","review_state":"current_route","record_ids":["ao-shearman-winter-2026-coop"]},
-      {"firm_name":"Addleshaw Goddard","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Akin Gump Strauss Hauer & Feld","review_state":"closed_programme","record_ids":[]},
-      {"firm_name":"AS&H Clifford Chance","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Baker Botts","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Baker McKenzie","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"BCLP","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Bird & Bird","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Clyde & Co.","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"CMS","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"DLA Piper Legal Consultants","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Eversheds Sutherland","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Freshfields","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Ghazzaawi Gowling WLG","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Gibson, Dunn & Crutcher","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Greenberg Traurig","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Herbert Smith Freehills Kramer","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Hogan Lovells","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"King & Spalding","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Kirkland & Ellis","review_state":"current_route","record_ids":["kirkland-riyadh-entry-level"]},
-      {"firm_name":"Latham & Watkins","review_state":"current_route","record_ids":["latham-riyadh-graduate-coop","latham-riyadh-trainee-associate"]},
-      {"firm_name":"Linklaters","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Morgan Lewis","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Norton Rose Fulbright","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Pillsbury AlArfaj","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Pinsent Masons","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Quinn Emanuel Urquhart & Sullivan","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Reed Smith","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Simmons & Simmons","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Squire Patton Boggs","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Stephenson Harwood","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"Trowers & Hamlins","review_state":"no_record_displayed","record_ids":[]},
-      {"firm_name":"White & Case","review_state":"no_record_displayed","record_ids":[]}
-    ]
+      {
+        "firm_name": "A&O Shearman",
+        "review_state": "current_route",
+        "record_ids": [
+          "ao-shearman-winter-2026-coop"
+        ]
+      },
+      {
+        "firm_name": "Addleshaw Goddard",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Akin Gump Strauss Hauer & Feld",
+        "review_state": "closed_programme",
+        "record_ids": []
+      },
+      {
+        "firm_name": "AS&H Clifford Chance",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Baker Botts",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Baker McKenzie",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "BCLP",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Bird & Bird",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Clyde & Co.",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "CMS",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "DLA Piper Legal Consultants",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Eversheds Sutherland",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Freshfields",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Ghazzaawi Gowling WLG",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Gibson, Dunn & Crutcher",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Greenberg Traurig",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Herbert Smith Freehills Kramer",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Hogan Lovells",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "King & Spalding",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Kirkland & Ellis",
+        "review_state": "current_route",
+        "record_ids": [
+          "kirkland-riyadh-entry-level"
+        ]
+      },
+      {
+        "firm_name": "Latham & Watkins",
+        "review_state": "current_route",
+        "record_ids": [
+          "latham-riyadh-graduate-coop",
+          "latham-riyadh-trainee-associate"
+        ]
+      },
+      {
+        "firm_name": "Linklaters",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Morgan Lewis",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Norton Rose Fulbright",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Pillsbury AlArfaj",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Pinsent Masons",
+        "review_state": "current_route",
+        "record_ids": [
+          "pinsent-masons-riyadh-internship-2026"
+        ],
+        "reviewed_at": "2026-09-30T08:38:53Z"
+      },
+      {
+        "firm_name": "Quinn Emanuel Urquhart & Sullivan",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Reed Smith",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Simmons & Simmons",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Squire Patton Boggs",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Stephenson Harwood",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Trowers & Hamlins",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "White & Case",
+        "review_state": "no_record_displayed",
+        "record_ids": []
+      },
+      {
+        "firm_name": "Dentons",
+        "review_state": "no_record_displayed",
+        "record_ids": [],
+        "reviewed_at": "2026-09-30",
+        "presence_url": "https://www.dentons.com/en/global-presence/middle-east/saudi-arabia/riyadh",
+        "coverage_type": "Regional vacancy portal; Saudi location required per role"
+      },
+      {
+        "firm_name": "Ashurst Perkins Coie",
+        "review_state": "no_record_displayed",
+        "record_ids": [],
+        "reviewed_at": "2026-09-30",
+        "presence_url": "https://www.ashurstperkinscoie.com/en/our-locations/riyadh/",
+        "coverage_type": "Official careers and employer-linked rest-of-world ATS; runtime readability reported separately"
+      },
+      {
+        "firm_name": "HFW",
+        "review_state": "no_record_displayed",
+        "record_ids": [],
+        "reviewed_at": "2026-09-30",
+        "presence_url": "https://www.hfw.com/about-us/our-locations/riyadh/",
+        "coverage_type": "Global vacancy portal; Saudi location and junior seniority required"
+      },
+      {
+        "firm_name": "Al Tamimi & Company",
+        "review_state": "no_record_displayed",
+        "record_ids": [],
+        "reviewed_at": "2026-09-30",
+        "presence_url": "https://www.tamimi.com/offices/saudi-arabia/",
+        "coverage_type": "Careers/programmes and employer-linked ATS; Saudi intake not automatically established"
+      },
+      {
+        "firm_name": "Khoshaim & Associates",
+        "review_state": "no_record_displayed",
+        "record_ids": [],
+        "reviewed_at": "2026-09-30",
+        "presence_url": "https://www.khoshaim.com/",
+        "coverage_type": "General Join Us form, not a vacancy feed"
+      },
+      {
+        "firm_name": "Hammad & Al-Mehdar",
+        "review_state": "no_record_displayed",
+        "record_ids": [],
+        "reviewed_at": "2026-09-30",
+        "presence_url": "https://hmco.com.sa/",
+        "coverage_type": "General graduate/lawyer/paralegal recruitment; country and vacancy require verification"
+      },
+      {
+        "firm_name": "Z&Co.",
+        "review_state": "no_record_displayed",
+        "record_ids": [],
+        "reviewed_at": "2026-09-30",
+        "presence_url": "https://zamakhchary.com/",
+        "coverage_type": "Manual review required: automated access blocked during audit"
+      },
+      {
+        "firm_name": "ZH Partners",
+        "review_state": "no_record_displayed",
+        "record_ids": [],
+        "reviewed_at": "2026-09-30",
+        "presence_url": "https://houranipartners.com/regulatory-notice/",
+        "coverage_type": "Hourani recruitment channel; separately regulated Saudi employer. Confirm employing entity and intake"
+      }
+    ],
+    "original_backfill_at": "2026-09-21T00:40:38Z",
+    "expansion_reviewed_at": "2026-09-30"
   },
   "records": [
     {
@@ -55,7 +263,11 @@
       "location": "Riyadh, Saudi Arabia",
       "location_group": "Riyadh",
       "career_stage": "Internship / COOP",
-      "practice_areas": ["Corporate / M&A", "Disputes", "Other"],
+      "practice_areas": [
+        "Corporate / M&A",
+        "Disputes",
+        "Other"
+      ],
       "source_url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504",
       "source_type": "Official firm careers",
       "source_title": "Co-op Scheme - Winter 2026 at A&O Shearman",
@@ -97,7 +309,13 @@
       "location": "Riyadh, Saudi Arabia",
       "location_group": "Riyadh",
       "career_stage": "Graduate / COOP",
-      "practice_areas": ["Corporate / M&A", "Banking & finance", "Capital markets", "Disputes", "Regulatory / fintech"],
+      "practice_areas": [
+        "Corporate / M&A",
+        "Banking & finance",
+        "Capital markets",
+        "Disputes",
+        "Regulatory / fintech"
+      ],
       "source_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job",
       "source_type": "Official applicant system",
       "source_title": "General Opportunity: Graduate Training Program (COOP) - Riyadh",
@@ -134,7 +352,13 @@
       "location": "Riyadh, Saudi Arabia",
       "location_group": "Riyadh",
       "career_stage": "Trainee",
-      "practice_areas": ["Corporate / M&A", "Banking & finance", "Capital markets", "Disputes", "Regulatory / fintech"],
+      "practice_areas": [
+        "Corporate / M&A",
+        "Banking & finance",
+        "Capital markets",
+        "Disputes",
+        "Regulatory / fintech"
+      ],
       "source_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job",
       "source_type": "Official applicant system",
       "source_title": "General Opportunity: Trainee Associate - Riyadh",
@@ -171,7 +395,9 @@
       "location": "Riyadh, Saudi Arabia",
       "location_group": "Riyadh",
       "career_stage": "Graduate / COOP",
-      "practice_areas": ["Other"],
+      "practice_areas": [
+        "Other"
+      ],
       "source_url": "https://www.kirkland.com/careers/asia/saudi-arabia",
       "source_type": "Official firm careers",
       "source_title": "Riyadh Careers | Careers | Kirkland & Ellis LLP",
@@ -195,6 +421,56 @@
       "materially_updated_at": "2026-09-21T00:40:38Z",
       "status": "open",
       "provenance_notes": "Official Kirkland & Ellis Riyadh careers page checked on 21 September 2026. It provides an Apply Now entry-level legal recruiting route by email, not a dated vacancy."
+    },
+    {
+      "id": "pinsent-masons-riyadh-internship-2026",
+      "firm_name": "Pinsent Masons",
+      "firm_slug": "pinsent-masons",
+      "role_title": "Internship Programme – Riyadh",
+      "location": "Riyadh, Saudi Arabia",
+      "location_group": "Riyadh",
+      "career_stage": "Internship / COOP",
+      "practice_areas": [
+        "Corporate / M&A",
+        "Banking & finance",
+        "Projects",
+        "Disputes",
+        "Other"
+      ],
+      "source_url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/internship-programme",
+      "source_type": "Official firm careers",
+      "source_title": "Saudi Arabia Internship Programme | Pinsent Masons",
+      "source_domain": "www.pinsentmasons.com",
+      "source_status": "verified",
+      "application_url": "https://ehpy.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1004/jobs/preview/3672",
+      "firm_careers_url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia",
+      "firm_linkedin_url": null,
+      "source_summary": "A three-month Riyadh internship for Saudi students and recent graduates, working alongside lawyers and business professionals. The official Saudi programme index marks internship applications open and the separate COOP programme closed.",
+      "offer_summary": "Starts 11 October 2026; three months; rolling applications opened in September. Monthly allowance, amount not stated. Mentorship and practical legal exposure.",
+      "responsibilities": [
+        "Work alongside Riyadh lawyers and business professionals.",
+        "Develop professional skills and commercial awareness; practice-group exposure depends on business requirements."
+      ],
+      "qualifications": [
+        "Saudi national or long-term resident in Saudi Arabia.",
+        "Penultimate year or beyond of a law degree at a recognised Saudi university.",
+        "Minimum GPA of 2.5/4.0 or equivalent, achieved or on track.",
+        "Submit an up-to-date CV, cover letter and current academic transcript(s)."
+      ],
+      "eligibility_state": "confirmed",
+      "eligibility_summary": "Saudi national or long-term resident; penultimate-year law student or beyond at a recognised Saudi university; minimum GPA 2.5/4.0 or equivalent.",
+      "eligibility_source_text": "The programme states Saudi nationality or long-term residence, penultimate-year-or-beyond law study at a recognised Saudi university, and a 2.5/4.0 minimum GPA or equivalent.",
+      "editorial_assessment": "A time-limited placement, not a permanent job. Future full-time or trainee-lawyer consideration is possible, not guaranteed. The internship and the closed COOP route must not be conflated.",
+      "posted_at": null,
+      "application_open_month": "2026-09",
+      "programme_start_date": "2026-10-11",
+      "programme_duration_months": 3,
+      "deadline_at": null,
+      "first_seen_at": "2026-09-30T08:38:53Z",
+      "last_verified_at": "2026-09-30T08:38:53Z",
+      "materially_updated_at": "2026-09-30T08:38:53Z",
+      "status": "open",
+      "provenance_notes": "Employer Saudi index and internship detail returned HTTP 200 on 30 September 2026. Both Apply Now anchors on the detail page pointed to Oracle job 3672 in CX_1004. Rolling closure, start date and eligibility were read from that page. No exact posting day or allowance amount is supplied; the LinkedIn relative timestamp is not treated as an opening date."
     }
   ]
 }

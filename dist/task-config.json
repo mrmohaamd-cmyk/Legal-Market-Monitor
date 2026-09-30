@@ -1,43 +1,291 @@
 {
   "title": "Saudi Legal Opportunities",
   "taskUrl": null,
-  "sourceTitle": "Riyadh Global 200 law-firm entry roles",
+  "sourceTitle": "Saudi commercial-law employer registry: original 33 targets plus verified additions",
   "timezone": "Asia/Riyadh",
   "cadence": "Daily monitoring",
   "target_firms": [
-    {"name": "A&O Shearman", "search_terms": ["A&O Shearman"]},
-    {"name": "Addleshaw Goddard", "search_terms": ["Addleshaw Goddard"]},
-    {"name": "Akin Gump Strauss Hauer & Feld", "search_terms": ["Akin Gump Strauss Hauer & Feld", "Akin"]},
-    {"name": "AS&H Clifford Chance", "search_terms": ["AS&H Clifford Chance", "AS&H", "Clifford Chance"]},
-    {"name": "Baker Botts", "search_terms": ["Baker Botts"]},
-    {"name": "Baker McKenzie", "search_terms": ["Baker McKenzie"]},
-    {"name": "BCLP", "search_terms": ["BCLP", "Bryan Cave Leighton Paisner"]},
-    {"name": "Bird & Bird", "search_terms": ["Bird & Bird"]},
-    {"name": "Clyde & Co.", "search_terms": ["Clyde & Co.", "Clyde & Co"]},
-    {"name": "CMS", "search_terms": ["CMS", "CMS Law", "CMS Riyadh"]},
-    {"name": "DLA Piper Legal Consultants", "search_terms": ["DLA Piper Legal Consultants", "DLA Piper"]},
-    {"name": "Eversheds Sutherland", "search_terms": ["Eversheds Sutherland"]},
-    {"name": "Freshfields", "search_terms": ["Freshfields"]},
-    {"name": "Ghazzaawi Gowling WLG", "search_terms": ["Ghazzaawi Gowling WLG", "Ghazzawi Gowling WLG", "Gowling WLG", "Dr. Ghazzawi"]},
-    {"name": "Gibson, Dunn & Crutcher", "search_terms": ["Gibson, Dunn & Crutcher", "Gibson Dunn"]},
-    {"name": "Greenberg Traurig", "search_terms": ["Greenberg Traurig"]},
-    {"name": "Herbert Smith Freehills Kramer", "search_terms": ["Herbert Smith Freehills Kramer", "Herbert Smith Freehills"]},
-    {"name": "Hogan Lovells", "search_terms": ["Hogan Lovells"]},
-    {"name": "King & Spalding", "search_terms": ["King & Spalding"]},
-    {"name": "Kirkland & Ellis", "search_terms": ["Kirkland & Ellis"]},
-    {"name": "Latham & Watkins", "search_terms": ["Latham & Watkins"]},
-    {"name": "Linklaters", "search_terms": ["Linklaters"]},
-    {"name": "Morgan Lewis", "search_terms": ["Morgan Lewis", "Morgan, Lewis & Bockius"]},
-    {"name": "Norton Rose Fulbright", "search_terms": ["Norton Rose Fulbright"]},
-    {"name": "Pillsbury AlArfaj", "search_terms": ["Pillsbury AlArfaj", "Pillsbury AlAlfaj", "Pillsbury"]},
-    {"name": "Pinsent Masons", "search_terms": ["Pinsent Masons"]},
-    {"name": "Quinn Emanuel Urquhart & Sullivan", "search_terms": ["Quinn Emanuel Urquhart & Sullivan", "Quinn Emanuel"]},
-    {"name": "Reed Smith", "search_terms": ["Reed Smith"]},
-    {"name": "Simmons & Simmons", "search_terms": ["Simmons & Simmons"]},
-    {"name": "Squire Patton Boggs", "search_terms": ["Squire Patton Boggs"]},
-    {"name": "Stephenson Harwood", "search_terms": ["Stephenson Harwood"]},
-    {"name": "Trowers & Hamlins", "search_terms": ["Trowers & Hamlins"]},
-    {"name": "White & Case", "search_terms": ["White & Case"]}
+    {
+      "name": "A&O Shearman",
+      "search_terms": [
+        "A&O Shearman"
+      ]
+    },
+    {
+      "name": "Addleshaw Goddard",
+      "search_terms": [
+        "Addleshaw Goddard"
+      ]
+    },
+    {
+      "name": "Akin Gump Strauss Hauer & Feld",
+      "search_terms": [
+        "Akin Gump Strauss Hauer & Feld",
+        "Akin"
+      ]
+    },
+    {
+      "name": "AS&H Clifford Chance",
+      "search_terms": [
+        "AS&H Clifford Chance",
+        "AS&H",
+        "Clifford Chance"
+      ]
+    },
+    {
+      "name": "Baker Botts",
+      "search_terms": [
+        "Baker Botts"
+      ]
+    },
+    {
+      "name": "Baker McKenzie",
+      "search_terms": [
+        "Baker McKenzie"
+      ]
+    },
+    {
+      "name": "BCLP",
+      "search_terms": [
+        "BCLP",
+        "Bryan Cave Leighton Paisner"
+      ]
+    },
+    {
+      "name": "Bird & Bird",
+      "search_terms": [
+        "Bird & Bird"
+      ]
+    },
+    {
+      "name": "Clyde & Co.",
+      "search_terms": [
+        "Clyde & Co.",
+        "Clyde & Co"
+      ]
+    },
+    {
+      "name": "CMS",
+      "search_terms": [
+        "CMS",
+        "CMS Law",
+        "CMS Riyadh"
+      ]
+    },
+    {
+      "name": "DLA Piper Legal Consultants",
+      "search_terms": [
+        "DLA Piper Legal Consultants",
+        "DLA Piper"
+      ]
+    },
+    {
+      "name": "Eversheds Sutherland",
+      "search_terms": [
+        "Eversheds Sutherland"
+      ]
+    },
+    {
+      "name": "Freshfields",
+      "search_terms": [
+        "Freshfields"
+      ]
+    },
+    {
+      "name": "Ghazzaawi Gowling WLG",
+      "search_terms": [
+        "Ghazzaawi Gowling WLG",
+        "Ghazzawi Gowling WLG",
+        "Gowling WLG",
+        "Dr. Ghazzawi"
+      ]
+    },
+    {
+      "name": "Gibson, Dunn & Crutcher",
+      "search_terms": [
+        "Gibson, Dunn & Crutcher",
+        "Gibson Dunn"
+      ]
+    },
+    {
+      "name": "Greenberg Traurig",
+      "search_terms": [
+        "Greenberg Traurig"
+      ]
+    },
+    {
+      "name": "Herbert Smith Freehills Kramer",
+      "search_terms": [
+        "Herbert Smith Freehills Kramer",
+        "Herbert Smith Freehills"
+      ]
+    },
+    {
+      "name": "Hogan Lovells",
+      "search_terms": [
+        "Hogan Lovells"
+      ]
+    },
+    {
+      "name": "King & Spalding",
+      "search_terms": [
+        "King & Spalding"
+      ]
+    },
+    {
+      "name": "Kirkland & Ellis",
+      "search_terms": [
+        "Kirkland & Ellis"
+      ]
+    },
+    {
+      "name": "Latham & Watkins",
+      "search_terms": [
+        "Latham & Watkins"
+      ]
+    },
+    {
+      "name": "Linklaters",
+      "search_terms": [
+        "Linklaters"
+      ]
+    },
+    {
+      "name": "Morgan Lewis",
+      "search_terms": [
+        "Morgan Lewis",
+        "Morgan, Lewis & Bockius"
+      ]
+    },
+    {
+      "name": "Norton Rose Fulbright",
+      "search_terms": [
+        "Norton Rose Fulbright"
+      ]
+    },
+    {
+      "name": "Pillsbury AlArfaj",
+      "search_terms": [
+        "Pillsbury AlArfaj",
+        "Pillsbury AlAlfaj",
+        "Pillsbury"
+      ]
+    },
+    {
+      "name": "Pinsent Masons",
+      "search_terms": [
+        "Pinsent Masons"
+      ]
+    },
+    {
+      "name": "Quinn Emanuel Urquhart & Sullivan",
+      "search_terms": [
+        "Quinn Emanuel Urquhart & Sullivan",
+        "Quinn Emanuel"
+      ]
+    },
+    {
+      "name": "Reed Smith",
+      "search_terms": [
+        "Reed Smith"
+      ]
+    },
+    {
+      "name": "Simmons & Simmons",
+      "search_terms": [
+        "Simmons & Simmons"
+      ]
+    },
+    {
+      "name": "Squire Patton Boggs",
+      "search_terms": [
+        "Squire Patton Boggs"
+      ]
+    },
+    {
+      "name": "Stephenson Harwood",
+      "search_terms": [
+        "Stephenson Harwood"
+      ]
+    },
+    {
+      "name": "Trowers & Hamlins",
+      "search_terms": [
+        "Trowers & Hamlins"
+      ]
+    },
+    {
+      "name": "White & Case",
+      "search_terms": [
+        "White & Case"
+      ]
+    },
+    {
+      "name": "Dentons",
+      "search_terms": [
+        "Dentons",
+        "Dentons Arabia"
+      ]
+    },
+    {
+      "name": "Ashurst Perkins Coie",
+      "search_terms": [
+        "Ashurst Perkins Coie",
+        "Ashurst",
+        "Perkins Coie",
+        "Faisal Adnan Baassiri"
+      ]
+    },
+    {
+      "name": "HFW",
+      "search_terms": [
+        "HFW",
+        "Holman Fenwick Willan"
+      ]
+    },
+    {
+      "name": "Al Tamimi & Company",
+      "search_terms": [
+        "Al Tamimi & Company",
+        "Al Tamimi",
+        "Tamimi"
+      ]
+    },
+    {
+      "name": "Khoshaim & Associates",
+      "search_terms": [
+        "Khoshaim & Associates",
+        "Khoshaim",
+        "خشيم"
+      ]
+    },
+    {
+      "name": "Hammad & Al-Mehdar",
+      "search_terms": [
+        "Hammad & Al-Mehdar",
+        "Hammad and Al Mehdar",
+        "Hammad AlMehdar"
+      ]
+    },
+    {
+      "name": "Z&Co.",
+      "search_terms": [
+        "Z&Co.",
+        "Z&Co",
+        "Zamakhchary",
+        "الزمخشري"
+      ]
+    },
+    {
+      "name": "ZH Partners",
+      "search_terms": [
+        "ZH Partners",
+        "Hourani & Partners",
+        "Mohammed M. Zarei",
+        "Khalid N. Alhamdan"
+      ]
+    }
   ],
-  "prompt": "Search for newly posted or materially changed early-career legal opportunities at every firm in the required Riyadh target universe below, but ONLY for roles based in Riyadh or elsewhere in Saudi Arabia. Required firms: A&O Shearman; Addleshaw Goddard; Akin Gump Strauss Hauer & Feld; AS&H Clifford Chance; Baker Botts; Baker McKenzie; BCLP; Bird & Bird; Clyde & Co.; CMS; DLA Piper Legal Consultants; Eversheds Sutherland; Freshfields; Ghazzaawi Gowling WLG; Gibson, Dunn & Crutcher; Greenberg Traurig; Herbert Smith Freehills Kramer; Hogan Lovells; King & Spalding; Kirkland & Ellis; Latham & Watkins; Linklaters; Morgan Lewis; Norton Rose Fulbright; Pillsbury AlArfaj; Pinsent Masons; Quinn Emanuel Urquhart & Sullivan; Reed Smith; Simmons & Simmons; Squire Patton Boggs; Stephenson Harwood; Trowers & Hamlins; and White & Case. Use reasonable name variants and local-association names where necessary, including AS&H / Clifford Chance, BCLP / Bryan Cave Leighton Paisner, Ghazzaawi / Ghazzawi Gowling WLG, Pillsbury AlArfaj / AlAlfaj, and DLA Piper Legal Consultants. Check the firm’s official global, Middle East and Saudi/Riyadh careers pages before relying on third-party job boards. Cover training contracts, trainee solicitor roles, vacation schemes, legal internships, graduate legal programmes, paralegal/legal analyst roles with a clear lawyer-development pathway, junior associate roles, newly qualified roles, and 0–2 PQE lawyer positions. Exclude roles outside Saudi Arabia even if they are in London, Dubai, Abu Dhabi, or elsewhere in the GCC. Notify me only when there is a new opening, a reopening, a material deadline/status change, or another meaningful change since the prior check. For each item include firm, role title, Saudi location, application deadline if available, experience/PQE requirement, qualification/eligibility requirements, source link, and a short assessment of why it is relevant to an ambitious early-career path toward elite corporate/finance/fintech legal practice. Flag especially strong fits and distinguish confirmed facts from inference. If nothing new or materially changed is found, do not notify me."
+  "prompt": "Search for newly posted or materially changed early-career legal opportunities at every firm in the required Riyadh target universe below, but ONLY for roles based in Riyadh or elsewhere in Saudi Arabia. Required firms: A&O Shearman; Addleshaw Goddard; Akin Gump Strauss Hauer & Feld; AS&H Clifford Chance; Baker Botts; Baker McKenzie; BCLP; Bird & Bird; Clyde & Co.; CMS; DLA Piper Legal Consultants; Eversheds Sutherland; Freshfields; Ghazzaawi Gowling WLG; Gibson, Dunn & Crutcher; Greenberg Traurig; Herbert Smith Freehills Kramer; Hogan Lovells; King & Spalding; Kirkland & Ellis; Latham & Watkins; Linklaters; Morgan Lewis; Norton Rose Fulbright; Pillsbury AlArfaj; Pinsent Masons; Quinn Emanuel Urquhart & Sullivan; Reed Smith; Simmons & Simmons; Squire Patton Boggs; Stephenson Harwood; Trowers & Hamlins; and White & Case. Use reasonable name variants and local-association names where necessary, including AS&H / Clifford Chance, BCLP / Bryan Cave Leighton Paisner, Ghazzaawi / Ghazzawi Gowling WLG, Pillsbury AlArfaj / AlAlfaj, and DLA Piper Legal Consultants. Check the firm’s official global, Middle East and Saudi/Riyadh careers pages before relying on third-party job boards. Cover training contracts, trainee solicitor roles, vacation schemes, legal internships, graduate legal programmes, paralegal/legal analyst roles with a clear lawyer-development pathway, junior associate roles, newly qualified roles, and 0–2 PQE lawyer positions. Exclude roles outside Saudi Arabia even if they are in London, Dubai, Abu Dhabi, or elsewhere in the GCC. Notify me only when there is a new opening, a reopening, a material deadline/status change, or another meaningful change since the prior check. For each item include firm, role title, Saudi location, application deadline if available, experience/PQE requirement, qualification/eligibility requirements, source link, and a short assessment of why it is relevant to an ambitious early-career path toward elite corporate/finance/fintech legal practice. Flag especially strong fits and distinguish confirmed facts from inference. If nothing new or materially changed is found, do not notify me.\n\nAdditional Saudi-employer search targets: Dentons; Ashurst Perkins Coie; HFW; Al Tamimi & Company; Khoshaim & Associates; Hammad & Al-Mehdar; Z&Co.; ZH Partners. Search current and former names and Saudi associated employers without treating separate legal entities as one employer.\nSearch official Saudi programme indexes, individual programme pages, employer-linked recruitment portals and employer-authored announcements, not just global careers landing pages. Include internship/internship programme, COOP/co-op/cooperative training, graduate programme/program, trainee associate, junior lawyer, NQ, legal analyst, paralegal and Arabic equivalents. Require an actual Saudi role location; a Saudi navigation link is not evidence. Verify ambiguous associate seniority rather than assuming it is junior.\nPinsent Masons: check https://www.pinsentmasons.com/careers/early-talent/saudi-arabia and its internship-programme and co-op-training-programme child pages separately. An open internship does not make the COOP programme open. Follow the employer page to the actual application destination.\nAdditional first-party discovery routes: Dentons — https://careers.dentons.com/go/Opportunities-in-the-Middle-East/8796702/\nAshurst Perkins Coie — https://www.ashurstperkinscoie.com/en/careers/ ; https://fsr.cvmailuk.com/ashurstperkinscoiecareers\nHFW — https://www.hfw.com/careers/vacancies/\nAl Tamimi & Company — https://www.tamimi.com/careers/ ; https://www.allhires.com/tamimi/\nKhoshaim & Associates — https://www.khoshaim.com/\nHammad & Al-Mehdar — https://hmco.com.sa/careers/\nZ&Co. — https://zamakhchary.com/\nZH Partners — https://houranipartners.com/careers/\nBlocked sources, JavaScript-only portals, general CV forms and unreviewed sources must be disclosed as coverage limitations, not reported as no vacancies. Review the employer universe for additions, name changes, associations and Saudi departures; do not claim the target list is exhaustive. Distinguish new vacancies from evergreen recruitment routes, and preserve human review before public publication.",
+  "coverage_expansion_at": "2026-09-30"
 }

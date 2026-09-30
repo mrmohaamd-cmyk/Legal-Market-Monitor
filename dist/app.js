@@ -362,12 +362,12 @@ function configureCoverageAudit(audit) {
     return;
   }
   const groups = [
-    ['current_route', 'Current source-verified route'],
+    ['current_route', 'Published route (check card freshness)'],
     ['closed_programme', 'Known closed programme'],
-    ['no_record_displayed', 'No current record displayed']
+    ['no_record_displayed', 'No source-verified record in this feed']
   ];
   panel.hidden = false;
-  title.textContent = audit.target_firm_count + '-firm backfill coverage';
+  title.textContent = audit.target_firm_count + '-firm source coverage';
   copy.textContent = audit.scope_note;
   const sections = groups.map(([state, heading]) => {
     const firms = audit.firms.filter((firm) => firm.review_state === state).map((firm) => firm.firm_name);

@@ -1,0 +1,367 @@
+{
+  "reviewed_at": "2026-09-30",
+  "original_target_count": 33,
+  "expanded_target_count": 41,
+  "scope": "The registry retains the original 33 targets and adds eight Saudi-employer targets reviewed on 30 September 2026. Original backfill: 21 September; Pinsent internship verified separately on 30 September. Published-route bookkeeping is not a claim of current freshness: check each card. No record displayed does not mean no vacancy. Configured targets, readable sources and complete vacancy discovery are different; some sources require manual review.",
+  "additions": [
+    {
+      "name": "Dentons",
+      "search_terms": [
+        "Dentons",
+        "Dentons Arabia"
+      ],
+      "presence_url": "https://www.dentons.com/en/global-presence/middle-east/saudi-arabia/riyadh",
+      "careers_url": "https://careers.dentons.com/go/Opportunities-in-the-Middle-East/8796702/",
+      "coverage_type": "Regional vacancy portal; Saudi location required per role"
+    },
+    {
+      "name": "Ashurst Perkins Coie",
+      "search_terms": [
+        "Ashurst Perkins Coie",
+        "Ashurst",
+        "Perkins Coie",
+        "Faisal Adnan Baassiri"
+      ],
+      "presence_url": "https://www.ashurstperkinscoie.com/en/our-locations/riyadh/",
+      "careers_url": "https://www.ashurstperkinscoie.com/en/careers/",
+      "additional_url": "https://fsr.cvmailuk.com/ashurstperkinscoiecareers",
+      "coverage_type": "Official careers and employer-linked rest-of-world ATS; runtime readability reported separately"
+    },
+    {
+      "name": "HFW",
+      "search_terms": [
+        "HFW",
+        "Holman Fenwick Willan"
+      ],
+      "presence_url": "https://www.hfw.com/about-us/our-locations/riyadh/",
+      "careers_url": "https://www.hfw.com/careers/vacancies/",
+      "coverage_type": "Global vacancy portal; Saudi location and junior seniority required"
+    },
+    {
+      "name": "Al Tamimi & Company",
+      "search_terms": [
+        "Al Tamimi & Company",
+        "Al Tamimi",
+        "Tamimi"
+      ],
+      "presence_url": "https://www.tamimi.com/offices/saudi-arabia/",
+      "careers_url": "https://www.tamimi.com/careers/",
+      "additional_url": "https://www.allhires.com/tamimi/",
+      "coverage_type": "Careers/programmes and employer-linked ATS; Saudi intake not automatically established"
+    },
+    {
+      "name": "Khoshaim & Associates",
+      "search_terms": [
+        "Khoshaim & Associates",
+        "Khoshaim",
+        "خشيم"
+      ],
+      "presence_url": "https://www.khoshaim.com/",
+      "careers_url": "https://www.khoshaim.com/",
+      "coverage_type": "General Join Us form, not a vacancy feed"
+    },
+    {
+      "name": "Hammad & Al-Mehdar",
+      "search_terms": [
+        "Hammad & Al-Mehdar",
+        "Hammad and Al Mehdar",
+        "Hammad AlMehdar"
+      ],
+      "presence_url": "https://hmco.com.sa/",
+      "careers_url": "https://hmco.com.sa/careers/",
+      "coverage_type": "General graduate/lawyer/paralegal recruitment; country and vacancy require verification"
+    },
+    {
+      "name": "Z&Co.",
+      "search_terms": [
+        "Z&Co.",
+        "Z&Co",
+        "Zamakhchary",
+        "الزمخشري"
+      ],
+      "presence_url": "https://zamakhchary.com/",
+      "careers_url": "https://zamakhchary.com/",
+      "coverage_type": "Manual review required: automated access blocked during audit"
+    },
+    {
+      "name": "ZH Partners",
+      "search_terms": [
+        "ZH Partners",
+        "Hourani & Partners",
+        "Mohammed M. Zarei",
+        "Khalid N. Alhamdan"
+      ],
+      "presence_url": "https://houranipartners.com/regulatory-notice/",
+      "careers_url": "https://houranipartners.com/careers/",
+      "coverage_type": "Hourani recruitment channel; separately regulated Saudi employer. Confirm employing entity and intake"
+    }
+  ],
+  "research_backlog": [
+    {
+      "name": "DWF",
+      "reason": "Saudi business-services/regional-headquarters presence is not sufficient evidence of a Saudi legal-employment route.",
+      "source_url": "https://dwfgroup.com/en/notices/legal-notices"
+    },
+    {
+      "name": "Watson Farley & Williams",
+      "reason": "Saudi office/employment route not verified in this bounded audit."
+    },
+    {
+      "name": "Charles Russell Speechlys",
+      "reason": "Regional presence alone does not establish a Saudi employment route."
+    },
+    {
+      "name": "Derayah law firm",
+      "reason": "Employer identity/careers route requires disambiguation from Derayah Financial."
+    }
+  ],
+  "pinsent": {
+    "source_url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/internship-programme",
+    "application_url": "https://ehpy.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1004/jobs/preview/3672",
+    "verified_at": "2026-09-30T08:38:53Z",
+    "internship_status": "open",
+    "separate_coop_status": "closed",
+    "verification_method": "Employer programme index and detail fetched successfully; Apply Now destination extracted from employer HTML. No application was submitted."
+  },
+  "targets": [
+    {
+      "firm_name": "A&O Shearman",
+      "review_state": "current_route",
+      "record_ids": [
+        "ao-shearman-winter-2026-coop"
+      ]
+    },
+    {
+      "firm_name": "Addleshaw Goddard",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Akin Gump Strauss Hauer & Feld",
+      "review_state": "closed_programme",
+      "record_ids": []
+    },
+    {
+      "firm_name": "AS&H Clifford Chance",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Baker Botts",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Baker McKenzie",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "BCLP",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Bird & Bird",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Clyde & Co.",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "CMS",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "DLA Piper Legal Consultants",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Eversheds Sutherland",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Freshfields",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Ghazzaawi Gowling WLG",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Gibson, Dunn & Crutcher",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Greenberg Traurig",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Herbert Smith Freehills Kramer",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Hogan Lovells",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "King & Spalding",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Kirkland & Ellis",
+      "review_state": "current_route",
+      "record_ids": [
+        "kirkland-riyadh-entry-level"
+      ]
+    },
+    {
+      "firm_name": "Latham & Watkins",
+      "review_state": "current_route",
+      "record_ids": [
+        "latham-riyadh-graduate-coop",
+        "latham-riyadh-trainee-associate"
+      ]
+    },
+    {
+      "firm_name": "Linklaters",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Morgan Lewis",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Norton Rose Fulbright",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Pillsbury AlArfaj",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Pinsent Masons",
+      "review_state": "current_route",
+      "record_ids": [
+        "pinsent-masons-riyadh-internship-2026"
+      ],
+      "reviewed_at": "2026-09-30T08:38:53Z"
+    },
+    {
+      "firm_name": "Quinn Emanuel Urquhart & Sullivan",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Reed Smith",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Simmons & Simmons",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Squire Patton Boggs",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Stephenson Harwood",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Trowers & Hamlins",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "White & Case",
+      "review_state": "no_record_displayed",
+      "record_ids": []
+    },
+    {
+      "firm_name": "Dentons",
+      "review_state": "no_record_displayed",
+      "record_ids": [],
+      "reviewed_at": "2026-09-30",
+      "presence_url": "https://www.dentons.com/en/global-presence/middle-east/saudi-arabia/riyadh",
+      "coverage_type": "Regional vacancy portal; Saudi location required per role"
+    },
+    {
+      "firm_name": "Ashurst Perkins Coie",
+      "review_state": "no_record_displayed",
+      "record_ids": [],
+      "reviewed_at": "2026-09-30",
+      "presence_url": "https://www.ashurstperkinscoie.com/en/our-locations/riyadh/",
+      "coverage_type": "Official careers and employer-linked rest-of-world ATS; runtime readability reported separately"
+    },
+    {
+      "firm_name": "HFW",
+      "review_state": "no_record_displayed",
+      "record_ids": [],
+      "reviewed_at": "2026-09-30",
+      "presence_url": "https://www.hfw.com/about-us/our-locations/riyadh/",
+      "coverage_type": "Global vacancy portal; Saudi location and junior seniority required"
+    },
+    {
+      "firm_name": "Al Tamimi & Company",
+      "review_state": "no_record_displayed",
+      "record_ids": [],
+      "reviewed_at": "2026-09-30",
+      "presence_url": "https://www.tamimi.com/offices/saudi-arabia/",
+      "coverage_type": "Careers/programmes and employer-linked ATS; Saudi intake not automatically established"
+    },
+    {
+      "firm_name": "Khoshaim & Associates",
+      "review_state": "no_record_displayed",
+      "record_ids": [],
+      "reviewed_at": "2026-09-30",
+      "presence_url": "https://www.khoshaim.com/",
+      "coverage_type": "General Join Us form, not a vacancy feed"
+    },
+    {
+      "firm_name": "Hammad & Al-Mehdar",
+      "review_state": "no_record_displayed",
+      "record_ids": [],
+      "reviewed_at": "2026-09-30",
+      "presence_url": "https://hmco.com.sa/",
+      "coverage_type": "General graduate/lawyer/paralegal recruitment; country and vacancy require verification"
+    },
+    {
+      "firm_name": "Z&Co.",
+      "review_state": "no_record_displayed",
+      "record_ids": [],
+      "reviewed_at": "2026-09-30",
+      "presence_url": "https://zamakhchary.com/",
+      "coverage_type": "Manual review required: automated access blocked during audit"
+    },
+    {
+      "firm_name": "ZH Partners",
+      "review_state": "no_record_displayed",
+      "record_ids": [],
+      "reviewed_at": "2026-09-30",
+      "presence_url": "https://houranipartners.com/regulatory-notice/",
+      "coverage_type": "Hourani recruitment channel; separately regulated Saudi employer. Confirm employing entity and intake"
+    }
+  ]
+}
