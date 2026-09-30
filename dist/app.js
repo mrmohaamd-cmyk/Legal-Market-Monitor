@@ -147,6 +147,11 @@ export function getFallbackAction(record) {
   };
 }
 
+export function getVerificationAction(record) {
+  const href = safeHttpsUrl(record.source_url);
+  return href ? { href, label: 'Check ' + record.firm_name + ' posting', accessibleName: 'Check current availability at the last recorded official source for ' + record.role_title } : getFallbackAction(record);
+}
+
 export function sourceValue(value) {
   return typeof value === 'string' && value.trim() ? value : 'Not stated by source';
 }
@@ -228,7 +233,7 @@ function renderActions(record, status, parent) {
       ? 'Official-source verification is due. This record is not presented as current.'
       : 'This record is not presented as a current opportunity.';
     actions.append(makeElement('p', 'source-action-unavailable', message));
-    const fallbackAction = getFallbackAction(record);
+    const fallbackAction = status === 'verification_pending' ? getVerificationAction(record) : getFallbackAction(record);
     if (fallbackAction) {
       const fallback = makeExternalLink(fallbackAction.href, 'button secondary', fallbackAction.label, fallbackAction.accessibleName);
       if (fallback) actions.append(fallback);
@@ -272,6 +277,7 @@ function renderOpportunity(record, windowHours) {
   card.append(facts);
 
   const provenance = makeElement('p', 'verification-line');
+  provenance.append(makeElement('span', '', 'Last source review: ' + formatDateTime(record.last_verified_at)));
   provenance.append(makeElement('span', '', record.source_type));
   provenance.append(makeElement('span', 'source-type', record.source_domain));
   card.append(provenance);
@@ -343,6 +349,7 @@ function configureWatch(groups, windowHours) {
     return;
   }
   watch.hidden = false;
+  watch.open = groups.current.length === 0 && groups.watch.length > 0;
   title.textContent = 'Verification watch and archive (' + records.length + ')';
   const pending = groups.watch.length;
   const archived = groups.archive.length;
@@ -429,7 +436,7 @@ async function initializeOpportunities() {
       count.textContent = filtered.length + ' ' + (filtered.length === 1 ? 'current opportunity' : 'current opportunities') + ' shown · ' + current.length + ' source-checked';
       if (!filtered.length) {
         const labels = Object.entries(active).filter((entry) => entry[1]).map((entry) => entry[1]);
-        emptyCopy.textContent = labels.length ? 'No current record matches ' + labels.join(' + ') + '. Clear the filters to restore the source-checked list.' : 'There are no source-checked opportunities in the current feed. Set up the monitor below for future changes.';
+        emptyCopy.textContent = labels.length ? 'No current record matches ' + labels.join(' + ') + '. Clear the filters to restore the source-checked list.' : (groups.watch.length ? 'No freshly verified openings are available. ' + groups.watch.length + ' previously recorded opportunity or recruitment route needs review below; this does not establish that applications are closed.' : 'No current records are available in this curated feed. This is not a claim that the monitored firms have no vacancies.');
       }
     };
 
@@ -479,8 +486,16 @@ async function initializeSetup() {
   }
 }
 
+export function sharePageUrl(locationHref) {
+  const url = new URL(locationHref);
+  url.search = '';
+  url.hash = '';
+  if (url.pathname.endsWith('/index.html')) url.pathname = url.pathname.slice(0, -10);
+  return url.href;
+}
+
 function pageUrl() {
-  return new URL('/', window.location.href).href;
+  return sharePageUrl(window.location.href);
 }
 
 function initializeShare() {
@@ -489,7 +504,7 @@ function initializeShare() {
       try {
         await navigator.share({
           title: 'Saudi Legal Opportunities',
-          text: 'Early-career legal opportunities in Riyadh and Saudi Arabia. A ChatGPT-powered monitor.',
+          text: 'Early-career legal opportunities in Riyadh and Saudi Arabia. An independent, source-reviewed monitor.',
           url: pageUrl()
         });
         $('share-status').textContent = '';
