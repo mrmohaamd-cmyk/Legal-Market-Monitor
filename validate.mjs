@@ -36,7 +36,7 @@ assert(!html.includes('PUBLICATION STANDARD'), 'The redundant publication-standa
 assert(!html.includes('id="copy-link"'), 'The redundant page-link copy control must remain removed.');
 assert(!html.includes('Example firm'), 'The finder must not contain fictional opportunities.');
 assert(!html.includes('NOT A LIVE VACANCY'), 'The finder must not present an illustrative vacancy.');
-assert(css.includes("@import url('/tokens.css');"), 'The stylesheet must use the semantic token adapter.');
+assert(css.includes("@import url('tokens.css');"), 'The stylesheet must use the semantic token adapter.');
 assert(!/#(?:[0-9a-f]{3}|[0-9a-f]{6})/i.test(css), 'Component CSS must not introduce raw colours.');
 assert(css.includes('overflow-wrap: anywhere'), 'Long titles and source domains must reflow without clipping.');
 for (const token of ['--eds-color-text-primary', '--eds-color-action-primary', '--eds-color-status-warning', '--eds-font-display', '--eds-space-section']) {
@@ -200,3 +200,13 @@ assert.equal(coverageAudit.pinsent.separate_coop_status, 'closed');
 for (const oldRecord of opportunities.records.filter((record) => record.id !== pinsentRecord.id)) assert.equal(oldRecord.last_verified_at, '2026-09-21T00:40:38Z');
 
 console.log('PASS: semantic-token adapter, no-new-tab links, source-backed records, decision-order fields, combined filters, no-results logic, deadline expiry, verification watch, archive partitioning, application/action routing, source fallback, setup parity and unsafe URL rejection.');
+
+const { sharePageUrl, getVerificationAction } = await import('./dist/app.js');
+assert.equal(sharePageUrl('https://owner.github.io/Legal-Market-Monitor/?ref=share#opportunities'), 'https://owner.github.io/Legal-Market-Monitor/');
+assert.equal(sharePageUrl('https://example.com/index.html#x'), 'https://example.com/');
+assert.equal(sharePageUrl('https://example.com/'), 'https://example.com/');
+assert.equal(getVerificationAction(pinsentRecord).href, pinsentRecord.source_url);
+assert(!getVerificationAction(pinsentRecord).label.startsWith('Apply'));
+assert(app.includes('Last source review: '));
+assert(app.includes('watch.open = groups.current.length === 0 && groups.watch.length > 0'));
+console.log('PASS: repository-subpath sharing, portable token import, dated verification links and honest overdue-record access.');
