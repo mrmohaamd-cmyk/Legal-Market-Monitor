@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-09-30T08:38:53Z",
+  "generated_at": "2026-10-03T09:29:11.259Z",
   "verification_window_hours": 24,
-  "coverage": "41-firm target registry, not an exhaustive market census or 41 fully automated vacancy feeds. Public roles require first-party verification and review. Individual verification timestamps control freshness.",
+  "coverage": "42-firm target registry, not an exhaustive market census or 42 fully automated vacancy feeds. Public roles require first-party verification and review. Individual verification timestamps control freshness.",
   "coverage_audit": {
     "backfill_at": "2026-09-21T00:40:38Z",
-    "target_firm_count": 41,
-    "current_record_count": 5,
-    "current_route_firm_count": 4,
+    "target_firm_count": 42,
+    "current_record_count": 8,
+    "current_route_firm_count": 6,
     "closed_programme_count": 1,
-    "no_record_displayed_count": 36,
-    "scope_note": "The registry retains the original 33 targets and adds eight Saudi-employer targets reviewed on 30 September 2026. Original backfill: 21 September; Pinsent internship verified separately on 30 September. Published-route bookkeeping is not a claim of current freshness: check each card. No record displayed does not mean no vacancy. Configured targets, readable sources and complete vacancy discovery are different; some sources require manual review.",
+    "no_record_displayed_count": 35,
+    "scope_note": "The registry retains the original 33 targets, eight Saudi-employer targets reviewed on 30 September 2026, and Segal Law Firm added on 3 October 2026 after first-party verification of its Riyadh careers route and live Student Intern vacancy. Published-route bookkeeping is not a claim of current freshness: check each card. No record displayed does not mean no vacancy. Configured targets, readable sources and complete vacancy discovery are different; some sources require manual review.",
     "firms": [
       {
         "firm_name": "A&O Shearman",
@@ -183,8 +183,12 @@
       },
       {
         "firm_name": "White & Case",
-        "review_state": "no_record_displayed",
-        "record_ids": []
+        "review_state": "current_route",
+        "record_ids": [
+          "white-case-saudi-coop-2027",
+          "white-case-saudi-law-trainee-2027"
+        ],
+        "reviewed_at": "2026-10-03T09:27:43.979Z"
       },
       {
         "firm_name": "Dentons",
@@ -249,10 +253,20 @@
         "reviewed_at": "2026-09-30",
         "presence_url": "https://houranipartners.com/regulatory-notice/",
         "coverage_type": "Hourani recruitment channel; separately regulated Saudi employer. Confirm employing entity and intake"
+      },
+      {
+        "firm_name": "Segal Law Firm",
+        "review_state": "current_route",
+        "record_ids": [
+          "segal-riyadh-student-intern-2026"
+        ],
+        "reviewed_at": "2026-10-03T05:55:00Z",
+        "presence_url": "https://www.segal.com.sa/en/careers",
+        "coverage_type": "First-party Riyadh careers index and live vacancy page"
       }
     ],
     "original_backfill_at": "2026-09-21T00:40:38Z",
-    "expansion_reviewed_at": "2026-09-30"
+    "expansion_reviewed_at": "2026-10-03"
   },
   "records": [
     {
@@ -293,13 +307,15 @@
       "eligibility_summary": "Undergraduate Law student; Arabic and English; strong GPA; assessment; COOP must be a graduation requirement.",
       "eligibility_source_text": "The official posting requires current undergraduate law enrolment, Arabic and English fluency, a strong GPA, an assessment, and a university letter confirming COOP as a graduation requirement.",
       "editorial_assessment": "The clearest dated Saudi early-career opening in this feed. It provides direct exposure to international transactions and disputes; possible future trainee consideration is mentioned, but not promised.",
-      "posted_at": "2026-09-14T00:00:00+03:00",
-      "deadline_at": "2026-11-30T17:00:00+03:00",
+      "posted_at": null,
+      "deadline_at": null,
       "first_seen_at": "2026-09-20T15:00:00+03:00",
-      "last_verified_at": "2026-09-21T00:40:38Z",
-      "materially_updated_at": "2026-09-21T00:40:38Z",
+      "last_verified_at": "2026-10-03T08:52:00Z",
+      "materially_updated_at": "2026-10-03T08:52:00Z",
       "status": "open",
-      "provenance_notes": "Official A&O Shearman job page and its linked application route were rechecked on 21 September 2026. The page states that applications close on 30 November 2026 at 5:00 p.m."
+      "provenance_notes": "Native first-party browser review supplied by the reviewing session, 3 October 2026 at approximately 08:52 UTC (timestamp recorded to the minute). Official A&O Shearman posting remains open: seven months, January/August intakes, undergraduate law enrolment and university letter. Applications open on 14 September 2026; this is not a midnight posting timestamp. Source closing wording: 30 November 2026 at 5pm. No timezone is stated, so no exact deadline instant is inferred.",
+      "application_open_date": "2026-09-14",
+      "deadline_source_text": "30 November 2026 at 5pm (timezone not stated by source)"
     },
     {
       "id": "latham-riyadh-graduate-coop",
@@ -339,10 +355,10 @@
       "posted_at": null,
       "deadline_at": null,
       "first_seen_at": "2026-09-20T15:00:00+03:00",
-      "last_verified_at": "2026-09-21T00:40:38Z",
+      "last_verified_at": "2026-10-03T08:52:00Z",
       "materially_updated_at": "2026-09-21T00:40:38Z",
       "status": "open",
-      "provenance_notes": "Official Latham & Watkins iCIMS posting retained in the 21 September 2026 backfill. It is a general opportunity with an on-page Apply action, not a dated vacancy."
+      "provenance_notes": "Native first-party browser review supplied by the reviewing session, 3 October 2026 at approximately 08:52 UTC (timestamp recorded to the minute). Official Latham & Watkins iCIMS posting and live iframe Apply action remain available. General opportunity for students and graduates, not confirmed immediate headcount. Programme length, posting date and application deadline remain unstated."
     },
     {
       "id": "latham-riyadh-trainee-associate",
@@ -382,10 +398,10 @@
       "posted_at": null,
       "deadline_at": null,
       "first_seen_at": "2026-09-20T15:00:00+03:00",
-      "last_verified_at": "2026-09-21T00:40:38Z",
+      "last_verified_at": "2026-10-03T08:52:00Z",
       "materially_updated_at": "2026-09-21T00:40:38Z",
       "status": "open",
-      "provenance_notes": "Official Latham & Watkins iCIMS posting retained in the 21 September 2026 backfill. It is a general opportunity describing a two-year trainee contract, not a dated vacancy."
+      "provenance_notes": "Native first-party browser review supplied by the reviewing session, 3 October 2026 at approximately 08:52 UTC (timestamp recorded to the minute). Official Latham & Watkins iCIMS posting and live iframe Apply action remain available. General opportunity describing a two-year trainee route, not a dated vacancy. Eligibility remains partly stated; posting date and deadline remain unstated. Recruiting contact: RecruitingRY@LW.com."
     },
     {
       "id": "kirkland-riyadh-entry-level",
@@ -417,10 +433,10 @@
       "posted_at": null,
       "deadline_at": null,
       "first_seen_at": "2026-09-21T00:40:38Z",
-      "last_verified_at": "2026-09-21T00:40:38Z",
+      "last_verified_at": "2026-10-03T08:52:00Z",
       "materially_updated_at": "2026-09-21T00:40:38Z",
       "status": "open",
-      "provenance_notes": "Official Kirkland & Ellis Riyadh careers page checked on 21 September 2026. It provides an Apply Now entry-level legal recruiting route by email, not a dated vacancy."
+      "provenance_notes": "Native first-party browser review supplied by the reviewing session, 3 October 2026 at approximately 08:52 UTC (timestamp recorded to the minute). Official Riyadh careers page still lists RY_Entry-Level_Legal_Recruiting@kirkland.com for entry-level legal recruiting. This is an email recruitment route, not a specific vacancy or confirmed headcount. No posting date or deadline is stated."
     },
     {
       "id": "pinsent-masons-riyadh-internship-2026",
@@ -446,7 +462,7 @@
       "firm_careers_url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia",
       "firm_linkedin_url": null,
       "source_summary": "A three-month Riyadh internship for Saudi students and recent graduates, working alongside lawyers and business professionals. The official Saudi programme index marks internship applications open and the separate COOP programme closed.",
-      "offer_summary": "Starts 11 October 2026; three months; rolling applications opened in September. Monthly allowance, amount not stated. Mentorship and practical legal exposure.",
+      "offer_summary": "Starts 11 October 2026; three months; rolling applications opened in September 2026, no exact deadline. Monthly allowance; amount disclosed to shortlisted candidates. Mentorship and practical legal exposure.",
       "responsibilities": [
         "Work alongside Riyadh lawyers and business professionals.",
         "Develop professional skills and commercial awareness; practice-group exposure depends on business requirements."
@@ -460,17 +476,150 @@
       "eligibility_state": "confirmed",
       "eligibility_summary": "Saudi national or long-term resident; penultimate-year law student or beyond at a recognised Saudi university; minimum GPA 2.5/4.0 or equivalent.",
       "eligibility_source_text": "The programme states Saudi nationality or long-term residence, penultimate-year-or-beyond law study at a recognised Saudi university, and a 2.5/4.0 minimum GPA or equivalent.",
-      "editorial_assessment": "A time-limited placement, not a permanent job. Future full-time or trainee-lawyer consideration is possible, not guaranteed. The internship and the closed COOP route must not be conflated.",
+      "editorial_assessment": "A time-limited placement, not a permanent job. Outstanding interns may be offered future full-time opportunities; a trainee-lawyer role is not specifically promised. Working hours and compatibility with concurrent employment are unknown. The internship and the closed COOP route must not be conflated.",
       "posted_at": null,
       "application_open_month": "2026-09",
       "programme_start_date": "2026-10-11",
       "programme_duration_months": 3,
       "deadline_at": null,
       "first_seen_at": "2026-09-30T08:38:53Z",
-      "last_verified_at": "2026-09-30T08:38:53Z",
-      "materially_updated_at": "2026-09-30T08:38:53Z",
+      "last_verified_at": "2026-10-03T08:52:00Z",
+      "materially_updated_at": "2026-10-03T08:52:00Z",
       "status": "open",
-      "provenance_notes": "Employer Saudi index and internship detail returned HTTP 200 on 30 September 2026. Both Apply Now anchors on the detail page pointed to Oracle job 3672 in CX_1004. Rolling closure, start date and eligibility were read from that page. No exact posting day or allowance amount is supplied; the LinkedIn relative timestamp is not treated as an opening date."
+      "provenance_notes": "Native first-party browser review supplied by the reviewing session, 3 October 2026 at approximately 08:52 UTC (timestamp recorded to the minute). Official internship tabs reviewed: dates (#2), salary (#4) and support (#5). They confirm an 11 October 2026 start, three-month duration, September 2026 opening and rolling applications without an exact deadline. Monthly allowance amount is disclosed to shortlisted candidates. Outstanding interns may be offered future full-time opportunities, not specifically trainee-lawyer roles. Working hours and compatibility with concurrent employment are not stated. The Oracle application destination and separate COOP status retain their 30 September evidence; neither was independently rechecked in this bounded review."
+    },
+    {
+      "id": "segal-riyadh-student-intern-2026",
+      "firm_name": "Segal Law Firm",
+      "firm_slug": "segal-law-firm",
+      "role_title": "Student Intern",
+      "location": "Riyadh, Saudi Arabia",
+      "location_group": "Riyadh",
+      "career_stage": "Internship / COOP",
+      "practice_areas": [
+        "Other"
+      ],
+      "source_url": "https://www.segal.com.sa/en/careers/jobs/student-intern",
+      "source_type": "Official firm careers",
+      "source_title": "Student Intern | Segal Law Firm",
+      "source_domain": "www.segal.com.sa",
+      "source_status": "verified",
+      "application_url": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
+      "firm_careers_url": "https://www.segal.com.sa/en/careers",
+      "firm_linkedin_url": null,
+      "source_summary": "A Riyadh student internship listed as a current opportunity on Segal Law Firm’s first-party careers site. The role provides substantive legal exposure, research, structured learning and responsibility from the outset, with possible consideration for future opportunities.",
+      "offer_summary": "Riyadh internship for current law students. No posting date, deadline, programme duration or compensation is stated on the verified vacancy page.",
+      "responsibilities": [
+        "Work on real legal matters and conduct legal research.",
+        "Take meaningful responsibility within Segal teams from the outset.",
+        "Develop legal and commercial skills through practical experience and structured learning.",
+        "Gain exposure to different areas of legal practice and firm initiatives."
+      ],
+      "qualifications": [
+        "Current law student at a recognised university.",
+        "Strong spoken, written and reading ability in Arabic and English.",
+        "Consistently strong academic record.",
+        "Genuine interest in law and business.",
+        "Right to work in Saudi Arabia for the duration of the internship."
+      ],
+      "eligibility_state": "confirmed",
+      "eligibility_summary": "Current law student; strong Arabic and English; consistently strong academic record; interest in law and business; right to work in Saudi Arabia during the internship.",
+      "eligibility_source_text": "The first-party vacancy states that candidates must be current law students at a recognised university, have a consistently strong academic record, be strong Arabic and English speakers/readers/writers, have a genuine interest in law and business, and have the right to work in Saudi Arabia for the internship.",
+      "editorial_assessment": "A verified Saudi early-career route with substantive legal exposure and possible future consideration. The posting does not allocate interns to a specific corporate, finance or fintech practice, so practice-area relevance should not be overstated.",
+      "posted_at": null,
+      "deadline_at": null,
+      "first_seen_at": "2026-10-03T05:55:00Z",
+      "last_verified_at": "2026-10-03T05:55:00Z",
+      "materially_updated_at": "2026-10-03T05:55:00Z",
+      "status": "open",
+      "provenance_notes": "First-party Segal careers index, Student Intern vacancy page and role-specific application form verified on 3 October 2026. Job reference SG-JOB-2026-0002. No posting date, closing date, duration or compensation is stated. No application was submitted."
+    },
+    {
+      "firm_name": "White & Case",
+      "firm_slug": "white-case",
+      "practice_areas": [
+        "Other"
+      ],
+      "source_url": "https://whitecase.grad.allhires.com/app/",
+      "source_type": "Official applicant system",
+      "source_title": "White & Case — Saudi programme application deadlines",
+      "source_domain": "whitecase.grad.allhires.com",
+      "source_status": "verified",
+      "application_url": "https://whitecase.grad.allhires.com/app/",
+      "firm_careers_url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+      "firm_linkedin_url": null,
+      "posted_at": null,
+      "application_open_date": "2026-09-01",
+      "deadline_at": null,
+      "first_seen_at": "2026-10-03T09:27:43.979Z",
+      "last_verified_at": "2026-10-03T09:27:43.979Z",
+      "materially_updated_at": "2026-10-03T09:27:43.979Z",
+      "status": "open",
+      "id": "white-case-saudi-coop-2027",
+      "role_title": "Saudi COOP Internship 2027",
+      "location": "Saudi Arabia — COOP city not separately stated",
+      "location_group": "Saudi Arabia (city unspecified)",
+      "career_stage": "Internship / COOP",
+      "source_summary": "Saudi COOP application route listed for January 2027. The employer describes practical work and learning during university studies.",
+      "offer_summary": "January 2027 intake; stipend for expenses, amount and duration unstated. The firm aims to recruit future Saudi trainees through COOP.",
+      "responsibilities": [
+        "Practical work with lawyers and programme learning sessions."
+      ],
+      "qualifications": [
+        "Undertaken while completing studies; COOP-specific thresholds are not separately stated."
+      ],
+      "eligibility_state": "partly_stated",
+      "eligibility_summary": "For students completing their studies. COOP-specific GPA, nationality and language conditions are not separately stated.",
+      "eligibility_source_text": "The employer describes COOP during studies. Its trainee-programme criteria are not assumed to apply unchanged to COOP.",
+      "editorial_assessment": "A Saudi early-career route with a stated trainee pathway; later employment is not guaranteed. City, duration and individual eligibility need confirmation.",
+      "programme_start_month": "2027-01",
+      "deadline_source_text": "30/10/2026 (source wording; closing time and timezone not stated)",
+      "provenance_notes": "AllHires public programme list verified in Chromium on 3 October 2026 at 09:27 UTC (HTTP 200). Programme details were read through web retrieval of the employer page https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program on the same date; that detail URL returned 403 in isolated Chromium. The employer page states applications opened 1 September 2026 and are reviewed on a rolling basis. AllHires requires email/login to start an application; no account, authenticated selection or submission was tested. Deadline strings are preserved without inventing a time or timezone. The public list names Saudi COOP Internship 2027, January 2027, deadline 30/10/2026. The exact COOP city is not separately stated."
+    },
+    {
+      "firm_name": "White & Case",
+      "firm_slug": "white-case",
+      "practice_areas": [
+        "Other"
+      ],
+      "source_url": "https://whitecase.grad.allhires.com/app/",
+      "source_type": "Official applicant system",
+      "source_title": "White & Case — Saudi programme application deadlines",
+      "source_domain": "whitecase.grad.allhires.com",
+      "source_status": "verified",
+      "application_url": "https://whitecase.grad.allhires.com/app/",
+      "firm_careers_url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+      "firm_linkedin_url": null,
+      "posted_at": null,
+      "application_open_date": "2026-09-01",
+      "deadline_at": null,
+      "first_seen_at": "2026-10-03T09:27:43.979Z",
+      "last_verified_at": "2026-10-03T09:27:43.979Z",
+      "materially_updated_at": "2026-10-03T09:27:43.979Z",
+      "status": "open",
+      "id": "white-case-saudi-law-trainee-2027",
+      "role_title": "Saudi Law Trainee Program 2027",
+      "location": "Riyadh, Saudi Arabia",
+      "location_group": "Riyadh",
+      "career_stage": "Trainee",
+      "source_summary": "Riyadh Saudi-law trainee route listed for March 2027, with supervised legal work and seat rotations.",
+      "offer_summary": "March 2027 intake; supervision, training and four seats (potentially three for LLM holders). Programme duration and pay are not stated.",
+      "responsibilities": [
+        "Legal research, document checking, meetings and supervised work across seats."
+      ],
+      "qualifications": [
+        "Saudi-university LLB; seeking a Saudi licence to practise.",
+        "Minimum GPA 3.5/4.0 or 4.5/5.0.",
+        "Native Arabic, fluent written and spoken.",
+        "Commitment to an international legal career, including an international LLM before associate consideration."
+      ],
+      "eligibility_state": "confirmed",
+      "eligibility_summary": "Saudi-university LLB; GPA 3.5/4.0 or 4.5/5.0; native fluent Arabic; pursuing Saudi qualification and an international legal career.",
+      "eligibility_source_text": "The employer lists those requirements and an international LLM before associate consideration. No nationality restriction or English threshold is stated.",
+      "editorial_assessment": "A direct Saudi qualification pathway. Associate progression is conditional, not guaranteed; do not confuse it with the separate GCC English-law programme.",
+      "programme_start_month": "2027-03",
+      "deadline_source_text": "08/01/2027 (source wording; closing time and timezone not stated)",
+      "provenance_notes": "AllHires public programme list verified in Chromium on 3 October 2026 at 09:27 UTC (HTTP 200). Programme details were read through web retrieval of the employer page https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program on the same date; that detail URL returned 403 in isolated Chromium. The employer page states applications opened 1 September 2026 and are reviewed on a rolling basis. AllHires requires email/login to start an application; no account, authenticated selection or submission was tested. Deadline strings are preserved without inventing a time or timezone. The public list names Saudi Law Trainee Program 2027, March 2027, deadline 08/01/2027. The employer detail explicitly places trainees in Riyadh."
     }
   ]
 }

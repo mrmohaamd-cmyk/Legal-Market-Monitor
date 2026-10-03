@@ -1,8 +1,8 @@
 {
-  "reviewed_at": "2026-09-30",
+  "reviewed_at": "2026-10-03",
   "original_target_count": 33,
-  "expanded_target_count": 41,
-  "scope": "The registry retains the original 33 targets and adds eight Saudi-employer targets reviewed on 30 September 2026. Original backfill: 21 September; Pinsent internship verified separately on 30 September. Published-route bookkeeping is not a claim of current freshness: check each card. No record displayed does not mean no vacancy. Configured targets, readable sources and complete vacancy discovery are different; some sources require manual review.",
+  "expanded_target_count": 42,
+  "scope": "The registry retains the original 33 targets, eight Saudi-employer targets reviewed on 30 September 2026, and Segal Law Firm added on 3 October 2026 after first-party verification of its Riyadh careers route and live Student Intern vacancy. Published-route bookkeeping is not a claim of current freshness: check each card. No record displayed does not mean no vacancy. Configured targets, readable sources and complete vacancy discovery are different; some sources require manual review.",
   "additions": [
     {
       "name": "Dentons",
@@ -94,6 +94,19 @@
       "presence_url": "https://houranipartners.com/regulatory-notice/",
       "careers_url": "https://houranipartners.com/careers/",
       "coverage_type": "Hourani recruitment channel; separately regulated Saudi employer. Confirm employing entity and intake"
+    },
+    {
+      "name": "Segal Law Firm",
+      "search_terms": [
+        "Segal Law Firm",
+        "Segal",
+        "سجال للمحاماة",
+        "سجال"
+      ],
+      "presence_url": "https://www.segal.com.sa/en/careers",
+      "careers_url": "https://www.segal.com.sa/en/careers",
+      "additional_url": "https://www.segal.com.sa/en/careers/jobs/student-intern",
+      "coverage_type": "First-party Riyadh careers index and vacancy pages; role-level application form available"
     }
   ],
   "research_backlog": [
@@ -296,8 +309,12 @@
     },
     {
       "firm_name": "White & Case",
-      "review_state": "no_record_displayed",
-      "record_ids": []
+      "review_state": "current_route",
+      "record_ids": [
+        "white-case-saudi-coop-2027",
+        "white-case-saudi-law-trainee-2027"
+      ],
+      "reviewed_at": "2026-10-03T09:27:43.979Z"
     },
     {
       "firm_name": "Dentons",
@@ -362,6 +379,35 @@
       "reviewed_at": "2026-09-30",
       "presence_url": "https://houranipartners.com/regulatory-notice/",
       "coverage_type": "Hourani recruitment channel; separately regulated Saudi employer. Confirm employing entity and intake"
+    },
+    {
+      "firm_name": "Segal Law Firm",
+      "review_state": "current_route",
+      "record_ids": [
+        "segal-riyadh-student-intern-2026"
+      ],
+      "reviewed_at": "2026-10-03T05:55:00Z",
+      "presence_url": "https://www.segal.com.sa/en/careers",
+      "coverage_type": "First-party Riyadh careers index and live vacancy page"
     }
-  ]
+  ],
+  "segal": {
+    "source_url": "https://www.segal.com.sa/en/careers/jobs/student-intern",
+    "application_url": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
+    "verified_at": "2026-10-03T05:55:00Z",
+    "internship_status": "open",
+    "job_reference": "SG-JOB-2026-0002",
+    "verification_method": "First-party Segal careers index, vacancy page and role-specific application form verified. No application was submitted."
+  },
+  "white_case": {
+    "reviewed_at": "2026-10-03T09:27:43.979Z",
+    "source_url": "https://whitecase.grad.allhires.com/app/",
+    "programme_details_url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+    "record_ids": [
+      "white-case-saudi-coop-2027",
+      "white-case-saudi-law-trainee-2027"
+    ],
+    "verification_method": "Public AllHires list verified in Chromium; employer detail read through web retrieval. Employer detail returned 403 in isolated Chromium. No login or submission.",
+    "limits": "COOP-specific eligibility and city, programme duration/pay detail and exact closing instants are not inferred."
+  }
 }

@@ -270,9 +270,9 @@ function renderOpportunity(record, windowHours) {
   const facts = makeElement('dl', 'opportunity-facts');
   const eligibilityLabel = record.eligibility_state === 'partly_stated' ? 'Eligibility — partly stated' : 'Eligibility — source';
   addFact(facts, eligibilityLabel, record.eligibility_summary, record.eligibility_state === 'partly_stated' ? 'fact-unknown' : '');
-  const deadlineText = record.deadline_at ? formatDateTime(record.deadline_at) : 'No deadline stated by source';
+  const deadlineText = record.deadline_source_text || (record.deadline_at ? formatDateTime(record.deadline_at) : 'No deadline stated by source');
   addFact(facts, 'Deadline', deadlineText, record.deadline_at ? '' : 'fact-unknown');
-  if (record.posted_at) addFact(facts, 'Applications open', formatDate(record.posted_at), '');
+  if (record.application_open_date || record.posted_at) addFact(facts, 'Applications open', formatDate(record.application_open_date || record.posted_at), '');
   addFact(facts, 'What it offers', record.offer_summary, '');
   card.append(facts);
 
