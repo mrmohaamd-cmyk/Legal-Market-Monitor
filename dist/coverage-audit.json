@@ -309,8 +309,12 @@
     },
     {
       "firm_name": "White & Case",
-      "review_state": "no_record_displayed",
-      "record_ids": []
+      "review_state": "current_route",
+      "record_ids": [
+        "white-case-saudi-coop-2027",
+        "white-case-saudi-law-trainee-2027"
+      ],
+      "reviewed_at": "2026-10-03T09:27:43.979Z"
     },
     {
       "firm_name": "Dentons",
@@ -394,5 +398,16 @@
     "internship_status": "open",
     "job_reference": "SG-JOB-2026-0002",
     "verification_method": "First-party Segal careers index, vacancy page and role-specific application form verified. No application was submitted."
+  },
+  "white_case": {
+    "reviewed_at": "2026-10-03T09:27:43.979Z",
+    "source_url": "https://whitecase.grad.allhires.com/app/",
+    "programme_details_url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+    "record_ids": [
+      "white-case-saudi-coop-2027",
+      "white-case-saudi-law-trainee-2027"
+    ],
+    "verification_method": "Public AllHires list verified in Chromium; employer detail read through web retrieval. Employer detail returned 403 in isolated Chromium. No login or submission.",
+    "limits": "COOP-specific eligibility and city, programme duration/pay detail and exact closing instants are not inferred."
   }
 }

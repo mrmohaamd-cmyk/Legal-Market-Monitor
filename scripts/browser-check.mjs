@@ -35,6 +35,16 @@ try {
         Object.defineProperty(navigator, 'clipboard', { configurable:true, value: { writeText: async () => { throw new Error('Controlled clipboard denial'); } } });
       });
       const page = await context.newPage();
+      // Check source-local date wording in the rendered card without inventing a timezone.
+      const ao = feed.records.find((record) => record.id === 'ao-shearman-winter-2026-coop');
+      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...ao,last_verified_at:new Date().toISOString()}]}}));
+      await page.goto(base);
+      await page.locator('#opportunity-list article').waitFor();
+      const aoFacts = await page.locator('#opportunity-list .opportunity-facts').textContent();
+      assert(aoFacts.includes('30 November 2026 at 5pm (timezone not stated by source)'));
+      assert(aoFacts.includes('14 Sept 2026'));
+      assert(!aoFacts.includes('No deadline stated by source'));
+      await page.unroute('**/opportunities.json');
       const errors = []; const missing = [];
       page.on('pageerror', (error) => errors.push(error.message));
       page.on('response', (response) => { if (response.status() >= 400 && /\.(css|js|json)(\?|$)/.test(response.url())) missing.push({url:response.url(),status:response.status()}); });

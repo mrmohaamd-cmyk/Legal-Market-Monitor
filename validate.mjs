@@ -58,9 +58,19 @@ assert(css.includes('position: sticky'), 'The opportunity action must remain car
 
 assert.equal(opportunities.verification_window_hours, 24);
 assert(opportunities.records.length >= 3, 'The feed must contain real records or be an honest zero state.');
-const sourceHosts = new Set(['www.pinsentmasons.com', 'careers.aoshearman.com', 'eume-earlyassociatecareers-lw.icims.com', 'www.kirkland.com', 'www.segal.com.sa']);
-const applicationHosts = new Set(['ehpy.fa.em5.oraclecloud.com', 'jobs.aoshearman.com', 'www.segal.com.sa']);
+const sourceHosts = new Set(['www.pinsentmasons.com', 'careers.aoshearman.com', 'eume-earlyassociatecareers-lw.icims.com', 'www.kirkland.com', 'www.segal.com.sa', 'whitecase.grad.allhires.com']);
+const applicationHosts = new Set(['ehpy.fa.em5.oraclecloud.com', 'jobs.aoshearman.com', 'www.segal.com.sa', 'whitecase.grad.allhires.com']);
 const recordIds = new Set();
+// Source-local wording is display evidence, never an inferred deadline instant.
+for (const record of opportunities.records) {
+  if (record.application_open_date != null) {
+    assert(/^\d{4}-\d{2}-\d{2}$/.test(record.application_open_date), 'Opening date must have day precision.');
+    assert.equal(new Date(record.application_open_date).toISOString().slice(0, 10), record.application_open_date);
+  }
+  if (record.deadline_source_text != null) {
+    assert(typeof record.deadline_source_text === 'string' && record.deadline_source_text.trim(), 'Source deadline wording must be nonempty.');
+  }
+}
 for (const record of opportunities.records) {
   for (const key of [
     'id', 'firm_name', 'firm_slug', 'role_title', 'location', 'location_group', 'career_stage',
