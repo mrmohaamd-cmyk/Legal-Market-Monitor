@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-09-30T08:38:53Z",
+  "generated_at": "2026-10-03T05:55:00Z",
   "verification_window_hours": 24,
-  "coverage": "41-firm target registry, not an exhaustive market census or 41 fully automated vacancy feeds. Public roles require first-party verification and review. Individual verification timestamps control freshness.",
+  "coverage": "42-firm target registry, not an exhaustive market census or 42 fully automated vacancy feeds. Public roles require first-party verification and review. Individual verification timestamps control freshness.",
   "coverage_audit": {
     "backfill_at": "2026-09-21T00:40:38Z",
-    "target_firm_count": 41,
-    "current_record_count": 5,
-    "current_route_firm_count": 4,
+    "target_firm_count": 42,
+    "current_record_count": 6,
+    "current_route_firm_count": 5,
     "closed_programme_count": 1,
     "no_record_displayed_count": 36,
-    "scope_note": "The registry retains the original 33 targets and adds eight Saudi-employer targets reviewed on 30 September 2026. Original backfill: 21 September; Pinsent internship verified separately on 30 September. Published-route bookkeeping is not a claim of current freshness: check each card. No record displayed does not mean no vacancy. Configured targets, readable sources and complete vacancy discovery are different; some sources require manual review.",
+    "scope_note": "The registry retains the original 33 targets, eight Saudi-employer targets reviewed on 30 September 2026, and Segal Law Firm added on 3 October 2026 after first-party verification of its Riyadh careers route and live Student Intern vacancy. Published-route bookkeeping is not a claim of current freshness: check each card. No record displayed does not mean no vacancy. Configured targets, readable sources and complete vacancy discovery are different; some sources require manual review.",
     "firms": [
       {
         "firm_name": "A&O Shearman",
@@ -249,10 +249,20 @@
         "reviewed_at": "2026-09-30",
         "presence_url": "https://houranipartners.com/regulatory-notice/",
         "coverage_type": "Hourani recruitment channel; separately regulated Saudi employer. Confirm employing entity and intake"
+      },
+      {
+        "firm_name": "Segal Law Firm",
+        "review_state": "current_route",
+        "record_ids": [
+          "segal-riyadh-student-intern-2026"
+        ],
+        "reviewed_at": "2026-10-03T05:55:00Z",
+        "presence_url": "https://www.segal.com.sa/en/careers",
+        "coverage_type": "First-party Riyadh careers index and live vacancy page"
       }
     ],
     "original_backfill_at": "2026-09-21T00:40:38Z",
-    "expansion_reviewed_at": "2026-09-30"
+    "expansion_reviewed_at": "2026-10-03"
   },
   "records": [
     {
@@ -471,6 +481,52 @@
       "materially_updated_at": "2026-09-30T08:38:53Z",
       "status": "open",
       "provenance_notes": "Employer Saudi index and internship detail returned HTTP 200 on 30 September 2026. Both Apply Now anchors on the detail page pointed to Oracle job 3672 in CX_1004. Rolling closure, start date and eligibility were read from that page. No exact posting day or allowance amount is supplied; the LinkedIn relative timestamp is not treated as an opening date."
+    },
+    {
+      "id": "segal-riyadh-student-intern-2026",
+      "firm_name": "Segal Law Firm",
+      "firm_slug": "segal-law-firm",
+      "role_title": "Student Intern",
+      "location": "Riyadh, Saudi Arabia",
+      "location_group": "Riyadh",
+      "career_stage": "Internship / COOP",
+      "practice_areas": [
+        "Other"
+      ],
+      "source_url": "https://www.segal.com.sa/en/careers/jobs/student-intern",
+      "source_type": "Official firm careers",
+      "source_title": "Student Intern | Segal Law Firm",
+      "source_domain": "www.segal.com.sa",
+      "source_status": "verified",
+      "application_url": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
+      "firm_careers_url": "https://www.segal.com.sa/en/careers",
+      "firm_linkedin_url": null,
+      "source_summary": "A Riyadh student internship listed as a current opportunity on Segal Law Firm’s first-party careers site. The role provides substantive legal exposure, research, structured learning and responsibility from the outset, with possible consideration for future opportunities.",
+      "offer_summary": "Riyadh internship for current law students. No posting date, deadline, programme duration or compensation is stated on the verified vacancy page.",
+      "responsibilities": [
+        "Work on real legal matters and conduct legal research.",
+        "Take meaningful responsibility within Segal teams from the outset.",
+        "Develop legal and commercial skills through practical experience and structured learning.",
+        "Gain exposure to different areas of legal practice and firm initiatives."
+      ],
+      "qualifications": [
+        "Current law student at a recognised university.",
+        "Strong spoken, written and reading ability in Arabic and English.",
+        "Consistently strong academic record.",
+        "Genuine interest in law and business.",
+        "Right to work in Saudi Arabia for the duration of the internship."
+      ],
+      "eligibility_state": "confirmed",
+      "eligibility_summary": "Current law student; strong Arabic and English; consistently strong academic record; interest in law and business; right to work in Saudi Arabia during the internship.",
+      "eligibility_source_text": "The first-party vacancy states that candidates must be current law students at a recognised university, have a consistently strong academic record, be strong Arabic and English speakers/readers/writers, have a genuine interest in law and business, and have the right to work in Saudi Arabia for the internship.",
+      "editorial_assessment": "A verified Saudi early-career route with substantive legal exposure and possible future consideration. The posting does not allocate interns to a specific corporate, finance or fintech practice, so practice-area relevance should not be overstated.",
+      "posted_at": null,
+      "deadline_at": null,
+      "first_seen_at": "2026-10-03T05:55:00Z",
+      "last_verified_at": "2026-10-03T05:55:00Z",
+      "materially_updated_at": "2026-10-03T05:55:00Z",
+      "status": "open",
+      "provenance_notes": "First-party Segal careers index, Student Intern vacancy page and role-specific application form verified on 3 October 2026. Job reference SG-JOB-2026-0002. No posting date, closing date, duration or compensation is stated. No application was submitted."
     }
   ]
 }
