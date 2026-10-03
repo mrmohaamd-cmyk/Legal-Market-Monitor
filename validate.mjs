@@ -58,8 +58,8 @@ assert(css.includes('position: sticky'), 'The opportunity action must remain car
 
 assert.equal(opportunities.verification_window_hours, 24);
 assert(opportunities.records.length >= 3, 'The feed must contain real records or be an honest zero state.');
-const sourceHosts = new Set(['www.pinsentmasons.com', 'careers.aoshearman.com', 'eume-earlyassociatecareers-lw.icims.com', 'www.kirkland.com']);
-const applicationHosts = new Set(['ehpy.fa.em5.oraclecloud.com', 'jobs.aoshearman.com']);
+const sourceHosts = new Set(['www.pinsentmasons.com', 'careers.aoshearman.com', 'eume-earlyassociatecareers-lw.icims.com', 'www.kirkland.com', 'www.segal.com.sa']);
+const applicationHosts = new Set(['ehpy.fa.em5.oraclecloud.com', 'jobs.aoshearman.com', 'www.segal.com.sa']);
 const recordIds = new Set();
 for (const record of opportunities.records) {
   for (const key of [
@@ -187,7 +187,7 @@ for (const firm of config.target_firms) {
   assert(config.prompt.includes(firm.name), 'The copied monitoring prompt must name ' + firm.name + '.');
   assert(html.includes(firm.name.replaceAll('&', '&amp;')), 'The published coverage disclosure must name ' + firm.name + '.');
 }
-assert(html.includes('41-firm target registry'), 'The coverage disclosure must explain that the entire mapped universe is searched.');
+assert(html.includes('42-firm target registry'), 'The coverage disclosure must explain that the entire mapped universe is searched.');
 assert(!html.includes('chatgpt.com/share/'));
 assert.equal(validTaskUrl('https://chatgpt.com/s/synthetic-test-only'), true);
 for (const value of [
@@ -199,8 +199,8 @@ for (const value of [
   'https://user@chatgpt.com/s/test'
 ]) assert.equal(validTaskUrl(value), false, 'Task URL rejection failed for ' + value);
 
-assert.equal(additions.length, 8);
-assert.equal(new Set(config.target_firms.map((firm) => firm.name)).size, 41);
+assert.equal(additions.length, 9);
+assert.equal(new Set(config.target_firms.map((firm) => firm.name)).size, 42);
 for (const addition of additions) assert(config.target_firms.some((firm) => firm.name === addition.name));
 const pinsentRecord = opportunities.records.find((record) => record.id === 'pinsent-masons-riyadh-internship-2026');
 assert(pinsentRecord);
