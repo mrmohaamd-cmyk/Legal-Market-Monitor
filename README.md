@@ -12,6 +12,10 @@ This is not a law-firm site and should not simulate one. It is an independent mo
 
 To refresh the feed, recheck each source, update its record and verification timestamp, run validation, and publish. Do not advance a timestamp without actually checking the official source. A standing or “general opportunity” must be described as such and must not be presented as confirmed immediate headcount.
 
+Each record also carries `record_kind` (`advertised_opening` or `recruitment_route`), `last_reviewed_at` and a dated `application_check`. A failed or incomplete availability check uses `verification_pending` and retains the previous `last_verified_at`; checking an accessible programme page alone does not renew vacancy verification. `source_status: verified` identifies an evidenced first-party source, not a guarantee of current application availability. An unverified application check cannot pass validation as open or produce an Apply action. Login-entry inspection is not a submitted or authenticated application; a published email address is not tested mailbox delivery.
+
+The optional `review_due_at` is an earlier editorial recheck deadline, never an inferred employer closing time. The White & Case COOP record requires review at the start of 31 October in Riyadh because its employer gives only 30/10/2026. Its exact `deadline_at` remains null. Records are repartitioned while the page remains open and after visibility/history restoration; timers only downgrade status and never refresh evidence dates. The empty state distinguishes overdue verification from filters that match no records. See [the 30 October review](docs/source-review-2026-10-30.md).
+
 ## Optional public alert setup
 
 `dist/task-config.json` has `taskUrl: null`. The page therefore shows manual setup instructions and a working copy/download path rather than claiming that a shared task works. This optional ChatGPT alert route is separate from the owner's independent GitHub monitoring and does not control publication of the site.

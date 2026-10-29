@@ -4,6 +4,7 @@ import { readFile, mkdir } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { resolve, extname, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { partitionRecords } from '../dist/app.js';
 const { chromium, webkit } = await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE).href);
 const root = resolve('dist');
 const prefix = '/Legal-Market-Monitor/';
@@ -50,6 +51,12 @@ try {
       page.on('response', (response) => { if (response.status() >= 400 && /\.(css|js|json)(\?|$)/.test(response.url())) missing.push({url:response.url(),status:response.status()}); });
       await page.goto(base + '?audit=1#opportunities');
       await page.waitForFunction(() => !document.getElementById('opportunity-count').textContent.includes('Loading'));
+      const actualGroups = partitionRecords(feed.records, feed.verification_window_hours);
+      assert.equal(await page.locator('#opportunity-list article').count(), actualGroups.current.length);
+      assert.equal(await page.locator('#opportunity-watch-list article').count(), actualGroups.watch.length + actualGroups.archive.length);
+      for (const record of actualGroups.watch) {
+        assert.equal(await page.locator('#opportunity-' + record.id + ' .source-link').count(), 0);
+      }
       await page.locator('#share-page').click();
       const shared = await page.evaluate(() => window.__shared?.url);
       const theme = await page.evaluate(() => getComputedStyle(document.body).getPropertyValue('--eds-color-text-primary').trim());
@@ -62,7 +69,8 @@ try {
       assert.equal(overflow, false, 'No horizontal page overflow.');
       assert.deepEqual(missing, []); assert.deepEqual(errors, []);
       // Exercise a controlled fresh record, independent of the wall clock or editorial feed age.
-      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...pinned,last_verified_at:new Date().toISOString()}]}}));
+      const controlled = {...pinned,status:'open',application_check:{result:'form_available'},review_due_at:null};
+      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...controlled,last_verified_at:new Date().toISOString()}]}}));
       await page.reload();
       await page.locator('#opportunity-list .source-link').waitFor();
       const action = page.locator('#opportunity-list .source-link');
@@ -79,7 +87,7 @@ try {
       await action.click(); await page.waitForURL(pinned.application_url); assert.equal(context.pages().length,1);
       await page.goto(base);
       await page.unroute('**/opportunities.json');
-      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...pinned,last_verified_at:new Date(Date.now()-48*3600000).toISOString()}]}}));
+      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...controlled,last_verified_at:new Date(Date.now()-48*3600000).toISOString()}]}}));
       await page.reload();
       await page.waitForFunction(() => document.querySelector('#opportunity-watch')?.open === true);
       assert.equal(await page.locator('#opportunity-list .source-link').count(),0);
@@ -88,6 +96,28 @@ try {
       assert((await reviewLink.textContent()).startsWith('Check Pinsent Masons'));
       assert((await page.locator('.verification-line').textContent()).includes('Last source review:'));
       assert((await page.locator('#opportunity-empty-copy').textContent()).includes('does not establish'));
+      assert.equal(await page.locator('#opportunity-empty h3').textContent(), 'No freshly verified openings.');
+      assert.equal(await page.locator('#empty-clear-filters').isVisible(), false);
+      // Reproduce a page left open across the window; no reload or filter action.
+      const clockPage = await context.newPage();
+      const clockNow = new Date('2026-10-29T12:00:00Z');
+      await clockPage.clock.install({time:clockNow});
+      await clockPage.route('**/opportunities.json', route => route.fulfill({json:{...feed,records:[{...controlled,last_verified_at:clockNow.toISOString()}]}}));
+      await clockPage.goto(base); await clockPage.locator('#opportunity-list .source-link').waitFor();
+      await clockPage.clock.fastForward(24*3600000+10);
+      assert.equal(await clockPage.locator('#opportunity-list .source-link').count(),0);
+      assert.equal(await clockPage.locator('#opportunity-watch-list article').count(),1);
+      assert((await clockPage.locator('#opportunity-count').textContent()).includes('0 source-checked'));
+      // Earlier editorial cutoff removes Open without claiming Closed.
+      await clockPage.unroute('**/opportunities.json');
+      const cutoff = new Date('2026-10-31T12:00:00Z');
+      await clockPage.clock.setSystemTime(new Date(cutoff.getTime()-60000));
+      await clockPage.route('**/opportunities.json', route => route.fulfill({json:{...feed,records:[{...controlled,last_verified_at:new Date(cutoff.getTime()-60000).toISOString(),review_due_at:cutoff.toISOString()}]}}));
+      await clockPage.reload(); await clockPage.locator('#opportunity-list .source-link').waitFor();
+      await clockPage.clock.fastForward(60010);
+      assert.equal(await clockPage.locator('#opportunity-list .source-link').count(),0);
+      assert((await clockPage.locator('#opportunity-watch-list .status-line').textContent()).includes('Verification due'));
+      await clockPage.close();
       // Share cancellation stays silent; unsupported sharing exposes a selected copy fallback.
       await page.evaluate(() => Object.defineProperty(navigator,'share',{configurable:true,value:async()=>{throw new DOMException('cancelled','AbortError');}}));
       await page.locator('#share-page').click(); assert.equal(await page.locator('#share-status').textContent(),'');

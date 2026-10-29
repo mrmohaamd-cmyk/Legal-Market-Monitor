@@ -65,15 +65,25 @@ export function deriveStatus(record, windowHours, now = Date.now()) {
   if (record.status === 'closed' || record.status === 'expired') return record.status;
   const deadline = record.deadline_at ? Date.parse(record.deadline_at) : null;
   if (deadline && deadline <= now) return 'expired';
-  if (record.status === 'verification_pending' || record.source_status === 'unreachable') return 'verification_pending';
+  if (!currentStatuses.has(record.status) || record.source_status !== 'verified' || record.application_check?.result === 'unverified') return 'verification_pending';
+  // An editorial recheck cutoff is not an inferred employer closing instant.
+  if (record.review_due_at && Date.parse(record.review_due_at) <= now) return 'verification_pending';
   const checked = Date.parse(record.last_verified_at);
-  if (!Number.isFinite(checked) || now - checked > windowHours * 60 * 60 * 1000) return 'verification_pending';
+  if (!Number.isFinite(checked) || checked > now || now - checked > windowHours * 60 * 60 * 1000) return 'verification_pending';
   if (deadline && deadline - now <= 14 * 24 * 60 * 60 * 1000) return 'closing_soon';
   return deadline ? 'open' : 'open_no_deadline';
 }
 
 export function isCurrentStatus(status) {
   return currentStatuses.has(status);
+}
+
+export function nextStatusChange(records, windowHours, now = Date.now()) {
+  const transitions = records.filter(record => isCurrentStatus(deriveStatus(record, windowHours, now)))
+    .flatMap(record => [Date.parse(record.last_verified_at) + windowHours * 3600000 + 1,
+      Date.parse(record.review_due_at), Date.parse(record.deadline_at)])
+    .filter(time => Number.isFinite(time) && time > now);
+  return transitions.length ? Math.min(...transitions) : null;
 }
 
 function compareRecords(a, b, windowHours, now) {
@@ -111,7 +121,7 @@ export function filterRecords(records, active, windowHours, now = Date.now()) {
 }
 
 export function getPrimaryAction(record, status) {
-  if (!isCurrentStatus(status) || (record.source_status && record.source_status !== 'verified')) return null;
+  if (!isCurrentStatus(status) || record.source_status !== 'verified' || record.application_check?.result === 'unverified') return null;
   const applicationUrl = safeHttpsUrl(record.application_url);
   if (applicationUrl) {
     return {
@@ -258,7 +268,8 @@ function renderOpportunity(record, windowHours) {
   top.append(identity);
 
   const freshness = makeElement('p', 'status-line status-' + status);
-  freshness.append(makeElement('span', '', statusLabels[status] || status));
+  const label = isCurrentStatus(status) && record.record_kind === 'recruitment_route' ? 'Open recruitment route' : statusLabels[status];
+  freshness.append(makeElement('span', '', label || status));
   top.append(freshness);
   card.setAttribute('aria-labelledby', title.id);
   card.append(top);
@@ -266,6 +277,7 @@ function renderOpportunity(record, windowHours) {
   // Keep the primary action in the decision sequence: identity, live status,
   // application route, then the eligibility and supporting facts.
   renderActions(record, status, card);
+  if (record.availability_note) card.append(makeElement('p', 'source-action-unavailable', record.availability_note));
 
   const facts = makeElement('dl', 'opportunity-facts');
   const eligibilityLabel = record.eligibility_state === 'partly_stated' ? 'Eligibility — partly stated' : 'Eligibility — source';
@@ -277,7 +289,10 @@ function renderOpportunity(record, windowHours) {
   card.append(facts);
 
   const provenance = makeElement('p', 'verification-line');
-  provenance.append(makeElement('span', '', 'Last source review: ' + formatDateTime(record.last_verified_at)));
+  provenance.append(makeElement('span', '', 'Last source review: ' + formatDateTime(record.last_reviewed_at || record.last_verified_at)));
+  if (record.last_reviewed_at && record.last_reviewed_at !== record.last_verified_at) {
+    provenance.append(makeElement('span', '', 'Last availability verification: ' + formatDateTime(record.last_verified_at)));
+  }
   provenance.append(makeElement('span', '', record.source_type));
   provenance.append(makeElement('span', 'source-type', record.source_domain));
   card.append(provenance);
@@ -353,9 +368,9 @@ function configureWatch(groups, windowHours) {
   title.textContent = 'Verification watch and archive (' + records.length + ')';
   const pending = groups.watch.length;
   const archived = groups.archive.length;
-  copy.textContent = (pending ? pending + ' record' + (pending === 1 ? '' : 's') + ' needs source re-verification' : '')
+  copy.textContent = (pending ? pending + ' record' + (pending === 1 ? ' needs' : 's need') + ' source re-verification' : '')
     + (pending && archived ? '; ' : '')
-    + (archived ? archived + ' record' + (archived === 1 ? '' : 's') + ' is closed or past its stated deadline.' : '');
+    + (archived ? archived + ' record' + (archived === 1 ? ' is' : 's are') + ' closed or past its stated deadline.' : '');
   list.replaceChildren(...records.map((record) => renderOpportunity(record, windowHours)));
 }
 
@@ -415,10 +430,17 @@ async function initializeOpportunities() {
     addOptions(selects.firm, current.map((record) => record.firm_name), []);
     addOptions(selects.location, current.map((record) => record.location_group), ['Riyadh', 'Other Saudi location', 'Saudi-wide / unspecified']);
     addOptions(selects.status, current.map((record) => statusLabels[deriveStatus(record, data.verification_window_hours)]), ['Open']);
-    configureWatch(groups, data.verification_window_hours);
     configureCoverageAudit(data.coverage_audit);
 
+    let statusTimer;
+    let previousStatuses;
     const render = () => {
+      window.clearTimeout(statusTimer);
+      const now = Date.now();
+      const groups = partitionRecords(data.records, data.verification_window_hours, now);
+      const statuses = data.records.map(record => deriveStatus(record, data.verification_window_hours, now)).join('|');
+      if (statuses !== previousStatuses) configureWatch(groups, data.verification_window_hours);
+      previousStatuses = statuses;
       const active = {
         stage: selects.stage.value,
         practice: selects.practice.value,
@@ -428,16 +450,20 @@ async function initializeOpportunities() {
       };
       const hasFilters = Object.values(active).some(Boolean);
       clear.disabled = !hasFilters;
-      const filtered = filterRecords(data.records, active, data.verification_window_hours);
+      const filtered = filterRecords(data.records, active, data.verification_window_hours, now);
       list.replaceChildren(...filtered.map((record) => renderOpportunity(record, data.verification_window_hours)));
       list.setAttribute('aria-busy', 'false');
       empty.hidden = filtered.length > 0;
       list.hidden = filtered.length === 0;
-      count.textContent = filtered.length + ' ' + (filtered.length === 1 ? 'current opportunity' : 'current opportunities') + ' shown · ' + current.length + ' source-checked';
+      count.textContent = filtered.length + ' ' + (filtered.length === 1 ? 'current opportunity' : 'current opportunities') + ' shown · ' + groups.current.length + ' source-checked';
+      empty.querySelector('h3').textContent = hasFilters ? 'No current opportunity matches.' : 'No freshly verified openings.';
+      emptyClear.hidden = !hasFilters;
       if (!filtered.length) {
         const labels = Object.entries(active).filter((entry) => entry[1]).map((entry) => entry[1]);
-        emptyCopy.textContent = labels.length ? 'No current record matches ' + labels.join(' + ') + '. Clear the filters to restore the source-checked list.' : (groups.watch.length ? 'No freshly verified openings are available. ' + groups.watch.length + ' previously recorded opportunity or recruitment route needs review below; this does not establish that applications are closed.' : 'No current records are available in this curated feed. This is not a claim that the monitored firms have no vacancies.');
+        emptyCopy.textContent = labels.length ? 'No current record matches ' + labels.join(' + ') + '. Clear the filters to restore the source-checked list.' : (groups.watch.length ? groups.watch.length + ' previously recorded ' + (groups.watch.length === 1 ? 'opportunity or recruitment route needs' : 'opportunities or recruitment routes need') + ' review below; this does not establish that applications are closed.' : 'No current records are available in this curated feed. This is not a claim that the monitored firms have no vacancies.');
       }
+      const next = nextStatusChange(data.records, data.verification_window_hours, now);
+      if (next !== null) statusTimer = window.setTimeout(render, Math.min(next - now, 2147483647));
     };
 
     const reset = () => {
@@ -447,6 +473,9 @@ async function initializeOpportunities() {
     for (const select of Object.values(selects)) select.addEventListener('change', render);
     clear.addEventListener('click', reset);
     emptyClear.addEventListener('click', reset);
+    // Re-evaluate after suspension or history restoration; never renew source dates.
+    window.addEventListener('pageshow', render);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); });
     render();
   } catch {
     list.hidden = true;
