@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile, mkdir, writeFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
-import {deriveStatus, partitionRecords, getPrimaryAction} from '../dist/app.js';
+import {deriveStatus, partitionRecords, getPrimaryAction, filterRecords} from '../dist/app.js';
 const {chromium, webkit} = await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE).href);
 const base = process.env.AUDIT_URL || 'http://127.0.0.1:4173/Legal-Market-Monitor/';
 const origin = new URL(base).origin;
@@ -31,12 +31,31 @@ for(const [name,type,viewport] of [['chromium-desktop',chromium,{width:1280,heig
     for (const record of feed.records) {
       const card = page.locator('#opportunity-' + record.id);
       assert(await card.isVisible());
+      const facts = await card.locator('.opportunity-facts').textContent();
+      assert(facts.includes(record.eligibility_summary));
+      assert(facts.includes(record.offer_summary));
+      if (record.deadline_source_text) assert(facts.includes(record.deadline_source_text));
+      await card.locator('details').evaluate(el => { el.open = true; });
+      if (deriveStatus(record, feed.verification_window_hours) !== 'closed' && deriveStatus(record, feed.verification_window_hours) !== 'expired') {
+        const links = await card.locator('a').evaluateAll(els => els.map(el => el.href));
+        assert(links.includes(record.source_url), 'Official source remains accessible: ' + record.id);
+      }
       const expected = getPrimaryAction(record, deriveStatus(record, feed.verification_window_hours));
       assert.equal(await card.locator('.source-link').count(), expected ? 1 : 0);
       if (expected) {
         assert.equal(await card.locator('.source-link').getAttribute('href'), expected.href);
         assert.equal(await card.locator('.source-link').getAttribute('target'), '_top');
       }
+    }
+    if (current.length) {
+      await page.locator('#filter-disclosure').evaluate(el => { el.open = true; });
+      const selected = current[0];
+      await page.selectOption('#filter-firm', selected.firm_name);
+      await page.selectOption('#filter-stage', selected.career_stage);
+      const matches = filterRecords(feed.records, {firm:selected.firm_name, stage:selected.career_stage}, feed.verification_window_hours);
+      assert.equal(await page.locator('#opportunity-list article').count(), matches.length);
+      await page.locator('#clear-filters').click();
+      assert.equal(await page.locator('#opportunity-list article').count(), current.length);
     }
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);
     assert.deepEqual(errors,[]);
