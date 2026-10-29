@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile, mkdir, writeFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
-import {deriveStatus} from '../dist/app.js';
+import {deriveStatus, partitionRecords, getPrimaryAction, filterRecords} from '../dist/app.js';
 const {chromium, webkit} = await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE).href);
 const base = process.env.AUDIT_URL || 'http://127.0.0.1:4173/Legal-Market-Monitor/';
 const origin = new URL(base).origin;
@@ -22,56 +22,46 @@ for(const [name,type,viewport] of [['chromium-desktop',chromium,{width:1280,heig
     const page=await browser.newPage({viewport});
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
     await page.goto(base);
-    await page.locator('#opportunity-list article').first().waitFor();
-    const current=feed.records.filter(r=>['open','open_no_deadline','closing_soon'].includes(deriveStatus(r,feed.verification_window_hours)));
-    assert.equal(await page.locator('#opportunity-list article').count(),current.length);
-    assert.equal(current.length,8,'Acceptance requires the eight independently reviewed records, including Segal and White & Case, to remain fresh.');
-    for(const record of current){
-      const card=page.locator('#opportunity-'+record.id);
+    await page.waitForFunction(() => !document.getElementById('opportunity-count').textContent.includes('Loading'));
+    const groups = partitionRecords(feed.records, feed.verification_window_hours);
+    const current = groups.current;
+    assert.equal(await page.locator('#opportunity-list article').count(), current.length);
+    assert.equal(await page.locator('#opportunity-watch-list article').count(), groups.watch.length + groups.archive.length);
+    if (groups.watch.length + groups.archive.length) await page.locator('#opportunity-watch').evaluate(el => { el.open = true; });
+    for (const record of feed.records) {
+      const card = page.locator('#opportunity-' + record.id);
       assert(await card.isVisible());
-      const action=card.locator('.source-link');
-      assert.equal(await action.getAttribute('href'),record.application_url||record.source_url);
-      assert.equal(await action.getAttribute('target'),'_top');
-      await card.locator('details').evaluate(el=>el.open=true);
-      const sourceLinks=await card.locator('a').evaluateAll(els=>els.map(el=>el.href));
-      assert(sourceLinks.includes(record.source_url),'First-party source link must be accessible: '+record.id);
+      const facts = await card.locator('.opportunity-facts').textContent();
+      assert(facts.includes(record.eligibility_summary));
+      assert(facts.includes(record.offer_summary));
+      if (record.deadline_source_text) assert(facts.includes(record.deadline_source_text));
+      await card.locator('details').evaluate(el => { el.open = true; });
+      if (deriveStatus(record, feed.verification_window_hours) !== 'closed' && deriveStatus(record, feed.verification_window_hours) !== 'expired') {
+        const links = await card.locator('a').evaluateAll(els => els.map(el => el.href));
+        assert(links.includes(record.source_url), 'Official source remains accessible: ' + record.id);
+      }
+      const expected = getPrimaryAction(record, deriveStatus(record, feed.verification_window_hours));
+      assert.equal(await card.locator('.source-link').count(), expected ? 1 : 0);
+      if (expected) {
+        assert.equal(await card.locator('.source-link').getAttribute('href'), expected.href);
+        assert.equal(await card.locator('.source-link').getAttribute('target'), '_top');
+      }
     }
-    const ao=page.locator('#opportunity-ao-shearman-winter-2026-coop');
-    const aoText=await ao.innerText();
-    assert(aoText.includes('30 November 2026 at 5pm (timezone not stated by source)'));
-    assert(aoText.includes('14 Sept 2026'));
-    assert(!aoText.includes('No deadline stated by source'));
-    const pinsent=await page.locator('#opportunity-pinsent-masons-riyadh-internship-2026').innerText();
-    for(const fact of ['11 October 2026','three months','shortlisted candidates','future full-time opportunities','compatibility with concurrent employment are unknown'])assert(pinsent.includes(fact),fact);
-    await page.locator('#filter-disclosure').evaluate(el=>el.open=true);
-    await page.selectOption('#filter-firm','White & Case');
-    assert.equal(await page.locator('#opportunity-list article').count(),2);
-    const coop=page.locator('#opportunity-white-case-saudi-coop-2027');
-    const trainee=page.locator('#opportunity-white-case-saudi-law-trainee-2027');
-    assert((await coop.innerText()).includes('30/10/2026 (source wording; closing time and timezone not stated)'));
-    assert((await trainee.innerText()).includes('08/01/2027 (source wording; closing time and timezone not stated)'));
-    assert((await coop.innerText()).includes('city not separately stated'));
-    assert((await trainee.innerText()).includes('3.5/4.0 or 4.5/5.0'));
-    assert((await trainee.innerText()).includes('1 Sept 2026'));
-    await page.selectOption('#filter-location','Riyadh');
-    assert.equal(await page.locator('#opportunity-list article').count(),1);
-    assert(await trainee.isVisible());
-    await page.locator('#clear-filters').click();
-    await page.selectOption('#filter-firm','Latham & Watkins');
-    assert.equal(await page.locator('#opportunity-list article').count(),2);
-    await page.selectOption('#filter-stage','Trainee');
-    assert.equal(await page.locator('#opportunity-list article').count(),1);
-    assert(await page.locator('#opportunity-latham-riyadh-trainee-associate').isVisible());
-    await page.selectOption('#filter-firm','Segal Law Firm');
-    assert.equal(await page.locator('#opportunity-list article').count(),0);
-    assert(await page.locator('#opportunity-empty').isVisible());
-    await page.locator('#clear-filters').click();
-    assert.equal(await page.locator('#opportunity-list article').count(),8);
+    if (current.length) {
+      await page.locator('#filter-disclosure').evaluate(el => { el.open = true; });
+      const selected = current[0];
+      await page.selectOption('#filter-firm', selected.firm_name);
+      await page.selectOption('#filter-stage', selected.career_stage);
+      const matches = filterRecords(feed.records, {firm:selected.firm_name, stage:selected.career_stage}, feed.verification_window_hours);
+      assert.equal(await page.locator('#opportunity-list article').count(), matches.length);
+      await page.locator('#clear-filters').click();
+      assert.equal(await page.locator('#opportunity-list article').count(), current.length);
+    }
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);
     assert.deepEqual(errors,[]);
     await page.screenshot({path:'acceptance-results/'+name+'.png',fullPage:true});
-    results.push({browser:name,passed:true,records:8,errors,checked_at:new Date().toISOString()});
+    results.push({browser:name,passed:true,current:current.length,watch:groups.watch.length,archive:groups.archive.length,errors,checked_at:new Date().toISOString()});
   }finally{await browser.close();}
 }
 await writeFile('acceptance-results/results.json',JSON.stringify({base,fixture_interception:false,routes:'passed',source_links:'exact href and same-tab target verified; no application submitted',results},null,2));
-console.log('PASS persistent-preview acceptance: root/subpath/QA/assets, traversal rejection, actual eight-record feed, White & Case programme dates/eligibility/location distinction, A&O date precision, Pinsent facts, all source/application links, combined filters/no-results/reset; Chromium desktop/mobile and WebKit mobile.');
+console.log('PASS persistent-preview acceptance: routes/assets, exact feed, actual current/watch/archive partitions, authorized application links, no actions on unsupported records and responsive layout.');

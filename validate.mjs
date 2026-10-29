@@ -9,6 +9,7 @@ import {
   getFallbackAction,
   getPrimaryAction,
   partitionRecords,
+  nextStatusChange,
   safeHttpsUrl,
   sourceValue,
   validTaskUrl
@@ -86,6 +87,13 @@ for (const record of opportunities.records) {
   assert(Array.isArray(record.responsibilities), 'Missing responsibilities for ' + record.id);
   assert(Array.isArray(record.qualifications), 'Missing qualifications for ' + record.id);
   assert.equal(record.source_status, 'verified', 'A listed source must be verified.');
+  assert(['open', 'open_no_deadline', 'closing_soon', 'verification_pending', 'closed', 'expired'].includes(record.status), 'Unknown editorial status.');
+  assert(['advertised_opening', 'recruitment_route'].includes(record.record_kind), 'Classify the opportunity, not just its reachability.');
+  assert(Number.isFinite(Date.parse(record.last_reviewed_at)), 'Review attempt must be dated separately from successful verification.');
+  assert(record.application_check && ['login_required', 'form_available', 'email_route', 'unverified'].includes(record.application_check.result), 'Application outcome required.');
+  assert(Number.isFinite(Date.parse(record.application_check.checked_at)) && record.application_check.note?.trim(), 'Application check must have evidence and time.');
+  if (record.application_check.result === 'unverified') assert(['verification_pending', 'closed', 'expired'].includes(record.status), 'Unverified application cannot be published open.');
+  if (record.review_due_at) assert(Number.isFinite(Date.parse(record.review_due_at)), 'Invalid editorial review cutoff.');
   const source = new URL(record.source_url);
   assert.equal(source.protocol, 'https:');
   assert(sourceHosts.has(source.hostname), 'Unapproved source host ' + source.hostname);
@@ -140,6 +148,14 @@ assert.equal(deriveStatus({...aoRecord, last_verified_at: '2026-09-19T18:00:00+0
 assert.equal(deriveStatus({...aoRecord, source_status: 'unreachable'}, 24, testNow), 'verification_pending');
 assert.equal(deriveStatus({...aoRecord, deadline_at: '2026-09-19T17:00:00+03:00'}, 24, testNow), 'expired');
 assert.equal(deriveStatus({...aoRecord, status: 'closed'}, 24, testNow), 'closed');
+assert.equal(deriveStatus({...aoRecord, status: 'unknown'}, 24, testNow), 'verification_pending');
+assert.equal(deriveStatus({...aoRecord, application_check: {result: 'unverified'}}, 24, testNow), 'verification_pending');
+assert.equal(deriveStatus({...aoRecord, last_verified_at: new Date(testNow + 1).toISOString()}, 24, testNow), 'verification_pending');
+assert.equal(deriveStatus({...aoRecord, review_due_at: new Date(testNow).toISOString()}, 24, testNow), 'verification_pending');
+assert.equal(nextStatusChange([lathamGraduate], 24, testNow), testNow + 24 * 3600000 + 1);
+assert.equal(nextStatusChange([{...lathamGraduate, review_due_at: new Date(testNow + 1000).toISOString()}], 24, testNow), testNow + 1000);
+assert.equal(nextStatusChange([{...lathamGraduate, status: 'closed'}], 24, testNow), null);
+assert.equal(getPrimaryAction({...aoRecord, application_check: {result: 'unverified'}}, 'open'), null);
 
 const groups = partitionRecords([
   aoRecord,
@@ -219,7 +235,7 @@ assert.equal(pinsentRecord.deadline_at, null);
 assert.equal(pinsentRecord.posted_at, null);
 assert.equal(pinsentRecord.programme_start_date, '2026-10-11');
 assert.equal(pinsentRecord.programme_duration_months, 3);
-const pinsentFixture = {...pinsentRecord, status: 'open', source_status: 'verified', last_verified_at: '2026-09-30T08:38:53Z'};
+const pinsentFixture = {...pinsentRecord, status: 'open', source_status: 'verified', application_check: {result: 'form_available'}, last_verified_at: '2026-09-30T08:38:53Z'};
 assert.equal(getPrimaryAction(pinsentFixture, 'open_no_deadline').label, 'Apply to Pinsent Masons');
 assert.equal(deriveStatus(pinsentFixture, 24, Date.parse('2026-09-30T09:00:00Z')), 'open_no_deadline');
 assert.equal(deriveStatus(pinsentFixture, 24, Date.parse('2026-10-01T09:00:00Z')), 'verification_pending');
@@ -277,6 +293,14 @@ if (process.env.EDITORIAL_VALIDATION_FIXTURE !== '1') {
     await exercise('unsafe source URLs remain rejected', (data) => {
       data.records[0].source_url = 'http://careers.aoshearman.com/controlled-test-only';
     }, 1);
+    await exercise('unverified applications cannot be relabelled open', (data) => {
+      data.records[0].application_check.result = 'unverified';
+      data.records[0].status = 'open';
+    }, 1);
+    await exercise('pending availability can be retained without renewing verification', (data) => {
+      data.records[0].application_check.result = 'unverified';
+      data.records[0].status = 'verification_pending';
+    });
     assert.equal(await readFile('dist/opportunities.json', 'utf8'), original, 'Editorial tests must not modify the live source feed.');
   } finally {
     await rm(root, {recursive: true, force: true});
