@@ -1,6 +1,6 @@
 # SaudiLaw jobs prototype
 
-Prepared for r/SaudiLaw: one ordinary Reddit text post per reviewed advertised job or training programme. **Disabled, dry-run, unregistered and undeployed.** Reddit accepted the proposed `saudilaw-jobs` name at its initial setup check on 6 November 2026; registration stopped at the humanity check, so ownership/reservation is not established. No Reddit credentials are needed for local work.
+Prepared for r/SaudiLaw: one ordinary Reddit text post per reviewed advertised job or training programme. **Disabled, dry-run, unuploaded and uninstalled.** The owner subsequently completed browser registration for `saudilaw-jobs`; the developer portal and authenticated read-only API confirm the claimed name/app account with zero versions and installations. No Reddit credentials are needed for local tests or previews.
 
 ## Local review
 
@@ -53,7 +53,9 @@ Existing Reddit posts are static snapshots. The bot will not silently edit/remov
 
 ## Before any Reddit action
 
-The official Devvit CLI 0.15.2 requests OAuth `scope=*` with `duration=permanent`; this broad developer-account grant is distinct from the bot's runtime permissions. `devvit login` also logs out any existing CLI session before starting consent, then stores access/refresh tokens locally. Do not run it as a read-only diagnostic. See the [setup packet](../docs/reddit-setup-draft.md) for the exact confirmation boundary.
+The official Devvit CLI 0.15.2 requests OAuth `scope=*` with `duration=permanent`; this broad developer-account grant is distinct from the bot's runtime permissions. The owner specifically approved that grant, the actual Reddit consent matched, and CLI login/account verification succeeded. `devvit login` logs out any existing CLI session before starting consent, so do not rerun it as a read-only diagnostic. The official local linked-bundle check also passed without upload. See the [setup packet](../docs/reddit-setup-draft.md) for the next confirmation boundary.
+
+**First upload has persistent side effects.** With this configuration's absent `dev.subreddit`, Devvit CLI 0.15.2 creates a private test community, installs the private app version there, and records the community in local configuration. It also submits the HTTP domain for review. This is not an upload-only action, and the installed build persists after the process ends. App installation needs separate approval from developer CLI authorization. No such upload/installation has occurred.
 
 See [review and launch notes](../docs/reddit-app-review.md) for official sources and costs. Obtain owner approval for registration/access, test-community playtesting, test posts, app upload/review, installation and activation. Finalize terms/privacy/contact details and request domain/external-link approval. Verify subreddit posting/flair rules and app-name availability. A test community requires an explicitly reviewed destination-allowlist change; the current prototype only accepts r/SaudiLaw and still cannot post.
 
