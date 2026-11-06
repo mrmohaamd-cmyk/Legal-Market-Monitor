@@ -19,6 +19,8 @@ npm run preview
 
 No npm script invokes Devvit upload, publish, playtest, installation or sign-in. See [the saved preview](../docs/reddit-preview-2026-11-06.md) and [review requirements](../docs/reddit-app-review.md).
 
+After an explicitly approved installation, moderators can use **Preview SaudiLaw jobs** from the subreddit menu. Enable feed checks in installation settings to allow the read; leave dry run on. The menu always forces preview mode, receives no posting/storage adapter, and reports the eligible/excluded counts in a toast. App logs contain draft IDs/titles, validation errors and provenance. This is a read-only invocation; it creates no posts, ledger claims or recurring tasks, even if a future scheduled-posting version is unlocked. The current build remains restricted to r/SaudiLaw, so an approved private test community still needs a reviewed allowlist change. See the [prepared setup packet](../docs/reddit-setup-draft.md).
+
 ## Publication and eligibility contract
 
 The only runtime feed is `dist/opportunities.json` from the public repository's **main** branch. That branch is the existing reviewed publication boundary; the feed has no per-record `published` flag. The bot never reads an automatic proposal branch, writes the feed, merges a PR, or renews verification timestamps.

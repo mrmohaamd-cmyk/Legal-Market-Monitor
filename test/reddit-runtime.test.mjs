@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { checkInstallation, LIVE_POSTING_ALLOWED } from '../reddit-bot/runtime.mjs';
+import { checkInstallation, previewInstallation, previewMessage, runLog, LIVE_POSTING_ALLOWED } from '../reddit-bot/runtime.mjs';
 
 const fail = () => { throw new Error('Must not be called'); };
 test('runtime rejects wrong/missing installation without reading settings or feed', async () => {
@@ -39,4 +39,37 @@ test('prepared Devvit config has no automatic trigger, public endpoint, or recur
   assert.equal(config.permissions.reddit.asUser, undefined);
   assert.deepEqual(config.permissions.http.domains, ['api.github.com']);
   for (const task of Object.values(config.scheduler.tasks)) assert.equal(task.cron, undefined);
+  assert.deepEqual(config.menu.items.map(item => [item.forUserType, item.location, item.endpoint]),
+    [['moderator', 'subreddit', '/internal/menu/preview-jobs']]);
+});
+
+test('manual moderator preview produces real drafts without any submit or storage capability', async () => {
+  const feed = JSON.parse(await readFile(new URL('../dist/opportunities.json', import.meta.url)));
+  const result = await previewInstallation({ subredditName: 'SaudiLaw', clock: () => Date.parse(feed.generated_at),
+    getSetting: async name => name === 'enabled', readFeed: async () => ({feed}),
+    submit: fail, storage: {get: fail, set: fail}, forceDryRun: false });
+  assert.equal(result.status, 'dry-run');
+  assert.equal(result.previews.length, 3);
+  assert.match(previewMessage(result), /3 eligible, 5 excluded/);
+  assert.match(previewMessage(result), /No posts or claims created/);
+  assert.equal(runLog(result, true).draftTitles.length, 3);
+  assert.deepEqual(Object.keys(runLog(result, true).draftTitles[0]), ['id', 'title']);
+});
+
+test('operational logs preserve uncertain post receipts and do not include complete drafts', () => {
+  const log = runLog({status:'receipt-uncertain', id:'job', postId:'t3_example', reason:'Receipt write failed',
+    previews:[{id:'job',title:'Public job title',text:'Full body'}]});
+  assert.equal(log.postId, 't3_example');
+  assert.equal(log.reason, 'Receipt write failed');
+  assert.equal(log.draftTitles, undefined);
+  assert.equal(JSON.stringify(log).includes('Full body'), false);
+});
+
+test('manual preview reports disabled, invalid and blocked states without claiming success', async () => {
+  const disabled = await previewInstallation({subredditName: 'SaudiLaw', getSetting: async () => false, readFeed: fail});
+  assert.match(previewMessage(disabled), /disabled/);
+  const blocked = await previewInstallation({subredditName: 'unexpected', getSetting: fail, readFeed: fail});
+  assert.match(previewMessage(blocked), /blocked/);
+  const invalid = await previewInstallation({subredditName: 'SaudiLaw', getSetting: async () => true, readFeed: async () => ({feed:{}})});
+  assert.match(previewMessage(invalid), /failed validation/);
 });

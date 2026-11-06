@@ -12,6 +12,15 @@
       "check-jobs": { "endpoint": "/internal/scheduler/check-jobs" }
     }
   },
+  "menu": {
+    "items": [{
+      "label": "Preview SaudiLaw jobs",
+      "description": "Check the reviewed feed without posting or claiming jobs",
+      "location": "subreddit",
+      "forUserType": "moderator",
+      "endpoint": "/internal/menu/preview-jobs"
+    }]
+  },
   "settings": {
     "subreddit": {
       "enabled": { "type": "boolean", "label": "Enable feed checks", "defaultValue": false },
