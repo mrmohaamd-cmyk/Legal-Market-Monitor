@@ -1,6 +1,6 @@
 {
   "generated_at": "2026-11-06T11:46:53Z",
-  "verification_window_hours": 24,
+  "verification_window_hours": 168,
   "coverage": "42-firm target registry, not an exhaustive market census or 42 fully automated vacancy feeds. Public roles require first-party verification and review. Individual verification timestamps control freshness.",
   "coverage_audit": {
     "backfill_at": "2026-09-21T00:40:38Z",

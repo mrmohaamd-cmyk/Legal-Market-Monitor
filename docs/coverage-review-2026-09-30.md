@@ -1,5 +1,7 @@
 # Saudi employer coverage review — 30 September 2026
 
+> Historical record: the former 24-hour policy applied when this review was recorded. The current [seven-day policy](freshness-policy-2026-11-06.md) supersedes that limit without changing source evidence.
+
 ## Correction and root cause
 
 Pinsent Masons was already included in both 33-firm registries. An empty code-search result was incorrectly treated as proof of absence. Direct file inspection established that the private monitor watched the global careers landing page, not the Saudi programme index or individual programme pages. A configured firm, a successful HTTP response and actual vacancy discovery are different evidence levels.

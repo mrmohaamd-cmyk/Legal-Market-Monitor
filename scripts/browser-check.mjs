@@ -92,7 +92,7 @@ try {
       await action.click(); await page.waitForURL(pinned.application_url); assert.equal(context.pages().length,1);
       await page.goto(base);
       await page.unroute('**/opportunities.json');
-      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...controlled,last_verified_at:new Date(Date.now()-48*3600000).toISOString()}]}}));
+      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...controlled,last_verified_at:new Date(Date.now()-192*3600000).toISOString()}]}}));
       await page.reload();
       await page.waitForFunction(() => document.querySelector('#opportunity-watch')?.open === true);
       assert.equal(await page.locator('#opportunity-list .source-link').count(),0);
@@ -109,9 +109,13 @@ try {
       await clockPage.clock.install({time:clockNow});
       await clockPage.route('**/opportunities.json', route => route.fulfill({json:{...feed,records:[verifiedFixture(controlled,clockNow.toISOString())]}}));
       await clockPage.goto(base); await clockPage.locator('#opportunity-list .source-link').waitFor();
+      assert((await clockPage.locator('#verification-policy').textContent()).includes('seven days'));
       await clockPage.clock.fastForward(24*3600000+10);
+      assert.equal(await clockPage.locator('#opportunity-list .source-link').count(),1, 'Evidence remains current after one day.');
+      await clockPage.clock.fastForward(144*3600000);
       assert.equal(await clockPage.locator('#opportunity-list .source-link').count(),0);
       assert.equal(await clockPage.locator('#opportunity-watch-list article').count(),1);
+      assert((await clockPage.locator('#opportunity-watch-list .status-line').textContent()).includes('Verification due'), 'Old evidence must need review, not become closed.');
       assert((await clockPage.locator('#opportunity-count').textContent()).includes('0 source-checked'));
       // Earlier editorial cutoff removes Open without claiming Closed.
       await clockPage.unroute('**/opportunities.json');

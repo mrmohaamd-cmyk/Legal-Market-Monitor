@@ -1,5 +1,7 @@
 # Integrated local preview — 3 October 2026
 
+> Historical record: the former 24-hour policy applied when this review was recorded. The current [seven-day policy](freshness-policy-2026-11-06.md) supersedes that limit without changing source evidence.
+
 **Follow-up:** The White & Case hold and six-record count below are superseded by `editorial-disposition-2026-10-03.md`: both programmes are now promoted locally after official-detail review and isolated eight-record acceptance. This document retains the earlier validation history.
 
 ## Working implementation

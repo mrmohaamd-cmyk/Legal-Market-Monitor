@@ -6,7 +6,7 @@ import { checkReviewOwnership, proposeRefresh, PR_MARKER, REFRESH_BRANCH } from 
 import { partitionRecords } from '../dist/app.js';
 
 const now = Date.parse('2026-11-06T12:00:00Z');
-const old = '2026-11-04T12:00:00Z';
+const old = '2026-10-29T12:00:00Z';
 const portal = 'https://whitecase.grad.allhires.com/app/';
 const trainee = {id:'white-case-saudi-law-trainee-2027', source_url:portal, application_url:portal, source_status:'verified', record_kind:'advertised_opening', status:'open', last_verified_at:old, application_check:{checked_at:old,result:'login_required',note:'Previous evidence'}, last_reviewed_at:old};
 const coop = {...trainee,id:'white-case-saudi-coop-2027'};
@@ -16,7 +16,7 @@ const openRow = row('Saudi Law Trainee Program 2027','March 2027','08/01/2027');
 const closedRow = row('Saudi COOP Internship 2027','January 2027','Deadline passed');
 const html = `<main>${form}<div>${closedRow}${openRow}</div></main>`;
 const response = body => ({url:portal,status:200,contentType:'text/html',body});
-const feed = records => ({generated_at:old,verification_window_hours:24,records});
+const feed = records => ({generated_at:old,verification_window_hours:168,records});
 const kirklandText = 'Apply Now — Entry Level Email our entry-level legal recruiting team to apply for a position in our Riyadh office';
 const evaluateSource = createSourceEvaluator({kirklandMainHash:createHash('sha256').update(kirklandText).digest('hex')});
 
@@ -80,9 +80,13 @@ test('end-to-end source evidence updates a proposal while failed/manual checks r
   assert.deepEqual(original,feed([trainee,coop,manual]),'Input feed is not mutated.');
   assert.equal(result.report.checks[2].applied,false);
   assert.match(reportMarkdown(result.report),/Draft proposal only/);
-  const current = partitionRecords(result.feed.records,24,now);
+  assert.equal(result.feed.verification_window_hours,168);
+  assert.equal(result.report.verification_window_hours,168);
+  assert.match(reportMarkdown(result.report),/168 hours \(7 days\)/);
+  const current = partitionRecords(result.feed.records,168,now);
   assert.equal(current.current.length,1); assert.equal(current.watch.length,1); assert.equal(current.archive.length,1);
-  assert.equal(partitionRecords(result.feed.records,24,now+24*3600000+1).current.length,0,'Successful proposals still expire after 24 hours.');
+  assert.equal(partitionRecords(result.feed.records,168,now+168*3600000).current.length,1,'A proposal remains current at exactly seven days.');
+  assert.equal(partitionRecords(result.feed.records,168,now+168*3600000+1).current.length,0,'A proposal expires immediately after seven days.');
   const failed = await reviewFeed(feed([trainee]),{now,retrieve:async()=>({error:'HTTP transport unavailable'})});
   assert.equal(failed.feed.records[0].last_verified_at,old);
   assert.equal(failed.feed.records[0].status,'verification_pending');
@@ -97,8 +101,19 @@ test('automatic source success cannot reopen an editorially closed record', asyn
   assert.equal(result.report.checks[0].retained_status,'closed');
 });
 
-test('future evidence and changed freshness policy are rejected before output', async () => {
-  await assert.rejects(reviewFeed({...feed([trainee]),verification_window_hours:48},{now}),/24-hour/);
+test('the configured seven-day policy accepts 168 hours and rejects the old 24-hour policy', async () => {
+  let requests = 0;
+  const retrieve = async()=>{ requests++; return {error:'Controlled transport failure'}; };
+  const accepted = await reviewFeed(feed([trainee]),{now,retrieve});
+  assert.equal(accepted.feed.verification_window_hours,168);
+  assert.equal(accepted.report.verification_window_hours,168);
+  assert.equal(accepted.feed.records[0].last_verified_at,old);
+  assert.equal(requests,1);
+  await assert.rejects(reviewFeed({...feed([trainee]),verification_window_hours:24},{now,retrieve}),/7-day \(168-hour\)/);
+  assert.equal(requests,1,'Reject the wrong policy before retrieving sources or producing output.');
+});
+
+test('future or invalid evidence is rejected before output', async () => {
   await assert.rejects(reviewFeed(feed([{...trainee,last_verified_at:new Date(now+1).toISOString()}]),{now}),/future/);
   await assert.rejects(reviewFeed(feed([{...trainee,application_check:{checked_at:'invalid'}}]),{now}),/future/);
 });

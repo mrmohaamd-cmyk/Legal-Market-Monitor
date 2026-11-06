@@ -1,5 +1,7 @@
 # Publication review — 30 October 2026 (Riyadh)
 
+> Historical record: the former 24-hour policy applied when this review was recorded. The current [seven-day policy](freshness-policy-2026-11-06.md) supersedes that limit without changing source evidence.
+
 ## Scope and evidence standard
 
 Reviewed the eight records in canonical public main `f2093f060ef2cd268440129c7f49fb589e1b6097` after private monitoring issue #37. No open public PR existed at inspection. This is a bounded editorial review, not a new 42-employer market census. The 28 October inventory reconciliation and Segal's disabled/manual monitor remain unchanged.

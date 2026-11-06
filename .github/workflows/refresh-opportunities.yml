@@ -2,7 +2,7 @@ name: Prepare verified opportunity refresh
 
 on:
   schedule:
-    # Multiple opportunities to prepare review within the 24-hour evidence window.
+    # Multiple opportunities to prepare review within the 7-day (168-hour) evidence window.
     # GitHub schedules are best effort and may still be delayed or skipped.
     - cron: '17 */6 * * *'
   workflow_dispatch:
@@ -68,5 +68,5 @@ jobs:
         if: always()
         run: |
           echo 'Checks prepare a draft PR only. No automatic merge or deployment occurs.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Review the source evidence and merge only after authorization. The 24-hour rule continues to expire records independently.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Review the source evidence and merge only after authorization. The 7-day (168-hour) rule continues to expire records independently.' >> "$GITHUB_STEP_SUMMARY"
           echo 'If creating PRs with GITHUB_TOKEN is disabled in repository Actions settings, the proposed feed remains in the source-refresh artifact. No additional credential is created.' >> "$GITHUB_STEP_SUMMARY"

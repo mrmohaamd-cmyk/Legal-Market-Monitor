@@ -2,7 +2,7 @@
 
 The eight retained records were reviewed against live first-party sources and public application entry points. Coordinated browser checks completed at 11:45 UTC; independent HTTP checks for Latham and Kirkland completed at the individual times below. `generated_at` is the latest completed record check, not evidence that all employers were checked at that instant. No login, account creation, consent, message, upload or application submission was performed.
 
-The feed retains the 24-hour freshness safeguard. Six records have supported current application or recruitment routes; White & Case COOP is affirmatively closed; Pinsent remains unavailable for current publication. Three of the six are standing recruitment routes, so the count is not six confirmed immediate vacancies.
+Following the owner's later request, the feed uses a seven-day freshness safeguard; the source checks and their timestamps below are unchanged. Six records have supported current application or recruitment routes; White & Case COOP is affirmatively closed; Pinsent remains unavailable for current publication. Three of the six are standing recruitment routes, so the count is not six confirmed immediate vacancies.
 
 | Record | Result and evidence | Checked UTC |
 | --- | --- | --- |
@@ -17,7 +17,7 @@ The feed retains the 24-hour freshness safeguard. Six records have supported cur
 
 ## Date interpretation
 
-AllHires uses day/month/year: neighboring dates `13/11/2026` and `15/11/2026` establish the format. The trainee deadline therefore reads 8 January 2027. No closing time or timezone is stated, so `deadline_at` remains null. The start of 9 January in Riyadh is an editorial recheck cutoff, not an invented employer closing instant. The 24-hour safeguard still takes effect first.
+AllHires uses day/month/year: neighboring dates `13/11/2026` and `15/11/2026` establish the format. The trainee deadline therefore reads 8 January 2027. No closing time or timezone is stated, so `deadline_at` remains null. The start of 9 January in Riyadh is an editorial recheck cutoff, not an invented employer closing instant. The seven-day safeguard still takes effect first for the recorded November checks.
 
 ## Additional discovery awaiting application verification
 

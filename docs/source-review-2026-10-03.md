@@ -1,5 +1,7 @@
 # Bounded source review — 3 October 2026
 
+> Historical record: the former 24-hour policy applied when this review was recorded. The current [seven-day policy](freshness-policy-2026-11-06.md) supersedes that limit without changing source evidence.
+
 ## Evidence and scope
 
 This local editorial patch transcribes native first-party browser findings supplied by the reviewing session at approximately 08:52 UTC on 3 October 2026. The patch author did not repeat those employer-page visits. `last_verified_at` records that source-review minute as `2026-10-03T08:52:00Z`, not the later patch-preparation time; seconds are not independently known. No application was submitted.

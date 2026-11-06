@@ -33,6 +33,7 @@ assert(html.includes('href="style.css"'), 'The stylesheet must remain portable f
 assert(!/target\s*=\s*['"]_blank['"]/.test(html), 'Public HTML must not require a new browsing context.');
 assert(!/opens in a new tab/i.test(html), 'Link labels must not promise a new tab.');
 assert(html.includes('id="opportunities"'), 'The opportunity finder must remain addressable.');
+assert(html.includes('id="verification-policy"') && html.includes('up to seven days'), 'The seven-day evidence window must be visible to visitors.');
 assert(html.includes('id="opportunity-watch"'), 'The archive/watch surface must be present.');
 assert(html.includes('id="coverage-audit"'), 'The 33-firm backfill coverage surface must be present.');
 assert(html.includes('id="filter-disclosure"'), 'Compact screens must retain a keyboard-accessible filter disclosure.');
@@ -57,7 +58,7 @@ assert(app.indexOf('renderActions(record, status, card);') < app.indexOf("const 
 assert(!css.includes('.copy-source-link'), 'The removed copy-link control must have no remaining component style.');
 assert(css.includes('position: sticky'), 'The opportunity action must remain card-bounded and reachable during detail reading.');
 
-assert.equal(opportunities.verification_window_hours, 24);
+assert.equal(opportunities.verification_window_hours, 168);
 assert(opportunities.records.length >= 3, 'The feed must contain real records or be an honest zero state.');
 const sourceHosts = new Set(['www.pinsentmasons.com', 'careers.aoshearman.com', 'eume-earlyassociatecareers-lw.icims.com', 'www.kirkland.com', 'www.segal.com.sa', 'whitecase.grad.allhires.com']);
 const applicationHosts = new Set(['ehpy.fa.em5.oraclecloud.com', 'jobs.aoshearman.com', 'www.segal.com.sa', 'whitecase.grad.allhires.com']);
@@ -141,33 +142,36 @@ const lathamGraduate = {...fixture, id: 'fixture-lw-graduate'};
 const lathamTrainee = {...fixture, id: 'fixture-lw-trainee', career_stage: 'Trainee'};
 const kirklandEntryLevel = {...fixture, id: 'fixture-kirkland', firm_name: 'Kirkland & Ellis', practice_areas: ['Other'], source_url: 'https://www.kirkland.com/controlled-test-only'};
 const fixtureRecords = [aoRecord, lathamGraduate, lathamTrainee, kirklandEntryLevel];
-assert.equal(deriveStatus(aoRecord, 24, testNow), 'open');
-assert.equal(deriveStatus(lathamGraduate, 24, testNow), 'open_no_deadline');
-assert.equal(deriveStatus(lathamTrainee, 24, testNow), 'open_no_deadline');
-assert.equal(deriveStatus(kirklandEntryLevel, 24, testNow), 'open_no_deadline');
-assert.equal(deriveStatus({...aoRecord, last_verified_at: '2026-09-19T18:00:00+03:00'}, 24, testNow), 'verification_pending');
-assert.equal(deriveStatus({...aoRecord, source_status: 'unreachable'}, 24, testNow), 'verification_pending');
-assert.equal(deriveStatus({...aoRecord, deadline_at: '2026-09-19T17:00:00+03:00'}, 24, testNow), 'expired');
-assert.equal(deriveStatus({...aoRecord, status: 'closed'}, 24, testNow), 'closed');
-assert.equal(deriveStatus({...aoRecord, status: 'unknown'}, 24, testNow), 'verification_pending');
-assert.equal(deriveStatus({...aoRecord, application_check: {result: 'unverified'}}, 24, testNow), 'verification_pending');
-for (const application_check of [undefined, {result: 'invented'}, {result: 'form_available'}, {result: 'form_available', checked_at: new Date(testNow - 25 * 3600000).toISOString()}, {result: 'form_available', checked_at: new Date(testNow + 1).toISOString()}]) {
-  assert.equal(deriveStatus({...aoRecord, application_check}, 24, testNow), 'verification_pending', 'Missing, stale or future application evidence must fail closed.');
+assert.equal(deriveStatus(aoRecord, 168, testNow), 'open');
+assert.equal(deriveStatus(lathamGraduate, 168, testNow), 'open_no_deadline');
+assert.equal(deriveStatus(lathamTrainee, 168, testNow), 'open_no_deadline');
+assert.equal(deriveStatus(kirklandEntryLevel, 168, testNow), 'open_no_deadline');
+assert.equal(deriveStatus(lathamGraduate, 168, testNow + 48 * 3600000), 'open_no_deadline', 'Successful evidence remains current after the old daily limit.');
+assert.equal(deriveStatus(lathamGraduate, 168, testNow + 168 * 3600000), 'open_no_deadline', 'Exactly seven days remains within the evidence window.');
+assert.equal(deriveStatus(lathamGraduate, 168, testNow + 168 * 3600000 + 1), 'verification_pending', 'Older evidence needs review, not presumed closure.');
+assert.equal(deriveStatus({...aoRecord, last_verified_at: '2026-09-12T18:00:00+03:00'}, 168, testNow), 'verification_pending');
+assert.equal(deriveStatus({...aoRecord, source_status: 'unreachable'}, 168, testNow), 'verification_pending');
+assert.equal(deriveStatus({...aoRecord, deadline_at: '2026-09-19T17:00:00+03:00'}, 168, testNow), 'expired');
+assert.equal(deriveStatus({...aoRecord, status: 'closed'}, 168, testNow), 'closed');
+assert.equal(deriveStatus({...aoRecord, status: 'unknown'}, 168, testNow), 'verification_pending');
+assert.equal(deriveStatus({...aoRecord, application_check: {result: 'unverified'}}, 168, testNow), 'verification_pending');
+for (const application_check of [undefined, {result: 'invented'}, {result: 'form_available'}, {result: 'form_available', checked_at: new Date(testNow - 169 * 3600000).toISOString()}, {result: 'form_available', checked_at: new Date(testNow + 1).toISOString()}]) {
+  assert.equal(deriveStatus({...aoRecord, application_check}, 168, testNow), 'verification_pending', 'Missing, stale or future application evidence must fail closed.');
 }
-for (const windowHours of [undefined, NaN, 0, -1, 25]) assert.equal(deriveStatus(aoRecord, windowHours, testNow), 'verification_pending');
-assert.equal(nextStatusChange([{...lathamGraduate, application_check: {result: 'form_available', checked_at: new Date(testNow - 3600000).toISOString()}}], 24, testNow), testNow + 23 * 3600000 + 1);
-assert.equal(deriveStatus({...aoRecord, last_verified_at: new Date(testNow + 1).toISOString()}, 24, testNow), 'verification_pending');
-assert.equal(deriveStatus({...aoRecord, review_due_at: new Date(testNow).toISOString()}, 24, testNow), 'verification_pending');
-assert.equal(nextStatusChange([lathamGraduate], 24, testNow), testNow + 24 * 3600000 + 1);
-assert.equal(nextStatusChange([{...lathamGraduate, review_due_at: new Date(testNow + 1000).toISOString()}], 24, testNow), testNow + 1000);
-assert.equal(nextStatusChange([{...lathamGraduate, status: 'closed'}], 24, testNow), null);
+for (const windowHours of [undefined, NaN, 0, -1, 169]) assert.equal(deriveStatus(aoRecord, windowHours, testNow), 'verification_pending');
+assert.equal(nextStatusChange([{...lathamGraduate, application_check: {result: 'form_available', checked_at: new Date(testNow - 3600000).toISOString()}}], 168, testNow), testNow + 167 * 3600000 + 1);
+assert.equal(deriveStatus({...aoRecord, last_verified_at: new Date(testNow + 1).toISOString()}, 168, testNow), 'verification_pending');
+assert.equal(deriveStatus({...aoRecord, review_due_at: new Date(testNow).toISOString()}, 168, testNow), 'verification_pending');
+assert.equal(nextStatusChange([lathamGraduate], 168, testNow), testNow + 168 * 3600000 + 1);
+assert.equal(nextStatusChange([{...lathamGraduate, review_due_at: new Date(testNow + 1000).toISOString()}], 168, testNow), testNow + 1000);
+assert.equal(nextStatusChange([{...lathamGraduate, status: 'closed'}], 168, testNow), null);
 assert.equal(getPrimaryAction({...aoRecord, application_check: {result: 'unverified'}}, 'open'), null);
 
 const groups = partitionRecords([
   aoRecord,
   {...lathamGraduate, source_status: 'unreachable'},
   {...lathamTrainee, deadline_at: '2026-09-19T17:00:00+03:00'}
-], 24, testNow);
+], 168, testNow);
 assert.equal(groups.current.length, 1, 'Only current records may remain in the default list.');
 assert.equal(groups.watch.length, 1, 'Unreachable sources must enter verification watch.');
 assert.equal(groups.archive.length, 1, 'Past-deadline records must enter the archive.');
@@ -194,9 +198,9 @@ assert.equal(safeHttpsUrl('https://user@example.com/path'), null);
 assert.equal(sourceValue(''), 'Not stated by source');
 assert.equal(sourceValue(undefined), 'Not stated by source');
 
-assert.equal(filterRecords(fixtureRecords, {stage: 'Trainee', practice: '', firm: '', location: '', status: ''}, 24, testNow).length, 1);
-assert.equal(filterRecords(fixtureRecords, {stage: '', practice: 'Banking & finance', firm: 'Latham & Watkins', location: 'Riyadh', status: ''}, 24, testNow).length, 2);
-assert.equal(filterRecords(fixtureRecords, {stage: 'NQ / 0–2 PQE', practice: '', firm: '', location: '', status: ''}, 24, testNow).length, 0);
+assert.equal(filterRecords(fixtureRecords, {stage: 'Trainee', practice: '', firm: '', location: '', status: ''}, 168, testNow).length, 1);
+assert.equal(filterRecords(fixtureRecords, {stage: '', practice: 'Banking & finance', firm: 'Latham & Watkins', location: 'Riyadh', status: ''}, 168, testNow).length, 2);
+assert.equal(filterRecords(fixtureRecords, {stage: 'NQ / 0–2 PQE', practice: '', firm: '', location: '', status: ''}, 168, testNow).length, 0);
 
 const setup = 'Create a separate daily monitoring task titled “' + config.title + '”. Check each morning using the Asia/Riyadh time zone. Notify me only for meaningful changes. Review any account limitations and confirm the actual schedule after creating it.\n\n' + config.prompt + '\n';
 assert.equal(download, setup, 'Downloaded setup instructions must match the copy action.');
@@ -243,8 +247,8 @@ assert.equal(pinsentRecord.programme_start_date, '2026-10-11');
 assert.equal(pinsentRecord.programme_duration_months, 3);
 const pinsentFixture = {...pinsentRecord, status: 'open', source_status: 'verified', application_check: {result: 'form_available', checked_at: '2026-09-30T08:38:53Z'}, last_verified_at: '2026-09-30T08:38:53Z'};
 assert.equal(getPrimaryAction(pinsentFixture, 'open_no_deadline').label, 'Apply to Pinsent Masons');
-assert.equal(deriveStatus(pinsentFixture, 24, Date.parse('2026-09-30T09:00:00Z')), 'open_no_deadline');
-assert.equal(deriveStatus(pinsentFixture, 24, Date.parse('2026-10-01T09:00:00Z')), 'verification_pending');
+assert.equal(deriveStatus(pinsentFixture, 168, Date.parse('2026-09-30T09:00:00Z')), 'open_no_deadline');
+assert.equal(deriveStatus(pinsentFixture, 168, Date.parse('2026-10-08T09:00:00Z')), 'verification_pending');
 assert.equal(coverageAudit.pinsent.separate_coop_status, 'closed');
 
 console.log('PASS: semantic-token adapter, no-new-tab links, source-backed records, decision-order fields, combined filters, no-results logic, deadline expiry, verification watch, archive partitioning, application/action routing, source fallback, setup parity and unsafe URL rejection.');

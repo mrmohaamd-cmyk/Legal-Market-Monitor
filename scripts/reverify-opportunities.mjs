@@ -8,6 +8,7 @@ import { resolve, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const USER_AGENT = 'Legal-Market-Monitor/1.0 (+https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor)';
+const VERIFICATION_WINDOW_HOURS = 168;
 const allHires = 'https://whitecase.grad.allhires.com/app/';
 const kirkland = 'https://www.kirkland.com/careers/asia/saudi-arabia';
 const rules = {
@@ -25,7 +26,7 @@ const pending = reason => ({outcome:'verification_pending', result:'unverified',
 export function createSourceEvaluator({kirklandMainHash = '7bcd58310b4c0f08c9cdea8334262e80eb59f875f4c6b85fd75eadd663d18f9e'} = {}) {
 return function evaluateSource(record, response, now = Date.now()) {
   const rule = rules[record.id];
-  if (!rule) return {outcome:'manual_review', reason:'No audited automatic application checker for this source. Human verification remains unchanged; the browser still expires it after 24 hours.'};
+  if (!rule) return {outcome:'manual_review', reason:'No audited automatic application checker for this source. Human verification remains unchanged; the browser still expires it after 7 days (168 hours).'};
   if (record.source_url !== rule.url || (rule.url === allHires && record.application_url !== allHires)) return pending('Record destination changed; adapter requires editorial review.');
   if (!response || response.error) return pending(response?.error || 'No response was obtained.');
   if (response.status !== 200) return pending(`HTTP ${response.status}; availability was not verified.`);
@@ -81,7 +82,7 @@ export async function retrieveSource(url) {
 }
 
 export async function reviewFeed(feed, {now = Date.now(), retrieve = retrieveSource, programmeFacts = verifyWhiteCaseProgrammeFacts} = {}) {
-  if (!Number.isFinite(now) || feed.verification_window_hours !== 24) throw new Error('A valid check time and the unchanged 24-hour safeguard are required.');
+  if (!Number.isFinite(now) || feed.verification_window_hours !== VERIFICATION_WINDOW_HOURS) throw new Error('A valid check time and the configured 7-day (168-hour) safeguard are required.');
   const proposed = structuredClone(feed);
   const checkedAt = new Date(now).toISOString();
   const cache = new Map(); const checks = [];
@@ -112,11 +113,11 @@ export async function reviewFeed(feed, {now = Date.now(), retrieve = retrieveSou
     }
   }
   if (JSON.stringify(proposed) !== JSON.stringify(feed)) proposed.generated_at = checkedAt;
-  return {feed:proposed, report:{checked_at:checkedAt, verification_window_hours:24, publication:'Draft proposal only. A person must review and merge; this check cannot publish.', checks}};
+  return {feed:proposed, report:{checked_at:checkedAt, verification_window_hours:VERIFICATION_WINDOW_HOURS, publication:'Draft proposal only. A person must review and merge; this check cannot publish.', checks}};
 }
 
 export function reportMarkdown(report) {
-  return `# First-party source check\n\nChecked ${report.checked_at}. ${report.publication}\n\nThe 24-hour verification window is unchanged. Unsupported automatic checks leave human evidence untouched; elapsed evidence still expires in the browser. A working page or unchanged fingerprint alone cannot renew evidence.\n\n` + report.checks.map(check => `## ${check.id}\n\n- Outcome: ${check.outcome}${check.applied ? '' : ' (record unchanged)'}\n- Source: ${check.source_url}\n- HTTP: ${check.http_status ?? 'not available'}${check.retrieval_error ? ` (${check.retrieval_error})` : ''}\n- Response fingerprint: ${check.response_body_sha256 || 'not available'}\n- Evidence: ${check.reason}\n${check.retained_status ? `- Retained editorial status: ${check.retained_status}. ${check.application_note}\n` : ''}${(check.evidence || []).map(item => `- Route evidence: ${item.request_url} → HTTP ${item.status ?? 'unavailable'}; SHA-256 ${item.body_sha256 ?? 'unavailable'}\n`).join('')}`).join('\n') + '\nThe explicit AllHires programme rows, Kirkland entry-level email route and the two reviewed Latham same-role application journeys have automatic verification adapters. A&O Shearman, Pinsent Masons and Segal require browser or editorial review. The AllHires automatic check uses an early editorial cutoff at the start of the stated deadline date in Riyadh; this is not an inferred employer closing instant. No account login, application submission, email delivery test, paid provider or access-control bypass is performed.\n';
+  return `# First-party source check\n\nChecked ${report.checked_at}. ${report.publication}\n\nThe verification window for this check is ${report.verification_window_hours} hours (${report.verification_window_hours / 24} days). Unsupported automatic checks leave human evidence untouched; elapsed evidence still expires in the browser. A working page or unchanged fingerprint alone cannot renew evidence.\n\n` + report.checks.map(check => `## ${check.id}\n\n- Outcome: ${check.outcome}${check.applied ? '' : ' (record unchanged)'}\n- Source: ${check.source_url}\n- HTTP: ${check.http_status ?? 'not available'}${check.retrieval_error ? ` (${check.retrieval_error})` : ''}\n- Response fingerprint: ${check.response_body_sha256 || 'not available'}\n- Evidence: ${check.reason}\n${check.retained_status ? `- Retained editorial status: ${check.retained_status}. ${check.application_note}\n` : ''}${(check.evidence || []).map(item => `- Route evidence: ${item.request_url} → HTTP ${item.status ?? 'unavailable'}; SHA-256 ${item.body_sha256 ?? 'unavailable'}\n`).join('')}`).join('\n') + '\nThe explicit AllHires programme rows, Kirkland entry-level email route and the two reviewed Latham same-role application journeys have automatic verification adapters. A&O Shearman, Pinsent Masons and Segal require browser or editorial review. The AllHires automatic check uses an early editorial cutoff at the start of the stated deadline date in Riyadh; this is not an inferred employer closing instant. No account login, application submission, email delivery test, paid provider or access-control bypass is performed.\n';
 }
 
 export async function run(input = 'dist/opportunities.json', outputDir = 'source-check-results') {

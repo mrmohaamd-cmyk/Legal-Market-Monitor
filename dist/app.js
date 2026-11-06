@@ -71,7 +71,7 @@ export function deriveStatus(record, windowHours, now = Date.now()) {
   if (record.review_due_at && Date.parse(record.review_due_at) <= now) return 'verification_pending';
   const checked = Date.parse(record.last_verified_at);
   const applicationChecked = Date.parse(record.application_check.checked_at);
-  if (!Number.isFinite(windowHours) || windowHours <= 0 || windowHours > 24) return 'verification_pending';
+  if (!Number.isFinite(windowHours) || windowHours <= 0 || windowHours > 168) return 'verification_pending';
   if ([checked, applicationChecked].some(time => !Number.isFinite(time) || time > now || now - time > windowHours * 60 * 60 * 1000)) return 'verification_pending';
   if (deadline && deadline - now <= 14 * 24 * 60 * 60 * 1000) return 'closing_soon';
   return deadline ? 'open' : 'open_no_deadline';

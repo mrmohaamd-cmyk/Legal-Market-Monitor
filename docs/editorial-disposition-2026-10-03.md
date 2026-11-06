@@ -1,5 +1,7 @@
 # Final local editorial disposition — 3 October 2026
 
+> Historical record: the former 24-hour policy applied when this review was recorded. The current [seven-day policy](freshness-policy-2026-11-06.md) supersedes that limit without changing source evidence.
+
 This decision supersedes the White & Case hold in `integrated-preview-2026-10-03.md`. It changes only the local preview. No remote issue, branch, deployment, login or application is changed.
 
 ## White & Case: both programmes promoted locally
