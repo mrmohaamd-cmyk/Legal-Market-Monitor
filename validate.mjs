@@ -20,7 +20,7 @@ const css = await readFile('dist/style.css', 'utf8');
 const tokens = await readFile('dist/tokens.css', 'utf8');
 const config = JSON.parse(await readFile('dist/task-config.json', 'utf8'));
 const opportunities = JSON.parse(await readFile('dist/opportunities.json', 'utf8'));
-const download = await readFile('dist/setup-instructions.txt', 'utf8');
+const download = (await readFile('dist/setup-instructions.txt', 'utf8')).replace(/\r\n/g, '\n');
 const coverageAudit = JSON.parse(await readFile('dist/coverage-audit.json', 'utf8'));
 const additions = coverageAudit.additions;
 
@@ -132,6 +132,7 @@ const fixture = {
   role_title: 'Controlled test opportunity', firm_name: 'Latham & Watkins',
   location_group: 'Riyadh', career_stage: 'Graduate / COOP', practice_areas: ['Banking & finance'],
   status: 'open', source_status: 'verified', last_verified_at: new Date(testNow).toISOString(), deadline_at: null,
+  application_check: {result: 'form_available', checked_at: new Date(testNow).toISOString()},
   source_url: 'https://eume-earlyassociatecareers-lw.icims.com/controlled-test-only', application_url: null,
   firm_careers_url: 'https://www.lwcareers.com/en/beginning-your-legal-career/saudi-arabia'
 };
@@ -150,6 +151,11 @@ assert.equal(deriveStatus({...aoRecord, deadline_at: '2026-09-19T17:00:00+03:00'
 assert.equal(deriveStatus({...aoRecord, status: 'closed'}, 24, testNow), 'closed');
 assert.equal(deriveStatus({...aoRecord, status: 'unknown'}, 24, testNow), 'verification_pending');
 assert.equal(deriveStatus({...aoRecord, application_check: {result: 'unverified'}}, 24, testNow), 'verification_pending');
+for (const application_check of [undefined, {result: 'invented'}, {result: 'form_available'}, {result: 'form_available', checked_at: new Date(testNow - 25 * 3600000).toISOString()}, {result: 'form_available', checked_at: new Date(testNow + 1).toISOString()}]) {
+  assert.equal(deriveStatus({...aoRecord, application_check}, 24, testNow), 'verification_pending', 'Missing, stale or future application evidence must fail closed.');
+}
+for (const windowHours of [undefined, NaN, 0, -1, 25]) assert.equal(deriveStatus(aoRecord, windowHours, testNow), 'verification_pending');
+assert.equal(nextStatusChange([{...lathamGraduate, application_check: {result: 'form_available', checked_at: new Date(testNow - 3600000).toISOString()}}], 24, testNow), testNow + 23 * 3600000 + 1);
 assert.equal(deriveStatus({...aoRecord, last_verified_at: new Date(testNow + 1).toISOString()}, 24, testNow), 'verification_pending');
 assert.equal(deriveStatus({...aoRecord, review_due_at: new Date(testNow).toISOString()}, 24, testNow), 'verification_pending');
 assert.equal(nextStatusChange([lathamGraduate], 24, testNow), testNow + 24 * 3600000 + 1);
@@ -235,7 +241,7 @@ assert.equal(pinsentRecord.deadline_at, null);
 assert.equal(pinsentRecord.posted_at, null);
 assert.equal(pinsentRecord.programme_start_date, '2026-10-11');
 assert.equal(pinsentRecord.programme_duration_months, 3);
-const pinsentFixture = {...pinsentRecord, status: 'open', source_status: 'verified', application_check: {result: 'form_available'}, last_verified_at: '2026-09-30T08:38:53Z'};
+const pinsentFixture = {...pinsentRecord, status: 'open', source_status: 'verified', application_check: {result: 'form_available', checked_at: '2026-09-30T08:38:53Z'}, last_verified_at: '2026-09-30T08:38:53Z'};
 assert.equal(getPrimaryAction(pinsentFixture, 'open_no_deadline').label, 'Apply to Pinsent Masons');
 assert.equal(deriveStatus(pinsentFixture, 24, Date.parse('2026-09-30T09:00:00Z')), 'open_no_deadline');
 assert.equal(deriveStatus(pinsentFixture, 24, Date.parse('2026-10-01T09:00:00Z')), 'verification_pending');

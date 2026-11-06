@@ -1,0 +1,186 @@
+{
+  "checked_at": "2026-11-06T12:05:37.046Z",
+  "verification_window_hours": 24,
+  "publication": "Draft proposal only. A person must review and merge; this check cannot publish.",
+  "checks": [
+    {
+      "id": "ao-shearman-winter-2026-coop",
+      "source_url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504",
+      "checked_at": "2026-11-06T12:05:37.046Z",
+      "http_status": 200,
+      "final_url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504",
+      "response_body_sha256": "edf00d07248c8cff64eb6da928f9c8a999c549128ce02537d73992cbc266aedb",
+      "response_body_bytes": 419528,
+      "retrieval_error": null,
+      "outcome": "manual_review",
+      "reason": "No audited automatic application checker for this source. Human verification remains unchanged; the browser still expires it after 24 hours.",
+      "applied": false
+    },
+    {
+      "id": "latham-riyadh-graduate-coop",
+      "source_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job",
+      "checked_at": "2026-11-06T12:05:37.046Z",
+      "http_status": 200,
+      "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job",
+      "response_body_sha256": "a950cee0b5caed362830b10e03a8a40d275b117af0e6424da27956f55acdc0cf",
+      "response_body_bytes": 197320,
+      "retrieval_error": null,
+      "outcome": "verified",
+      "result": "login_required",
+      "evidence": [
+        {
+          "request_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job",
+          "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job",
+          "status": 200,
+          "body_sha256": "a950cee0b5caed362830b10e03a8a40d275b117af0e6424da27956f55acdc0cf",
+          "body_bytes": 197320
+        },
+        {
+          "request_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job?in_iframe=1",
+          "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job?in_iframe=1",
+          "status": 200,
+          "body_sha256": "6804367685606ca5c44359ecb7296f9533cfeabf402e251cfbe93df35eb92c74",
+          "body_bytes": 29932
+        },
+        {
+          "request_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3a-graduate-training-program-%28coop%29---riyadh/job?mode=apply&apply=yes&in_iframe=1&hashed=-1834384612",
+          "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3a-graduate-training-program-%28coop%29---riyadh/job?mode=apply&apply=yes&in_iframe=1&hashed=-1834384612",
+          "status": 302,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_bytes": 0
+        },
+        {
+          "request_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3a-graduate-training-program-%28coop%29---riyadh/login?in_iframe=1",
+          "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3a-graduate-training-program-%28coop%29---riyadh/login?in_iframe=1",
+          "status": 200,
+          "body_sha256": "22655a1ac3f87a8f5fa7ead55f31f2f2199b90da1d4ca823769e1fb017a8bff0",
+          "body_bytes": 35640
+        }
+      ],
+      "reason": "Latham requisition 11016 retains its reviewed general-recruitment description and Riyadh location. Its employer-provided iframe and exact Apply action reach a same-role public email/profile form. This verifies route availability, not immediate headcount. No login, consent, profile creation or application submission was performed.",
+      "applied": true
+    },
+    {
+      "id": "latham-riyadh-trainee-associate",
+      "source_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job",
+      "checked_at": "2026-11-06T12:05:37.046Z",
+      "http_status": 200,
+      "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job",
+      "response_body_sha256": "33c72af3719f22d89323aae56249d4656425ff4d0499a218181868d5003ae6d8",
+      "response_body_bytes": 197282,
+      "retrieval_error": null,
+      "outcome": "verified",
+      "result": "login_required",
+      "evidence": [
+        {
+          "request_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job",
+          "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job",
+          "status": 200,
+          "body_sha256": "33c72af3719f22d89323aae56249d4656425ff4d0499a218181868d5003ae6d8",
+          "body_bytes": 197282
+        },
+        {
+          "request_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job?in_iframe=1",
+          "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job?in_iframe=1",
+          "status": 200,
+          "body_sha256": "03e1ce25255791735f08cdd4eb69efa8405b78cb291947b14ba57d8772fa9ab5",
+          "body_bytes": 29825
+        },
+        {
+          "request_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3a-trainee-associate---riyadh/job?mode=apply&apply=yes&in_iframe=1&hashed=-1834384612",
+          "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3a-trainee-associate---riyadh/job?mode=apply&apply=yes&in_iframe=1&hashed=-1834384612",
+          "status": 302,
+          "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "body_bytes": 0
+        },
+        {
+          "request_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3a-trainee-associate---riyadh/login?in_iframe=1",
+          "final_url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3a-trainee-associate---riyadh/login?in_iframe=1",
+          "status": 200,
+          "body_sha256": "bab026105f5f16054278256b26b96cc7d281d6667f51e35c5daeba8055e30542",
+          "body_bytes": 35556
+        }
+      ],
+      "reason": "Latham requisition 11015 retains its reviewed general-recruitment description and Riyadh location. Its employer-provided iframe and exact Apply action reach a same-role public email/profile form. This verifies route availability, not immediate headcount. No login, consent, profile creation or application submission was performed.",
+      "applied": true
+    },
+    {
+      "id": "kirkland-riyadh-entry-level",
+      "source_url": "https://www.kirkland.com/careers/asia/saudi-arabia",
+      "checked_at": "2026-11-06T12:05:37.046Z",
+      "http_status": 200,
+      "final_url": "https://www.kirkland.com/careers/asia/saudi-arabia",
+      "response_body_sha256": "129618ddede0be2623e9c58894dbb0865aa170d7301bc06780849599db32c692",
+      "response_body_bytes": 31663,
+      "retrieval_error": null,
+      "outcome": "verified",
+      "result": "email_route",
+      "reason": "The first-party Riyadh page still publishes its entry-level legal recruiting email inside the Apply Now — Entry Level card. This verifies a standing email route, not immediate headcount or mailbox delivery.",
+      "applied": true
+    },
+    {
+      "id": "pinsent-masons-riyadh-internship-2026",
+      "source_url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/internship-programme",
+      "checked_at": "2026-11-06T12:05:37.046Z",
+      "http_status": 200,
+      "final_url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/internship-programme",
+      "response_body_sha256": "44dff1a587e038360b2076189e5a9add6a587c78886992430d01741829eed08a",
+      "response_body_bytes": 638879,
+      "retrieval_error": null,
+      "outcome": "manual_review",
+      "reason": "No audited automatic application checker for this source. Human verification remains unchanged; the browser still expires it after 24 hours.",
+      "applied": false
+    },
+    {
+      "id": "segal-riyadh-student-intern-2026",
+      "source_url": "https://www.segal.com.sa/en/careers/jobs/student-intern",
+      "checked_at": "2026-11-06T12:05:37.046Z",
+      "http_status": 200,
+      "final_url": "https://www.segal.com.sa/en/careers/jobs/student-intern",
+      "response_body_sha256": "e56d8604c25d0a616404b66c69aca81be40895a35d3aa94e17023c386c9841e1",
+      "response_body_bytes": 133590,
+      "retrieval_error": null,
+      "outcome": "manual_review",
+      "reason": "No audited automatic application checker for this source. Human verification remains unchanged; the browser still expires it after 24 hours.",
+      "applied": false
+    },
+    {
+      "id": "white-case-saudi-coop-2027",
+      "source_url": "https://whitecase.grad.allhires.com/app/",
+      "checked_at": "2026-11-06T12:05:37.046Z",
+      "http_status": 200,
+      "final_url": "https://whitecase.grad.allhires.com/app/",
+      "response_body_sha256": "401e2449ee9eb40f9c608cc36fba9027ac0899e5fc10ac0102ddfdb602295360",
+      "response_body_bytes": 15227,
+      "retrieval_error": null,
+      "outcome": "closed",
+      "result": "unverified",
+      "reason": "The first-party portal explicitly marks Saudi COOP Internship 2027 (January 2027) “Deadline passed”. Other programmes on the page do not affect this finding.",
+      "applied": true
+    },
+    {
+      "id": "white-case-saudi-law-trainee-2027",
+      "source_url": "https://whitecase.grad.allhires.com/app/",
+      "checked_at": "2026-11-06T12:05:37.046Z",
+      "http_status": 200,
+      "final_url": "https://whitecase.grad.allhires.com/app/",
+      "response_body_sha256": "401e2449ee9eb40f9c608cc36fba9027ac0899e5fc10ac0102ddfdb602295360",
+      "response_body_bytes": 15227,
+      "retrieval_error": null,
+      "outcome": "verified",
+      "result": "login_required",
+      "reviewDueAt": "2027-01-07T21:00:00.000Z",
+      "reason": "The exact Saudi Law Trainee Program 2027 row shows March 2027 and 08/01/2027, and the public email-entry form is available. Authentication, programme selection after login and submission were not tested. The review cutoff is editorial, not an employer closing instant. The separate first-party Saudi Law Trainee programme article also retains its reviewed programme and eligibility facts.",
+      "evidence": [
+        {
+          "request_url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+          "final_url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+          "status": 200,
+          "body_sha256": "3eb09a88b0de0109c89ffba1c55695fe7f70d6b5ae1623fd896e717aeee52ea2",
+          "body_bytes": 156882
+        }
+      ],
+      "applied": true
+    }
+  ]
+}

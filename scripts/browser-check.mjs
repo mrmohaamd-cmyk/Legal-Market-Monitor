@@ -25,10 +25,15 @@ const base = process.env.AUDIT_URL || local;
 const feed = process.env.AUDIT_URL ? await (await fetch(new URL('opportunities.json', base))).json() : JSON.parse(await readFile('dist/opportunities.json', 'utf8'));
 const pinned = feed.records.find((r) => r.id === 'pinsent-masons-riyadh-internship-2026');
 assert(pinned, 'Reviewed Pinsent record must exist.');
+// Fully controlled evidence dates: a fixture must not inherit the live review's status or age.
+const verifiedFixture = (record, at = new Date().toISOString()) => ({...record,
+  status:'open', source_status:'verified', review_due_at:null, last_verified_at:at,
+  application_check:{result:'form_available',checked_at:at}});
 await mkdir('browser-results', { recursive: true });
 try {
   for (const [name, browserType, viewport] of [['chromium-mobile',chromium,{width:390,height:844}], ['webkit-mobile',webkit,{width:390,height:844}], ['chromium-desktop',chromium,{width:1280,height:900}]]) {
-    const browser = await browserType.launch();
+    if (process.env.BROWSER_ENGINES && !process.env.BROWSER_ENGINES.split(',').includes(browserType.name())) continue;
+    const browser = await browserType.launch(browserType === chromium && process.env.PLAYWRIGHT_CHROMIUM_CHANNEL ? {channel:process.env.PLAYWRIGHT_CHROMIUM_CHANNEL} : {});
     try {
       const context = await browser.newContext({ viewport });
       await context.addInitScript(() => {
@@ -38,7 +43,7 @@ try {
       const page = await context.newPage();
       // Check source-local date wording in the rendered card without inventing a timezone.
       const ao = feed.records.find((record) => record.id === 'ao-shearman-winter-2026-coop');
-      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...ao,last_verified_at:new Date().toISOString()}]}}));
+      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...verifiedFixture(ao),deadline_at:null,application_open_date:'2026-09-14',deadline_source_text:'30 November 2026 at 5pm (timezone not stated by source)'}]}}));
       await page.goto(base);
       await page.locator('#opportunity-list article').waitFor();
       const aoFacts = await page.locator('#opportunity-list .opportunity-facts').textContent();
@@ -69,8 +74,8 @@ try {
       assert.equal(overflow, false, 'No horizontal page overflow.');
       assert.deepEqual(missing, []); assert.deepEqual(errors, []);
       // Exercise a controlled fresh record, independent of the wall clock or editorial feed age.
-      const controlled = {...pinned,status:'open',application_check:{result:'form_available'},review_due_at:null};
-      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[{...controlled,last_verified_at:new Date().toISOString()}]}}));
+      const controlled = verifiedFixture(pinned);
+      await page.route('**/opportunities.json', (route) => route.fulfill({json:{...feed,records:[verifiedFixture(controlled)]}}));
       await page.reload();
       await page.locator('#opportunity-list .source-link').waitFor();
       const action = page.locator('#opportunity-list .source-link');
@@ -102,7 +107,7 @@ try {
       const clockPage = await context.newPage();
       const clockNow = new Date('2026-10-29T12:00:00Z');
       await clockPage.clock.install({time:clockNow});
-      await clockPage.route('**/opportunities.json', route => route.fulfill({json:{...feed,records:[{...controlled,last_verified_at:clockNow.toISOString()}]}}));
+      await clockPage.route('**/opportunities.json', route => route.fulfill({json:{...feed,records:[verifiedFixture(controlled,clockNow.toISOString())]}}));
       await clockPage.goto(base); await clockPage.locator('#opportunity-list .source-link').waitFor();
       await clockPage.clock.fastForward(24*3600000+10);
       assert.equal(await clockPage.locator('#opportunity-list .source-link').count(),0);
@@ -112,7 +117,7 @@ try {
       await clockPage.unroute('**/opportunities.json');
       const cutoff = new Date('2026-10-31T12:00:00Z');
       await clockPage.clock.setSystemTime(new Date(cutoff.getTime()-60000));
-      await clockPage.route('**/opportunities.json', route => route.fulfill({json:{...feed,records:[{...controlled,last_verified_at:new Date(cutoff.getTime()-60000).toISOString(),review_due_at:cutoff.toISOString()}]}}));
+      await clockPage.route('**/opportunities.json', route => route.fulfill({json:{...feed,records:[{...verifiedFixture(controlled,new Date(cutoff.getTime()-60000).toISOString()),review_due_at:cutoff.toISOString()}]}}));
       await clockPage.reload(); await clockPage.locator('#opportunity-list .source-link').waitFor();
       await clockPage.clock.fastForward(60010);
       assert.equal(await clockPage.locator('#opportunity-list .source-link').count(),0);

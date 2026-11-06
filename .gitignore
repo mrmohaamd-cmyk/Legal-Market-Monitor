@@ -8,3 +8,6 @@ node_modules/
 *.key
 *.p12
 /site.tar.gz
+/browser-results/
+/acceptance-results/
+/source-check-results/
