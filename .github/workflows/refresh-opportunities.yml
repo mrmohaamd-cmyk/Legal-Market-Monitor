@@ -1,0 +1,72 @@
+name: Prepare verified opportunity refresh
+
+on:
+  schedule:
+    # Multiple opportunities to prepare review within the 7-day (168-hour) evidence window.
+    # GitHub schedules are best effort and may still be delayed or skipped.
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verified-opportunity-refresh
+  cancel-in-progress: false
+
+jobs:
+  propose:
+    if: github.repository == 'mrmohaamd-cmyk/Legal-Market-Monitor' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate the checker and current feed
+        run: |
+          node --test
+          npm run build
+      - name: Check first-party source evidence
+        run: node scripts/reverify-opportunities.mjs dist/opportunities.json "$RUNNER_TEMP/source-check"
+      - name: Validate the proposed feed and browser journeys before changing a branch
+        run: |
+          cp "$RUNNER_TEMP/source-check/proposed-opportunities.json" dist/opportunities.json
+          npm run build
+          npm install --prefix "$RUNNER_TEMP/monitor-qa" --ignore-scripts --no-audit --no-fund playwright@1.55.0
+          "$RUNNER_TEMP/monitor-qa/node_modules/.bin/playwright" install --with-deps chromium webkit > "$RUNNER_TEMP/browser-install.log" 2>&1 || { tail -80 "$RUNNER_TEMP/browser-install.log"; exit 1; }
+          PLAYWRIGHT_MODULE="$RUNNER_TEMP/monitor-qa/node_modules/playwright/index.mjs" node scripts/browser-check.mjs
+      - name: Preserve check and proposed feed even if PR creation is unavailable
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-refresh-${{ github.run_id }}
+          path: ${{ runner.temp }}/source-check/
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Preserve proposed-feed browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-refresh-browser-${{ github.run_id }}
+          path: browser-results/
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Create or update the single draft review PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_CHECK_DIRECTORY: ${{ runner.temp }}/source-check
+        run: node scripts/propose-refresh.mjs
+      - name: Explain review and publication boundary
+        if: always()
+        run: |
+          echo 'Checks prepare a draft PR only. No automatic merge or deployment occurs.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Review the source evidence and merge only after authorization. The 7-day (168-hour) rule continues to expire records independently.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'If creating PRs with GITHUB_TOKEN is disabled in repository Actions settings, the proposed feed remains in the source-refresh artifact. No additional credential is created.' >> "$GITHUB_STEP_SUMMARY"

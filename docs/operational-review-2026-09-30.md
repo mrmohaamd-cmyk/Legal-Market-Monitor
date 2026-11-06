@@ -1,5 +1,7 @@
 # Operational follow-through — 30 September 2026
 
+> Historical record: the former 24-hour policy applied when this review was recorded. The current [seven-day policy](freshness-policy-2026-11-06.md) supersedes that limit without changing source evidence.
+
 ## Scope and diagnosis
 
 The prior coverage fix is present on main: 41 employer targets, five published records, distinct Pinsent Saudi programme sources, and review-only discovery. That does not itself prove usable browser journeys or sustainable editorial freshness.

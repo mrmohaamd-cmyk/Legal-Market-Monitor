@@ -5,6 +5,7 @@ const opportunitiesPath = 'opportunities.json';
 const $ = (id) => document.getElementById(id);
 
 const currentStatuses = new Set(['open', 'open_no_deadline', 'closing_soon']);
+const checkedApplicationResults = new Set(['login_required', 'form_available', 'email_route']);
 const statusPriority = {
   closing_soon: 0,
   open: 1,
@@ -65,11 +66,13 @@ export function deriveStatus(record, windowHours, now = Date.now()) {
   if (record.status === 'closed' || record.status === 'expired') return record.status;
   const deadline = record.deadline_at ? Date.parse(record.deadline_at) : null;
   if (deadline && deadline <= now) return 'expired';
-  if (!currentStatuses.has(record.status) || record.source_status !== 'verified' || record.application_check?.result === 'unverified') return 'verification_pending';
+  if (!currentStatuses.has(record.status) || record.source_status !== 'verified' || !checkedApplicationResults.has(record.application_check?.result)) return 'verification_pending';
   // An editorial recheck cutoff is not an inferred employer closing instant.
   if (record.review_due_at && Date.parse(record.review_due_at) <= now) return 'verification_pending';
   const checked = Date.parse(record.last_verified_at);
-  if (!Number.isFinite(checked) || checked > now || now - checked > windowHours * 60 * 60 * 1000) return 'verification_pending';
+  const applicationChecked = Date.parse(record.application_check.checked_at);
+  if (!Number.isFinite(windowHours) || windowHours <= 0 || windowHours > 168) return 'verification_pending';
+  if ([checked, applicationChecked].some(time => !Number.isFinite(time) || time > now || now - time > windowHours * 60 * 60 * 1000)) return 'verification_pending';
   if (deadline && deadline - now <= 14 * 24 * 60 * 60 * 1000) return 'closing_soon';
   return deadline ? 'open' : 'open_no_deadline';
 }
@@ -81,6 +84,7 @@ export function isCurrentStatus(status) {
 export function nextStatusChange(records, windowHours, now = Date.now()) {
   const transitions = records.filter(record => isCurrentStatus(deriveStatus(record, windowHours, now)))
     .flatMap(record => [Date.parse(record.last_verified_at) + windowHours * 3600000 + 1,
+      Date.parse(record.application_check?.checked_at) + windowHours * 3600000 + 1,
       Date.parse(record.review_due_at), Date.parse(record.deadline_at)])
     .filter(time => Number.isFinite(time) && time > now);
   return transitions.length ? Math.min(...transitions) : null;
@@ -121,7 +125,7 @@ export function filterRecords(records, active, windowHours, now = Date.now()) {
 }
 
 export function getPrimaryAction(record, status) {
-  if (!isCurrentStatus(status) || record.source_status !== 'verified' || record.application_check?.result === 'unverified') return null;
+  if (!isCurrentStatus(status) || record.source_status !== 'verified' || !checkedApplicationResults.has(record.application_check?.result)) return null;
   const applicationUrl = safeHttpsUrl(record.application_url);
   if (applicationUrl) {
     return {
