@@ -4,7 +4,7 @@ Prepared for the next setup phase. Nothing in this document establishes Reddit a
 
 ## Exact next steps
 
-1. The browser inspection found `developers.reddit.com` signed out. Its login control opened Reddit's sign-in form, but no moderator account was authenticated. A local metadata check also found no `devvit` command on PATH and no `~/.devvit/token` file in the selected environment; no credential contents were read. The next required user action is to sign in there with the account that moderates r/SaudiLaw. Do not select an unidentified Google account, create another Reddit account, or treat reaching the login form as completed sign-in.
+1. The browser inspection found `developers.reddit.com` signed out. Its login control opened Reddit's sign-in form, but no moderator account was authenticated. The official Devvit CLI 0.15.2 was then installed in a separate local task-workspace tools directory, without lifecycle scripts or a global PATH change. Its version command succeeded; `~/.devvit/token` remained absent. No credential contents were read. The next required user action is to sign in there with the account that moderates r/SaudiLaw. Do not select an unidentified Google account, create another Reddit account, or treat reaching the login form as completed sign-in.
 2. After sign-in, inspect the account, available apps and r/SaudiLaw moderator controls without changing access. Inspect any subsequent developer-registration or authorization screen and obtain confirmation for that specific persistent grant before accepting it. Devvit CLI login stores a token in `~/.devvit/token` and refreshes it automatically. A broad request to continue setup is not a substitute for the required action-specific access confirmation in this task. If an existing authorized CLI session is later found, `devvit whoami` is an account check; do not print or copy its token.
 3. Verify whether the proposed app name `saudilaw-jobs` is available and whether the owner already has a suitable private test community. Do not create an app, community or installation while their required access confirmation remains outstanding.
 4. Before an approved playtest, prepare a reviewed test-target configuration and verify the manual moderator dry-run entry point. The current setup work adds that entry point while preserving the r/SaudiLaw-only destination gate; a concrete private test target still needs a separate reviewed change. Keep the hard posting lock active for this phase.
@@ -54,7 +54,7 @@ Following an application link takes the reader to an external employer/provider.
 
 | Field | Current state |
 |---|---|
-| Developer account/session | Browser signed out; login form reached. No Devvit command on PATH or token file found locally; no credential contents read |
+| Developer account/session | Browser signed out; login form reached. Local Devvit CLI 0.15.2 prepared and version-tested; token file remains absent |
 | App registration/name | Proposed `saudilaw-jobs`; availability/ownership unverified |
 | Test community | No concrete approved target recorded |
 | Terms/privacy URLs | Not supplied or published |
