@@ -1,6 +1,6 @@
 # SaudiLaw jobs prototype
 
-Prepared for r/SaudiLaw: one ordinary Reddit text post per reviewed advertised job or training programme. **Disabled, dry-run, unregistered and undeployed.** The proposed `saudilaw-jobs` app name has not been reserved or checked for availability. No Reddit credentials are needed for local work.
+Prepared for r/SaudiLaw: one ordinary Reddit text post per reviewed advertised job or training programme. **Disabled, dry-run, unregistered and undeployed.** Reddit accepted the proposed `saudilaw-jobs` name at its initial setup check on 6 November 2026; registration stopped at the humanity check, so ownership/reservation is not established. No Reddit credentials are needed for local work.
 
 ## Local review
 
@@ -52,6 +52,8 @@ Existing Reddit posts are static snapshots. The bot will not silently edit/remov
 `api.github.com`: unauthenticated HTTPS GET to this repository's fixed contents endpoint with `ref=main`. The JSON/base64 envelope is bounded, its file path/size/Git blob SHA checked, and redirects/errors/rate limits rejected. No GitHub token is used. Employer application sites are link destinations, not runtime fetch domains. Reddit approval for this hostname and permission to direct users off-platform are **not yet obtained**.
 
 ## Before any Reddit action
+
+The official Devvit CLI 0.15.2 requests OAuth `scope=*` with `duration=permanent`; this broad developer-account grant is distinct from the bot's runtime permissions. `devvit login` also logs out any existing CLI session before starting consent, then stores access/refresh tokens locally. Do not run it as a read-only diagnostic. See the [setup packet](../docs/reddit-setup-draft.md) for the exact confirmation boundary.
 
 See [review and launch notes](../docs/reddit-app-review.md) for official sources and costs. Obtain owner approval for registration/access, test-community playtesting, test posts, app upload/review, installation and activation. Finalize terms/privacy/contact details and request domain/external-link approval. Verify subreddit posting/flair rules and app-name availability. A test community requires an explicitly reviewed destination-allowlist change; the current prototype only accepts r/SaudiLaw and still cannot post.
 
