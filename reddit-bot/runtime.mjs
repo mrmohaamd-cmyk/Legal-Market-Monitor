@@ -6,7 +6,12 @@ import { readPublishedFeed } from './transport.mjs';
 export const LIVE_POSTING_ALLOWED = false;
 
 export async function checkInstallation({ subredditName, getSetting, readFeed = readPublishedFeed, storage, submit, forceDryRun = false, clock = Date.now }) {
-  if (typeof subredditName !== 'string' || subredditName.toLowerCase() !== 'saudilaw') {
+  const forcedPreview = forceDryRun === true;
+  const community = typeof subredditName === 'string' ? subredditName.toLowerCase() : '';
+  // The private development installation can only preview. Scheduled checks retain
+  // the production-community restriction even while the separate posting lock is on.
+  const privatePreview = forcedPreview && community === 'saudilaw_jobs_dev';
+  if (community !== 'saudilaw' && !privatePreview) {
     return { status: 'blocked', reason: 'Installation is outside the reviewed community.' };
   }
   try {
@@ -14,7 +19,9 @@ export async function checkInstallation({ subredditName, getSetting, readFeed = 
     if (enabled !== true) return { status: 'disabled' };
     const { feed, provenance } = await readFeed();
     const result = await runBot({ feed, enabled: true, now: clock(), clock,
-      dryRun: forceDryRun || !LIVE_POSTING_ALLOWED || dryRun !== false, subreddit: 'SaudiLaw', storage, submit });
+      dryRun: forcedPreview || !LIVE_POSTING_ALLOWED || dryRun !== false, subreddit: 'SaudiLaw',
+      // Forced previews never receive write capabilities, including direct calls.
+      ...(forcedPreview ? {} : { storage, submit }) });
     return { ...result, provenance, livePostingAllowed: LIVE_POSTING_ALLOWED };
   } catch {
     return { status: 'blocked', reason: 'Settings or published feed could not be read safely; no posting.' };

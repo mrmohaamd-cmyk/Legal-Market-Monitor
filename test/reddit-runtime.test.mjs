@@ -56,6 +56,36 @@ test('manual moderator preview produces real drafts without any submit or storag
   assert.deepEqual(Object.keys(runLog(result, true).draftTitles[0]), ['id', 'title']);
 });
 
+test('exact private development community supports moderator preview with posting settings overridden', async () => {
+  const feed = JSON.parse(await readFile(new URL('../dist/opportunities.json', import.meta.url)));
+  const result = await previewInstallation({ subredditName: 'saudilaw_jobs_dev', clock: () => Date.parse(feed.generated_at),
+    getSetting: async name => name === 'enabled', readFeed: async () => ({feed}),
+    submit: fail, storage: {get: fail, set: fail}, forceDryRun: false });
+  assert.equal(result.status, 'dry-run');
+  assert.equal(result.livePostingAllowed, false);
+  assert.equal(result.previews.length, 3);
+  assert.match(previewMessage(result), /No posts or claims created/);
+});
+
+test('private development community rejects scheduled/direct checks before reading settings or feed', async () => {
+  for (const forceDryRun of [undefined, false, 'true', 1]) {
+    const result = await checkInstallation({ subredditName: 'saudilaw_jobs_dev', forceDryRun,
+      getSetting: fail, readFeed: fail, submit: fail, storage: {get: fail, set: fail} });
+    assert.equal(result.status, 'blocked');
+  }
+});
+
+test('forced preview retains disabled defaults and rejects unrelated or lookalike communities without effects', async () => {
+  const disabled = await previewInstallation({ subredditName: 'saudilaw_jobs_dev',
+    getSetting: async () => undefined, readFeed: fail, submit: fail, storage: {get: fail, set: fail} });
+  assert.equal(disabled.status, 'disabled');
+  for (const subredditName of ['menajobs', 'saudilaw_jobs_dev.evil', 'saudilaw_jobs_dev_extra', ' saudilaw_jobs_dev', 'saudilaw_jobs_dev ']) {
+    const result = await previewInstallation({ subredditName, getSetting: fail, readFeed: fail,
+      submit: fail, storage: {get: fail, set: fail} });
+    assert.equal(result.status, 'blocked');
+  }
+});
+
 test('operational logs preserve uncertain post receipts and do not include complete drafts', () => {
   const log = runLog({status:'receipt-uncertain', id:'job', postId:'t3_example', reason:'Receipt write failed',
     previews:[{id:'job',title:'Public job title',text:'Full body'}]});

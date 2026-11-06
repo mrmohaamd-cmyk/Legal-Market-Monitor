@@ -1,13 +1,13 @@
 import { context, createServer, getServerPort, reddit, redis, settings } from '@devvit/web/server';
 import type { UiResponse } from '@devvit/web/shared';
 import { checkInstallation, previewInstallation, previewMessage, runLog } from '../runtime.mjs';
+import { sendJson } from './http.mjs';
 
 // No public endpoint, startup post, install trigger, or cron is registered.
 createServer(async (req, res) => {
-  res.setHeader('content-type', 'application/json');
   const isPreview = req.url === '/internal/menu/preview-jobs';
   if (req.method !== 'POST' || (!isPreview && req.url !== '/internal/scheduler/check-jobs')) {
-    res.writeHead(404).end(JSON.stringify({ error: 'Not found' }));
+    sendJson(res, 404, { error: 'Not found' });
     return;
   }
   const previewContext = {
@@ -30,5 +30,5 @@ createServer(async (req, res) => {
     ? { showToast: previewMessage(result) }
     : { status: 'ok', result: result.status };
   // Terminal safety states are acknowledged; the core controls retries, not HTTP retry loops.
-  res.writeHead(200).end(JSON.stringify(response));
+  sendJson(res, 200, response);
 }).listen(getServerPort());

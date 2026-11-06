@@ -1,6 +1,6 @@
 # SaudiLaw jobs prototype
 
-Prepared for r/SaudiLaw: one ordinary Reddit text post per reviewed advertised job or training programme. **Disabled, dry-run, unuploaded and uninstalled.** The owner subsequently completed browser registration for `saudilaw-jobs`; the developer portal and authenticated read-only API confirm the claimed name/app account with zero versions and installations. No Reddit credentials are needed for local tests or previews.
+Prepared for r/SaudiLaw: one ordinary Reddit text post per reviewed advertised job or training programme. **Private version `0.0.1` is installed only in r/saudilaw_jobs_dev; feed checks are off, dry run is on and live posting remains hard-locked.** The owner specifically approved the first upload and private installation. Zero posts were observed; CLI inspection found no r/SaudiLaw installation. No Reddit credentials are needed for local tests or previews.
 
 ## Local review
 
@@ -19,7 +19,7 @@ npm run preview
 
 No npm script invokes Devvit upload, publish, playtest, installation or sign-in. See [the saved preview](../docs/reddit-preview-2026-11-06.md) and [review requirements](../docs/reddit-app-review.md).
 
-After an explicitly approved installation, moderators can use **Preview SaudiLaw jobs** from the subreddit menu. Enable feed checks in installation settings to allow the read; leave dry run on. The menu always forces preview mode, receives no posting/storage adapter, and reports the eligible/excluded counts in a toast. App logs contain draft IDs/titles, validation errors and provenance. This is a read-only invocation; it creates no posts, ledger claims or recurring tasks, even if a future scheduled-posting version is unlocked. The current build remains restricted to r/SaudiLaw, so an approved private test community still needs a reviewed allowlist change. See the [prepared setup packet](../docs/reddit-setup-draft.md).
+Moderators can use **Preview SaudiLaw jobs** from the subreddit menu. Enable feed checks in the private installation settings to allow the read; leave dry run on. The menu always forces preview mode and receives no posting/storage adapter. It is designed to report eligible/excluded counts in a toast and draft IDs/titles, validation errors and provenance in app logs, without posts, ledger claims or recurring tasks. The installed `0.0.1` menu reached the server, where the r/SaudiLaw-only guard blocked the private community; its UI response then failed because `Content-Length` was missing. A preview-only allowlist for the exact private community and the header correction are local changes, not deployed fixes. See the [setup packet and pending action](../docs/reddit-setup-draft.md).
 
 ## Publication and eligibility contract
 
@@ -35,7 +35,7 @@ Application evidence may establish an available public form or a login entry; it
 
 - Installation defaults: `enabled=false`, `dryRun=true`. Missing/non-boolean settings fail closed.
 - `runtime.mjs` also hard-locks live posting with `LIVE_POSTING_ALLOWED=false`. Settings cannot bypass that code gate.
-- No cron, install/upgrade trigger, public endpoint, user-account action, PM, crosspost or paid integration exists. Only trusted context identifying r/SaudiLaw is accepted.
+- No cron, install/upgrade trigger, public endpoint, user-account action, PM, crosspost or paid integration exists. The scheduled path accepts only trusted context identifying r/SaudiLaw; the proposed private-community exception is confined to forced preview.
 - The core's future live adapter uses the app account and allows at most one attempted post per run and per UTC calendar day. This is not a rolling 24-hour cap; posting cadence must be reviewed separately before activation.
 - Redis atomically claims the day, stable record ID, and normalized employer/title/location with `SET NX`. Every successful claim must return exactly `OK` before submitting. Claims have no expiry. Partial/ambiguous writes stop submission and consume the slot conservatively.
 - A timeout or malformed Reddit response remains pending/uncertain; a returned post ID with failed receipt storage is logged for reconciliation. Claims prevent automatic retries. This aims for at-most-once attempts, not exactly-once delivery. A missed post is preferred to an accidental duplicate.
@@ -49,14 +49,16 @@ Existing Reddit posts are static snapshots. The bot will not silently edit/remov
 
 ## Fetch Domains
 
-`api.github.com`: unauthenticated HTTPS GET to this repository's fixed contents endpoint with `ref=main`. The JSON/base64 envelope is bounded, its file path/size/Git blob SHA checked, and redirects/errors/rate limits rejected. No GitHub token is used. Employer application sites are link destinations, not runtime fetch domains. Reddit approval for this hostname and permission to direct users off-platform are **not yet obtained**.
+`api.github.com`: unauthenticated HTTPS GET to this repository's fixed contents endpoint with `ref=main`. The JSON/base64 envelope is bounded, its file path/size/Git blob SHA checked, and redirects/errors/rate limits rejected. No GitHub token is used. Employer application sites are link destinations, not runtime fetch domains. The app's Developer Settings page now shows this hostname **Approved**. This does not establish general app-review approval or permission to direct users off-platform; both remain outstanding, and app terms/privacy URLs are absent.
 
-## Before any Reddit action
+## Reddit setup and next action
 
 The official Devvit CLI 0.15.2 requests OAuth `scope=*` with `duration=permanent`; this broad developer-account grant is distinct from the bot's runtime permissions. The owner specifically approved that grant, the actual Reddit consent matched, and CLI login/account verification succeeded. `devvit login` logs out any existing CLI session before starting consent, so do not rerun it as a read-only diagnostic. The official local linked-bundle check also passed without upload. See the [setup packet](../docs/reddit-setup-draft.md) for the next confirmation boundary.
 
-**First upload has persistent side effects.** With this configuration's absent `dev.subreddit`, Devvit CLI 0.15.2 creates a private test community, installs the private app version there, and records the community in local configuration. It also submits the HTTP domain for review. This is not an upload-only action, and the installed build persists after the process ends. App installation needs separate approval from developer CLI authorization. No such upload/installation has occurred.
+**The approved first upload completed.** Devvit CLI 0.15.2 uploaded private version `0.0.1`, created r/saudilaw_jobs_dev, installed the app there and recorded that community in local configuration. The installation persists after the terminal stops. Browser inspection confirmed `enabled=false` and `dryRun=true`. Reddit assigned the app account **Everything** moderator permissions, as required by its app-installation flow, and also installed Devvit Admin Helper automatically. The optional developer-log-access grant was not changed. These broad platform permissions must not be described as posting-only access.
 
-See [review and launch notes](../docs/reddit-app-review.md) for official sources and costs. Obtain owner approval for registration/access, test-community playtesting, test posts, app upload/review, installation and activation. Finalize terms/privacy/contact details and request domain/external-link approval. Verify subreddit posting/flair rules and app-name availability. A test community requires an explicitly reviewed destination-allowlist change; the current prototype only accepts r/SaudiLaw and still cannot post.
+**Next action is pending specific approval:** upload the reviewed local fixes as private `0.0.2`, upgrade only the existing r/saudilaw_jobs_dev installation, temporarily enable feed checks there with dry run on, invoke the forced moderator preview, inspect the result and restore feed checks off. Permissions remain Reddit API, Redis and the already approved `api.github.com`; this adds no community, r/SaudiLaw installation, post or recurrence. A second upload attempt was rejected by automatic approval review before execution because the initial approval did not clearly cover a changed version and the installed app requires a separate upgrade. It was not retried. Later uploads do not automatically upgrade this existing installation.
+
+See [review and launch notes](../docs/reddit-app-review.md) for official sources and costs. Finalize terms/privacy/contact details, obtain general app and external-link review, and verify community/flair rules before a production proposal. Test posts, publication, r/SaudiLaw installation and activation remain separate future actions.
 
 After authorized integration testing, a separate reviewed change would unlock the live adapter and add an approved schedule. Do not enable those as part of merging this prototype. Local schema, fake-storage concurrency tests and compilation do not prove Devvit runtime integration or Reddit approval. Reddit currently documents free Devvit hosting; this design needs no paid service. Human verification/moderation remains necessary.

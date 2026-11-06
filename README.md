@@ -20,7 +20,7 @@ The owner requested the seven-day window after the initial repair review. [The p
 
 ## Reddit jobs prototype
 
-[`reddit-bot/`](reddit-bot/README.md) prepares one-post-per-advertised-opportunity drafts for r/SaudiLaw from the reviewed public feed. It is disabled, dry-run and protected by a build-time posting lock, with no recurring schedule or Reddit installation. Standing recruitment routes are excluded. See the [saved draft posts](docs/reddit-preview-2026-11-06.md) and [Reddit review/launch requirements](docs/reddit-app-review.md). This prototype does not alter the existing feed or deployment.
+[`reddit-bot/`](reddit-bot/README.md) prepares one-post-per-advertised-opportunity drafts for r/SaudiLaw from the reviewed public feed. Private version `0.0.1` is installed only in r/saudilaw_jobs_dev, with feed checks off, dry run on and a hard posting lock. No recurring schedule or r/SaudiLaw installation exists; zero posts were observed. GitHub fetch-domain approval is confirmed, while general app/off-platform-link review remains outstanding. The first menu test exposed a private-community guard and response-header issue; local fixes await approval to upload and upgrade the private installation. See the [setup status](docs/reddit-setup-draft.md), [saved draft posts](docs/reddit-preview-2026-11-06.md) and [review requirements](docs/reddit-app-review.md). Standing recruitment routes remain excluded; the existing feed and site deployment are unchanged.
 
 ## Optional public alert setup
 

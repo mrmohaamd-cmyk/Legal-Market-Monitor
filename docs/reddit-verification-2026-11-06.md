@@ -1,8 +1,10 @@
 # Reddit prototype verification — 6 November 2026
 
-Prepared against main commit `1cdd3202553d991bd9cabbaf172474f30bb2b983`. No Reddit app was registered, authenticated, uploaded, playtested, published or installed; no Reddit post or credential was created. The upstream feed, evidence timestamps, existing monitoring and published site files were not changed.
+Current status: private `saudilaw-jobs@0.0.1` is installed in r/saudilaw_jobs_dev after specific approval, with feed checks off, dry run on and no posts observed. The GitHub fetch domain is approved; general app/off-platform-link approval is outstanding. The first runtime menu test exposed two issues; local corrections await specific approval to upload and upgrade. See the final section for the current evidence.
 
-## Recorded checks
+The earlier sections below are historical checkpoints. The initial prototype was prepared against main commit `1cdd3202553d991bd9cabbaf172474f30bb2b983`; at that checkpoint no Reddit app was registered, authenticated, uploaded, playtested, published or installed, and no Reddit post or credential had been created. The upstream feed, evidence timestamps, existing monitoring and published site files were not changed.
+
+## Historical initial checks
 
 - Node.js 24.21.0; Devvit SDK/shared schema 0.15.2; TypeScript 7.0.2; esbuild 0.28.2, pinned with an npm lockfile.
 - `npm test`: **84 passed, 0 failed**, including 34 Reddit-specific tests. The core suite simulates 30 overlapping runs, exact freshness expiry, UTC-midnight crossover, storage failures/ambiguous claims, submission timeout, missing post receipts and failed receipt persistence. Simulated submits never contact Reddit.
@@ -14,13 +16,13 @@ Prepared against main commit `1cdd3202553d991bd9cabbaf172474f30bb2b983`. No Redd
 
 The drafts contain employer, location, unknown work model, sourced role details/responsibilities/requirements, preserved deadline uncertainty, source/application links and dated availability caveats. Source-link checks corroborated advertised pages, but did not renew employer verification or authenticate/submit any application. The existing reviewed evidence for the three candidates expires at 11:45 UTC on 13 November unless independently reverified.
 
-## Deliberate limits
+## Historical initial limits
 
 The bot does not discover jobs, promote recruitment routes, update its registry automatically, or guarantee an employer will still accept an application. The preview is a point-in-time review artifact. The live adapter is hard-locked; toggling settings cannot post. New records/URLs need reviewed registry additions. Reddit posts would be static snapshots requiring moderator corrections on withdrawal.
 
 Local tests verify logic and SDK compatibility, not Reddit runtime behavior, actual Redis isolation, permissions, app-account output, mobile/web rendering, platform rate limits or app-review approval. Those checks require an owner-approved test installation and test-post phase. A separate test-target allowlist change is needed before testing in a private community. Terms/privacy/contact details, feed-host and off-platform-link approval, app-name availability, community/flair rules and final activation authorization remain unresolved. See [review/launch notes](reddit-app-review.md) and [setup instructions](../reddit-bot/README.md).
 
-## Setup follow-up
+## Historical signed-out setup follow-up
 
 The user asked to progress setup and testing wherever access permits. Inspection of the available Chrome session found the Reddit developer site signed out. Its Log in link reached the Reddit username/password sign-in page; no moderator account was authenticated. The known local `~/.devvit/token` path was absent. Official Devvit CLI 0.15.2 tooling was installed into a separate local task-workspace directory using `--ignore-scripts`, without changing global PATH. Its version command returned `@devvit/cli/0.15.2 win32-x64 node-v24.21.0`; the token path remained absent afterward. No credential content was read, new credential created, Google identity selected, agreement accepted or persistent permission granted. Installing local development tooling is separate from registering or installing a Reddit app; neither Reddit action occurred.
 
@@ -30,13 +32,13 @@ The code now includes a **Preview SaudiLaw jobs** moderator menu action. It forc
 
 Follow-up validation: **87 tests passed**, including the moderator-preview and operational-log checks; the existing site validator passed; the Devvit adapter type-check, official configuration schema and CommonJS build passed. These remain local/CI checks. Reddit setup, upload/playtest, actual backend integration, test posts and review submission have not occurred.
 
-## Signed-in browser checkpoint
+## Historical signed-in browser checkpoint
 
 The owner subsequently signed in on their PC. Read-only browser inspection verified the active account's r/SaudiLaw moderator permissions as **Everything** and opened the developer portal. The proposed `saudilaw-jobs` name passed the initial check; the workflow advanced to `new/humanity-check` and was left open at an unchecked CAPTCHA. The CAPTCHA was not completed, no developer terms were accepted, and registration/name reservation is not established. App upload, installation, review and Reddit runtime testing remain pending.
 
 Read-only inspection of the installed official CLI 0.15.2 found `scopes: '*'` and token duration `permanent` in its OAuth setup. The login command first logs out an existing CLI session, potentially revoking its refresh token, clearing its token file and removing `DEVVIT_AUTH_TOKEN` from the working directory's `.env`; successful consent then stores access/refresh tokens as base64 JSON in `~/.devvit/token`. No login command was run. This requires specific confirmation before invocation and is separate from the bot's narrower runtime permissions. No application code changed during this browser-only checkpoint, so the previously passing 87-test/SDK/CI checks remain the relevant code validation.
 
-## Approved developer authorization follow-up
+## Historical approved developer authorization follow-up
 
 The owner approved the identified CAPTCHA and official CLI's permanent full-scope access. On resuming, the browser was already at registration success; My apps and the app page confirmed `saudilaw-jobs` was claimed. No CAPTCHA or developer agreement was completed by the agent during this follow-up.
 
@@ -45,3 +47,13 @@ Preflight found no existing token file, working-directory `.env` or environment 
 Additional validation: official Devvit CLI 0.15.2 `bundle actor saudilaw-jobs --linked` succeeded and wrote a local server linked bundle. This did not upload, install, execute the bot or prove Reddit runtime behavior. The generated `reddit-bot/dist/` artifact is ignored. Application code is unchanged; the previously passing 87 tests and SDK checks remain applicable.
 
 Inspection revealed that the CLI's first `upload`, with this configuration's absent development subreddit, also creates and installs into a private test community and submits the HTTP domain for review. That persistent app-installation grant has not been approved or performed. The exact next action is documented in the [setup packet](reddit-setup-draft.md). No app version, post, cron, review approval or live-community installation exists as a result of this work.
+
+## Current approved private installation follow-up
+
+The owner specifically approved the first private upload, Reddit-created private test community, app installation with Reddit API/storage permissions, and GitHub HTTP-domain submission. That action completed: private version `0.0.1` is installed in r/saudilaw_jobs_dev. Browser inspection confirmed `enabled=false` and `dryRun=true`, and zero posts were observed. CLI `list installs SaudiLaw` returned no installed apps. No r/SaudiLaw posting or recurring job was activated.
+
+Reddit granted the app account **Everything** moderator permissions in the private community, as required by the platform's app-installation flow, and automatically installed Devvit Admin Helper. The optional developer-log-access grant was not changed. This platform permission set is broad and is not a posting-only grant. The app's Developer Settings page showed `api.github.com` **Approved**. General app review and permission for off-platform application links remain unapproved; app terms/privacy URLs remain absent and the draft policy text remains unadopted.
+
+The `0.0.1` moderator menu reached the actual server: logs recorded a blocked private installation because that version's community guard accepts only r/SaudiLaw. The UI response then failed due to a missing `Content-Length` header. This establishes partial runtime integration, not a successful feed preview. Local changes add an exact private-community exception for forced preview and a JSON response helper in `server/http.mjs` that sets the header. They have not been uploaded or installed. The complete local suite now has **91 passing tests**, including an actual HTTP wire regression; `npm --prefix reddit-bot run check` also passes TypeScript checking, official configuration-schema validation and bundling. These checks do not establish that the fixes work on Reddit until the approved version is upgraded and tested there.
+
+A second upload attempt was rejected by automatic approval review before execution because the initial approval did not clearly authorize a changed version and updating the installed app requires a separate upgrade. The latest user history still supplied only the initial approval; the action was not retried. Version `0.0.1` remains installed. The concrete pending proposal is private `0.0.2` upload, upgrade of the same private installation, and a forced preview with unchanged Reddit API/Redis/GitHub HTTP permissions. Feed checks would be temporarily enabled there with dry run retained, then restored off. No new community, r/SaudiLaw installation, post or recurrence is part of that proposal. See the [setup packet](reddit-setup-draft.md).
