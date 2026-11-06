@@ -1,0 +1,22 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "saudilaw-jobs",
+  "server": { "dir": "build/server", "entry": "index.cjs" },
+  "permissions": {
+    "reddit": { "enable": true, "scope": "user" },
+    "redis": true,
+    "http": { "enable": true, "domains": ["api.github.com"] }
+  },
+  "scheduler": {
+    "tasks": {
+      "check-jobs": { "endpoint": "/internal/scheduler/check-jobs" }
+    }
+  },
+  "settings": {
+    "subreddit": {
+      "enabled": { "type": "boolean", "label": "Enable feed checks", "defaultValue": false },
+      "dryRun": { "type": "boolean", "label": "Preview only (do not post)", "defaultValue": true }
+    }
+  },
+  "scripts": { "build": "npm run build" }
+}

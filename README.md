@@ -18,6 +18,10 @@ The optional `review_due_at` is an earlier editorial recheck deadline, never an 
 
 The owner requested the seven-day window after the initial repair review. [The policy-change record](docs/freshness-policy-2026-11-06.md) distinguishes the current rule from historical 24-hour audit evidence; no verification dates changed with the policy.
 
+## Reddit jobs prototype
+
+[`reddit-bot/`](reddit-bot/README.md) prepares one-post-per-advertised-opportunity drafts for r/SaudiLaw from the reviewed public feed. It is disabled, dry-run and protected by a build-time posting lock, with no recurring schedule or Reddit installation. Standing recruitment routes are excluded. See the [saved draft posts](docs/reddit-preview-2026-11-06.md) and [Reddit review/launch requirements](docs/reddit-app-review.md). This prototype does not alter the existing feed or deployment.
+
 ## Optional public alert setup
 
 `dist/task-config.json` has `taskUrl: null`. The page therefore shows manual setup instructions and a working copy/download path rather than claiming that a shared task works. This optional ChatGPT alert route is separate from the owner's independent GitHub monitoring and does not control publication of the site.
