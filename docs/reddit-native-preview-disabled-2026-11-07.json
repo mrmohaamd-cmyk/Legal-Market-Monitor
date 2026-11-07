@@ -1,0 +1,23 @@
+{
+  "app": "saudilaw-jobs",
+  "community": "saudilaw_jobs_dev",
+  "source": "Official Devvit CLI 0.15.2 logs, scoped to the private installation, --since 10m --json",
+  "timestamp": "2026-11-07T01:01:12.178Z",
+  "message": {
+    "status": "disabled"
+  },
+  "tags": ["Console"],
+  "interpretation": "The moderator preview handler reached the disabled-check guard. This invocation did not perform a feed candidate preview.",
+  "installedVersionContext": {
+    "version": "0.0.3",
+    "verifiedSeparatelyAt": "2026-11-07T00:48:32.172Z",
+    "note": "The log record itself does not include an app version."
+  },
+  "errorRecordsObserved": 0,
+  "logStreamStopped": true,
+  "limitations": [
+    "No claim is made that the transient preview toast was visually captured.",
+    "No enabled feed preview, Redis audit or post submission was performed by this log inspection.",
+    "The disabled status does not independently establish the saved dryRun setting."
+  ]
+}

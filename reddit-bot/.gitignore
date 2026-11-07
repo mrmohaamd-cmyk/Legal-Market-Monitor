@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+preview-output/
+.devvit/
+.env
+.env.*
+*.pem
+*.key
+*.p12
