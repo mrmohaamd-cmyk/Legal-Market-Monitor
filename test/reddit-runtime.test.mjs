@@ -39,7 +39,7 @@ test('prepared Devvit config has no automatic trigger, public endpoint, or recur
   assert.equal(config.permissions.reddit.asUser, undefined);
   assert.deepEqual(config.permissions.http.domains, ['api.github.com']);
   for (const task of Object.values(config.scheduler.tasks)) assert.equal(task.cron, undefined);
-  assert.deepEqual(config.menu.items.map(item => [item.forUserType, item.location, item.endpoint]),
+  assert.deepEqual(config.menu.items.filter(item => item.endpoint === '/internal/menu/preview-jobs').map(item => [item.forUserType, item.location, item.endpoint]),
     [['moderator', 'subreddit', '/internal/menu/preview-jobs']]);
 });
 

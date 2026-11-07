@@ -2,9 +2,11 @@ import { context, createServer, getServerPort, reddit, redis, settings } from '@
 import type { UiResponse } from '@devvit/web/shared';
 import { checkInstallation, previewInstallation, previewMessage, runLog } from '../runtime.mjs';
 import { sendJson } from './http.mjs';
+import { dispatchInfoMenu } from './menu-info.mjs';
 
 // No public endpoint, startup post, install trigger, or cron is registered.
 createServer(async (req, res) => {
+  if (dispatchInfoMenu(req, res, context.subredditName)) return;
   const isPreview = req.url === '/internal/menu/preview-jobs';
   if (req.method !== 'POST' || (!isPreview && req.url !== '/internal/scheduler/check-jobs')) {
     sendJson(res, 404, { error: 'Not found' });

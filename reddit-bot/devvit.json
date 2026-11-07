@@ -28,6 +28,34 @@
   "menu": {
     "items": [
       {
+        "label": "SaudiLaw Jobs: About",
+        "description": "Read what this preview-only app does",
+        "location": "subreddit",
+        "forUserType": "user",
+        "endpoint": "/internal/menu/jobs-about"
+      },
+      {
+        "label": "SaudiLaw Jobs: Terms",
+        "description": "Open the app terms on GitHub",
+        "location": "subreddit",
+        "forUserType": "user",
+        "endpoint": "/internal/menu/jobs-terms"
+      },
+      {
+        "label": "SaudiLaw Jobs: Privacy",
+        "description": "Open the app privacy policy on GitHub",
+        "location": "subreddit",
+        "forUserType": "user",
+        "endpoint": "/internal/menu/jobs-privacy"
+      },
+      {
+        "label": "SaudiLaw Jobs: Contact moderators",
+        "description": "Open a message to r/SaudiLaw moderators; nothing is sent automatically",
+        "location": "subreddit",
+        "forUserType": "user",
+        "endpoint": "/internal/menu/jobs-support"
+      },
+      {
         "label": "Preview SaudiLaw jobs",
         "description": "Check the reviewed feed without posting or claiming jobs",
         "location": "subreddit",
