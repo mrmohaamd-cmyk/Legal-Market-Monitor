@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-11-07T01:59:39.19Z",
+  "observedAt": "2026-11-07T02:45:36.057Z",
   "app": "saudilaw-jobs",
   "candidateVersion": "0.0.4",
   "offline": true,
@@ -23,8 +23,8 @@
     },
     {
       "path": "devvit.json",
-      "bytes": 5149,
-      "sha256": "c68c4cf8a8a05d26732a46ddbf8bc39d12bae4d1cf3fa6e677cb5dd17865737b"
+      "bytes": 5157,
+      "sha256": "0fadf8a03ea954d186a7187f14fea83fa373f4489c0f5cce3e53ef765b684ec9"
     },
     {
       "path": "lib/core.mjs",
@@ -58,8 +58,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6696,
-      "sha256": "ceb8ac4de151c6c27e2cfc51e2d5a284eea14b9ef5e41ad8db594ae51664ef08"
+      "bytes": 6995,
+      "sha256": "7b919ceddbadc87793632757bc5e17175d3a2608b66c14ac175b7f1ead9bf94f"
     },
     {
       "path": "reddit-adapters.mjs",
@@ -68,8 +68,8 @@
     },
     {
       "path": "release-policy.mjs",
-      "bytes": 389,
-      "sha256": "bae84d241d3610b92cd9fed0c3977cee7f735801c0771f10578ce4f739b6aa55"
+      "bytes": 388,
+      "sha256": "09028a6be857606573bebda86ba7dc0d771415ced1b07ff3b9f717047455ad52"
     },
     {
       "path": "runtime.mjs",
@@ -113,10 +113,10 @@
     }
   ],
   "sourceRoot": "reddit-bot",
-  "status": "Local posting candidate; both release gates false; not uploaded or submitted; supersedes the earlier README-only 0.0.4 archive",
+  "status": "Authorized private-test candidate; private gate true, production gate false; offline snapshot before approved private upload",
   "zip": {
-    "bytes": 151195,
-    "sha256": "79614697c9397d808373d60789217320f41c2d81c0b37e0e9bdbffbfd6b1e5e8",
-    "file": "saudilaw-jobs-0.0.4-review-source.zip"
+    "sha256": "c8512c3d7ebe6c6ffb2256e6b43e7abd1854007e199e600d457f55080b4fcf3d",
+    "file": "saudilaw-jobs-0.0.4-review-source.zip",
+    "bytes": 151501
   }
 }

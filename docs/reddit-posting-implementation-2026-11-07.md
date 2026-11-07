@@ -1,12 +1,14 @@
 # Prepared posting implementation — local only
 
+Historical record of the locked local candidate at commit `329d415`. The owner subsequently approved revised policy publication and one private synthetic test; see the [0.0.4 integration receipt](reddit-private-posting-0.0.4.md). Production remains locked. Archive/test figures below describe the earlier candidate, not the later uploaded private-test build.
+
 This work replaces the former multi-key claim prototype with an atomic posting ledger and moderator operations. It is not deployed, submitted for review, or active in any community. The hosted app remains private 0.0.3. Both source-controlled posting permissions remain false; requests and settings cannot override them. The earlier README-only 0.0.4 package is superseded and must not be uploaded.
 
 ## Verified local artifact
 
 On 7 November 2026, all **153 repository tests passed**, with zero failures or skips. This includes pinned-SDK Redis reply decoding, 25 concurrent scheduled callbacks creating one simulated post, 25 concurrent private confirmations creating one simulated post, positive reconciliation after a lost reply, deletion-before/after-receipt races, denied member actions, and concurrent Start/Stop generations. TypeScript, the pinned Devvit 0.15.2 configuration schema and the CommonJS bundle also passed. These are local tests; they are not evidence of real Redis transactions or posts on Reddit.
 
-The official CLI's offline source packager produced a 21-file, 151,195-byte archive at `2026-11-07T01:59:39.190Z`. Every archived file matched the [manifest](reddit-source-manifest-0.0.4.json). Archive SHA-256: `79614697c9397d808373d60789217320f41c2d81c0b37e0e9bdbffbfd6b1e5e8`. Source ignores excluded dependencies, build output, environment files and credentials; a private-key marker check passed. Those checks do not certify the absence of every conceivable secret. This archive has both posting gates false and is not the later private-test-enabled build.
+The official CLI's offline source packager produced a 21-file, 151,195-byte archive at `2026-11-07T01:59:39.190Z`. Every archived file matched the [historical manifest](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/329d415c580a9b8e50341a4200bbad905195f34e/docs/reddit-source-manifest-0.0.4.json). Archive SHA-256: `79614697c9397d808373d60789217320f41c2d81c0b37e0e9bdbffbfd6b1e5e8`. Source ignores excluded dependencies, build output, environment files and credentials; a private-key marker check passed. Those checks do not certify the absence of every conceivable secret. This archive has both posting gates false and is not the later private-test-enabled build.
 
 The CI configuration now runs the full tests after installing pinned bot dependencies, so the SDK wire-decoding check is exercised there as well. A local pass is not a claim that a new GitHub Actions run has completed.
 

@@ -2,11 +2,11 @@
 
 SaudiLaw Jobs prepares one Reddit post per verified Saudi legal job or training opportunity. It includes the employer, location, work model when stated, role details, requirements, source evidence and application link. Standing recruitment routes are never presented as vacancies. The app does not accept applications or CVs.
 
-**Current candidate: posting is locked, not deployed or submitted for review.** The implemented posting, recovery and scheduler controls are prepared for supervised private integration tests. Defaults remain feed checks off, production preview-only on, private test off and no active schedule. Installed private version 0.0.3 remains unchanged. This candidate is not a claim of completed Reddit posting tests or Reddit approval.
+**Current candidate: production posting is locked; one supervised private test is authorized.** The private-test source gate permits only the fixed one-use synthetic fixture in r/saudilaw_jobs_dev. Its installation switch still defaults off. The owner approved the private upgrade, first-time ledger initialization, one submission attempt, duplicate verification and author deletion of that exact test post. Defaults remain feed checks off, production preview-only on and no active schedule. This candidate has not been submitted for review and does not claim completed Reddit integration tests or Reddit approval.
 
 Operator: [u/BannedForThe7thTime](https://www.reddit.com/user/BannedForThe7thTime/). Support, corrections and deletion requests: [r/SaudiLaw modmail](https://www.reddit.com/message/compose?to=r/SaudiLaw).
 
-[Adopted terms](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/main/docs/saudilaw-jobs-terms.md) | [Adopted privacy notice](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/main/docs/saudilaw-jobs-privacy.md). These describe the deployed preview. Proposed posting-specific disclosures require adoption before a posting release is submitted; they are not silently substituted here.
+[Adopted terms](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/main/docs/saudilaw-jobs-terms.md) | [Adopted privacy notice](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/main/docs/saudilaw-jobs-privacy.md). The owner approved the revised posting-specific notices for publication before the private test. Public terms and privacy URLs remain the same; verify publication before upgrading.
 
 ## Moderator controls
 
@@ -23,7 +23,7 @@ All mutating menus and form submissions independently check the caller's post-mo
 - **Remove bot post:** explicitly confirm permanent author deletion of one verified app post. A suppression tombstone is committed first. An API acknowledgement alone does not prove deletion; verify the post afterward.
 - **Private posting test:** after separate deployment/test authorization, one fixed synthetic NOT A JOB post in r/saudilaw_jobs_dev. It uses no feed, employer details or application link, and has a separate permanent one-use claim. This setting never permits production posts or a schedule.
 
-Posting remains locked until the appropriate source-controlled release permission is approved. Request bodies and installation settings cannot unlock it. The only supported communities are r/SaudiLaw and the exact private test community.
+Production posting remains locked in source. Request bodies and installation settings cannot unlock it. The authorized private gate still requires its installation switch and moderator confirmation; it cannot publish a real opportunity or start a schedule. The only supported communities are r/SaudiLaw and the exact private test community.
 
 ## Safety, data and recovery
 

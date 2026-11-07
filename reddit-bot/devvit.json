@@ -29,7 +29,7 @@
     "items": [
       {
         "label": "SaudiLaw Jobs: About",
-        "description": "Read what this preview-only app does",
+        "description": "Read the app purpose and private-test status",
         "location": "subreddit",
         "forUserType": "user",
         "endpoint": "/internal/menu/jobs-about"

@@ -5,6 +5,7 @@ import { IncomingMessage, ServerResponse } from 'node:http';
 import { once } from 'node:events';
 import { Duplex } from 'node:stream';
 import { dispatchInfoMenu, menuInfoResponse } from '../reddit-bot/server/menu-info.mjs';
+import { RELEASE_POLICY } from '../reddit-bot/release-policy.mjs';
 
 const urls = {
   '/internal/menu/jobs-terms': 'https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/main/docs/saudilaw-jobs-terms.md',
@@ -54,13 +55,20 @@ test('information menu is available to users while the preview action remains mo
   assert.equal(config.settings.subreddit.privateTestEnabled.defaultValue, false);
 });
 
-test('About displays preview-only information without navigation, forms, or settings access', async () => {
+test('About distinguishes the private test release from public preview without navigation or settings access', async () => {
+  assert.equal(RELEASE_POLICY.productionPosting, false);
   for (const community of ['SaudiLaw', 'saudilaw_jobs_dev', 'SAUDILAW']) {
     const result = await dispatch('/internal/menu/jobs-about', community);
     assert.equal(result.status, 200);
     assert.deepEqual(Object.keys(result.value), ['showToast']);
-    assert.match(result.value.showToast, /preview only/);
-    assert.match(result.value.showToast, /does not publish jobs or accept applications/);
+    if (RELEASE_POLICY.privateTestPosting === true && community.toLowerCase() === 'saudilaw_jobs_dev') {
+      assert.match(result.value.showToast, /private testing/);
+      assert.match(result.value.showToast, /one labelled test post/);
+      assert.match(result.value.showToast, /No applications are accepted/);
+    } else {
+      assert.match(result.value.showToast, /preview only/);
+      assert.match(result.value.showToast, /does not publish jobs or accept applications/);
+    }
     assert.match(result.value.showToast, /Terms, Privacy or Contact moderators/);
   }
 });
