@@ -30,11 +30,11 @@ test('runtime hard lock prevents live posts even when installation settings requ
   assert.equal(result.status, 'dry-run');
   assert.equal(result.livePostingAllowed, false);
 });
-test('prepared Devvit config has no automatic trigger, public endpoint, or recurring cron', async () => {
+test('prepared Devvit config has only deletion cleanup, no install activation, public endpoint, or recurring cron', async () => {
   const config = JSON.parse(await readFile(new URL('../reddit-bot/devvit.json', import.meta.url)));
   assert.equal(config.settings.subreddit.enabled.defaultValue, false);
   assert.equal(config.settings.subreddit.dryRun.defaultValue, true);
-  assert.equal(config.triggers, undefined);
+  assert.deepEqual(config.triggers, { onPostDelete: '/internal/triggers/post-delete' });
   assert.equal(config.server.externalEndpoints, undefined);
   assert.equal(config.permissions.reddit.asUser, undefined);
   assert.deepEqual(config.permissions.http.domains, ['api.github.com']);

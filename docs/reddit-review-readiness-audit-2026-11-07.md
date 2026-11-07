@@ -1,5 +1,7 @@
 # Reddit review readiness audit — paused before submission
 
+Historical audit of the preview-only candidate. The README-only 0.0.4 package described below was superseded, without upload, by a locally prepared posting implementation. For current scope and evidence use the [posting implementation](reddit-posting-implementation-2026-11-07.md) and [review packet](reddit-posting-review-packet.md). The installed version remains 0.0.3 and review remains paused. Historical archive hashes below must not be used for the changed source.
+
 Audit date: 7 November 2026. **Not submitted; not high-confidence review-ready.** The owner initially authorized review/source upload with possible unlisted visibility, then asked us to pause and check confidence before execution. No publish, source upload, review submission, metadata edit, installation change or production activation was executed in this preparation. Official API inspection at `2026-11-07T01:29:13.873Z` found zero publish-review records, versions 0.0.1–0.0.3 PRIVATE/READY and 0.0.4 unused. No withdrawal is necessary.
 
 ## Scope and evidence

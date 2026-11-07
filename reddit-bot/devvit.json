@@ -61,6 +61,69 @@
         "location": "subreddit",
         "forUserType": "moderator",
         "endpoint": "/internal/menu/preview-jobs"
+      },
+      {
+        "label": "Job bot status",
+        "description": "View posting and scheduler state",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-status"
+      },
+      {
+        "label": "Initialize posting ledger",
+        "description": "First-time setup only; never reset lost storage",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-initialize"
+      },
+      {
+        "label": "Publish next verified job",
+        "description": "Confirm one verified opportunity as the app",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-publish"
+      },
+      {
+        "label": "Start daily jobs",
+        "description": "Confirm daily checks at 09:00 Saudi time",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-start"
+      },
+      {
+        "label": "Stop daily jobs",
+        "description": "Pause future callbacks before cancelling jobs",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-stop"
+      },
+      {
+        "label": "Private posting test",
+        "description": "One clearly labelled synthetic test in the private community",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-private-test"
+      },
+      {
+        "label": "Reconcile bot post",
+        "description": "Verify an existing app post without reposting",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-reconcile"
+      },
+      {
+        "label": "Remove bot post",
+        "description": "Confirm author deletion of one verified app post",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-remove"
+      },
+      {
+        "label": "Cancel reserved attempt",
+        "description": "Cancel work that has not entered submission; never clear an uncertain post",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-cancel-reservation"
       }
     ]
   },
@@ -73,8 +136,13 @@
       },
       "dryRun": {
         "type": "boolean",
-        "label": "Preview only (do not post)",
+        "label": "Production preview only (no job posts)",
         "defaultValue": true
+      },
+      "privateTestEnabled": {
+        "type": "boolean",
+        "label": "Allow the separately approved one-post private test",
+        "defaultValue": false
       }
     }
   },
@@ -83,5 +151,18 @@
   },
   "dev": {
     "subreddit": "saudilaw_jobs_dev"
+  },
+  "forms": {
+    "jobsStatus": "/internal/form/jobsStatus",
+    "jobsInitialize": "/internal/form/jobsInitialize",
+    "jobsPublish": "/internal/form/jobsPublish",
+    "jobsStart": "/internal/form/jobsStart",
+    "jobsPrivateTest": "/internal/form/jobsPrivateTest",
+    "jobsReconcile": "/internal/form/jobsReconcile",
+    "jobsRemove": "/internal/form/jobsRemove",
+    "jobsCancelReservation": "/internal/form/jobsCancelReservation"
+  },
+  "triggers": {
+    "onPostDelete": "/internal/triggers/post-delete"
   }
 }

@@ -21,7 +21,7 @@ jobs:
       - run: npm run build
 
   reddit-prototype:
-    name: Check disabled Reddit prototype
+    name: Check disabled Reddit bot
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,5 +32,6 @@ jobs:
           cache-dependency-path: reddit-bot/package-lock.json
       - run: npm ci --ignore-scripts --no-audit --no-fund
         working-directory: reddit-bot
+      - run: npm test
       - run: npm run check
         working-directory: reddit-bot

@@ -47,11 +47,11 @@ test('information menu is available to users while the preview action remains mo
     assert.equal(item.forUserType, 'user'); assert.equal(item.location, 'subreddit');
     assert.match(item.label, /^SaudiLaw Jobs: /);
   }
-  assert.equal(config.menu.items.length, endpoints.length + 1);
+  for (const item of config.menu.items.filter(item => !endpoints.includes(item.endpoint))) assert.equal(item.forUserType, 'moderator');
   assert.equal(config.menu.items.find(item => item.endpoint === '/internal/menu/preview-jobs').forUserType, 'moderator');
   assert.equal(config.settings.subreddit.enabled.defaultValue, false);
   assert.equal(config.settings.subreddit.dryRun.defaultValue, true);
-  assert.equal(config.forms, undefined);
+  assert.equal(config.settings.subreddit.privateTestEnabled.defaultValue, false);
 });
 
 test('About displays preview-only information without navigation, forms, or settings access', async () => {

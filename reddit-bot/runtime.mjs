@@ -1,9 +1,10 @@
 import { runBot } from './lib/core.mjs';
 import { readPublishedFeed } from './transport.mjs';
+import { RELEASE_POLICY } from './release-policy.mjs';
 
 // Deliberate code-review gate. Neither settings nor environment variables bypass it.
 // A separate owner-approved change and Reddit integration testing are needed to unlock.
-export const LIVE_POSTING_ALLOWED = false;
+export const LIVE_POSTING_ALLOWED = RELEASE_POLICY.productionPosting;
 
 export async function checkInstallation({ subredditName, getSetting, readFeed = readPublishedFeed, storage, submit, forceDryRun = false, clock = Date.now }) {
   const forcedPreview = forceDryRun === true;

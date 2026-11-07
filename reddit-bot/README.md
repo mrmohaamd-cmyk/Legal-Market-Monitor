@@ -1,47 +1,43 @@
 # SaudiLaw Jobs
 
-SaudiLaw Jobs is a **preview-only moderator tool** for checking reviewed Saudi legal jobs and training opportunities. It cannot publish posts. It does not receive applications or CVs. Operator: [u/BannedForThe7thTime](https://www.reddit.com/user/BannedForThe7thTime/). Support and correction/deletion requests: [r/SaudiLaw modmail](https://www.reddit.com/message/compose?to=r/SaudiLaw).
+SaudiLaw Jobs prepares one Reddit post per verified Saudi legal job or training opportunity. It includes the employer, location, work model when stated, role details, requirements, source evidence and application link. Standing recruitment routes are never presented as vacancies. The app does not accept applications or CVs.
 
-[Terms](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/main/docs/saudilaw-jobs-terms.md) | [Privacy notice](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/main/docs/saudilaw-jobs-privacy.md), adopted and effective 7 November 2026. These exact URLs are saved in app details.
+**Current candidate: posting is locked, not deployed or submitted for review.** The implemented posting, recovery and scheduler controls are prepared for supervised private integration tests. Defaults remain feed checks off, production preview-only on, private test off and no active schedule. Installed private version 0.0.3 remains unchanged. This candidate is not a claim of completed Reddit posting tests or Reddit approval.
 
-## How to use this release
+Operator: [u/BannedForThe7thTime](https://www.reddit.com/user/BannedForThe7thTime/). Support, corrections and deletion requests: [r/SaudiLaw modmail](https://www.reddit.com/message/compose?to=r/SaudiLaw).
 
-The subreddit menu contains:
+[Adopted terms](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/main/docs/saudilaw-jobs-terms.md) | [Adopted privacy notice](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/main/docs/saudilaw-jobs-privacy.md). These describe the deployed preview. Proposed posting-specific disclosures require adoption before a posting release is submitted; they are not silently substituted here.
 
-- **Preview SaudiLaw jobs** - moderators only. Checks the reviewed feed and reports eligible/excluded counts. No post or duplicate-prevention record is created.
-- **SaudiLaw Jobs: About** - explains preview-only operation; it does not navigate anywhere.
-- **SaudiLaw Jobs: Terms**, **SaudiLaw Jobs: Privacy**, **SaudiLaw Jobs: Contact moderators** - available to community members. Each opens only its named, fixed destination after the user selects it. Terms and privacy open the published GitHub notices; Contact moderators opens r/SaudiLaw modmail. The app does not read or send the message.
+## Moderator controls
 
-For an authorized private preview, open installation settings, switch **Enable feed checks** on, leave **Preview only (do not post)** on, then choose Preview. Turn checks off afterward. Disabled checks report that state. About and policy/support navigation work even when checks are disabled. Defaults are checks off and preview-only on.
+All mutating menus and form submissions independently check the caller's post-moderation permission in this exact community. Member-visible About, Terms, Privacy and Contact menus provide fixed policy/support links. Contact opens a blank Reddit composer and sends nothing.
 
-The two allowed communities are r/SaudiLaw and the private development community r/saudilaw_jobs_dev. Other communities fail closed. Changing settings cannot bypass the code-level posting lock. There is no recurring schedule, install-triggered action, public HTTP endpoint or user-account posting.
+- **Preview SaudiLaw jobs:** inspect eligible/excluded counts with no post or ledger writes. Enable feed checks to run it; production preview-only can stay on.
+- **Job bot status:** inspect the schedule, any unresolved attempt and the latest ten receipts.
+- **Initialize posting ledger:** first-time setup only, with explicit confirmation that neither prior posting nor lost storage exists. It never replaces an existing ledger. Do not use it after storage loss.
+- **Publish next verified job:** confirm one unclaimed eligible job. The displayed draft fingerprint is rechecked before submission; changed or expired evidence is rejected.
+- **Start daily jobs:** after a separately approved production release, enable checks and turn production preview-only off, then explicitly confirm checks at 09:00 Saudi time (06:00 UTC). It does not post immediately. At most one attempt is allowed per UTC day.
+- **Stop daily jobs:** persist a stop before cancelling callbacks. A newer Start has a different generation. An already-submitted request cannot be recalled; uncertain stop results require inspecting status and disabling feed checks.
+- **Reconcile bot post:** record an existing post only after independently verifying its exact ID, app author, community and unique attempt reference. No post is created. Absence or elapsed time never permits a retry.
+- **Cancel reserved attempt:** cancel work that has not entered submission. Its opportunity and daily claims remain consumed. Submitted/uncertain work cannot be cleared this way.
+- **Remove bot post:** explicitly confirm permanent author deletion of one verified app post. A suppression tombstone is committed first. An API acknowledgement alone does not prove deletion; verify the post afterward.
+- **Private posting test:** after separate deployment/test authorization, one fixed synthetic NOT A JOB post in r/saudilaw_jobs_dev. It uses no feed, employer details or application link, and has a separate permanent one-use claim. This setting never permits production posts or a schedule.
 
-## What the check means
+Posting remains locked until the appropriate source-controlled release permission is approved. Request bodies and installation settings cannot unlock it. The only supported communities are r/SaudiLaw and the exact private test community.
 
-The feed comes from the public, human-reviewed `main` branch of `mrmohaamd-cmyk/Legal-Market-Monitor`. Only explicitly advertised openings with verified source/application/editorial evidence less than 168 hours old qualify. Closed, stale, uncertain and standing recruitment-route records are excluded. The approved registry pins identities and source/application URLs. Missing work model, salary and deadlines stay unknown. A successful download does not recheck an employer's site or guarantee application availability.
+## Safety, data and recovery
 
-Current hosted preview feedback gives counts and diagnostic status; it does not display or publish a complete job post. Local developer previews can produce the proposed post text. Employers control their hiring; source evidence and support remain necessary.
+The public, human-reviewed main branch of mrmohaamd-cmyk/Legal-Market-Monitor supplies the feed. Source, application and editorial evidence must each be less than 168 hours old. Closed, uncertain, stale, malformed and unregistered records are withheld. Missing salary, deadlines and work model remain unknown. Downloading the feed does not recheck an employer's live site.
 
-## Permissions and data
+An atomic installation-scoped ledger reserves the day and hashed opportunity identities before submitting as the app. An unresolved attempt pauses all later posting, even for another job or day. A timeout may occur after Reddit creates a post; the app never automatically retries it. Recovery requires positive matching evidence. Deleted or suppressed opportunities are not automatically reposted. Capacity limits and corrupt/missing storage fail closed.
 
-Runtime capabilities are Reddit API, Redis and HTTP fetch. This version's information controls use no feed, storage or Reddit API calls. Preview checks read settings and the public feed but write no posting ledger. Diagnostic logs contain public record IDs/titles, skip reasons and feed provenance. The app does not intentionally store applicant data, viewer profiles, usernames or user-post bodies.
+The ledger stores hashes, attempt states/times and post receipts/tombstones, not Reddit post bodies, titles, URLs, applicant details or moderator profiles. Moderator identities and nominated posts are read transiently for authorization and recovery. Scheduler state stores tokens and job IDs. Deletion/removal events scrub tracked raw post IDs; no event content is retained. Unknown failures remain explicit, with retryable cleanup separated from non-retryable submissions.
 
-The future posting adapter remains locked. Its conservative atomic day/job/identity claims and uncertain-result handling are locally tested, but live Reddit posting/storage integration is not claimed. Before any later posting release, implement/test deletion and reconciliation, reverify sources, obtain Reddit review and obtain owner authorization. The adopted privacy notice describes these conditions.
+Reddit API, Redis, scheduler and deletion-trigger capabilities support these controls. The sole fetch host is approved api.github.com: a fixed unauthenticated repository-contents GET, bounded by size, deadline and Git blob validation. No payments, account linking, advertising or analytics integration is included.
 
-## Fetch Domains
+## Review scope and evidence
 
-`api.github.com` - approved for this app. An unauthenticated HTTPS GET reads the fixed repository contents endpoint for `dist/opportunities.json?ref=main`. Path, size and Git blob identity are checked; redirects and invalid responses are rejected. No GitHub credential or Reddit viewer data is added. Employer/application sites are future link destinations, not runtime fetch hosts.
+The intended posting release must explicitly request permission for GitHub policy navigation and employer/application links: careers.aoshearman.com, jobs.aoshearman.com, www.segal.com.sa, www.whitecase.com and whitecase.grad.allhires.com. Fetch approval is not external-navigation approval. Public destinations have been reviewed, but authenticated application flows and backend security are not certified. Any changed posting release requires Reddit review; an UNLISTED flag is not approval.
 
-## Review request: external links and release scope
+Local tests cover concurrent claims, ambiguous submission/receipt writes, positive recovery, deletion races, role checks, scheduler lifecycle and fixed private-test isolation. Desktop menus on installed 0.0.3 passed; its predecessor completed an enabled feed preview. The newly implemented controls, real Redis transaction behavior, actual posting/deletion, mobile and ordinary-member sessions still require integration evidence. See the repository's private posting test plan and review-readiness audit. No test/build command deploys or activates the app.
 
-Please assess this **preview-only release**, including explicit navigation to its two GitHub-hosted policy notices and Reddit modmail. No job posts, external application submissions, applicant collection, monetization or autonomous posting are enabled.
-
-The intended later job-posting design would link to employer sources and their application providers: `careers.aoshearman.com`, `jobs.aoshearman.com`, `www.segal.com.sa`, `www.whitecase.com` and `whitecase.grad.allhires.com`. Employer linkage and public privacy notices have been reviewed; authenticated application journeys and backend security have not been certified. We request guidance on permission and conditions for that planned off-platform use. **Approval of this preview does not constitute approval of a later changed posting release.** That release must be submitted again with its tests and exact behavior.
-
-## Verification and developer information
-
-Private version 0.0.2 completed a real moderator preview with three candidates, five exclusions and no backend validation/bridge errors. Version 0.0.3 passed actual desktop Reddit menu checks on 7 November 2026: all five entries appeared, About displayed its preview-only explanation, Terms and Privacy passed through Reddit's external-link confirmation to the exact published notices, and Contact opened an empty r/SaudiLaw composer with Send disabled. No message was sent. Its Preview menu reached the disabled guard, confirmed by the server log at 01:01:12 UTC. The installation UI showed version 0.0.3, checks off and preview-only on; the community had no posts.
-
-This review candidate has the same executable source and configuration as tested 0.0.3; only this README's verification record changed. The unchanged feed-preview implementation was not rerun with checks enabled on 0.0.3. Native mobile and actual ordinary-member sessions remain untested; a responsive viewport attempt did not resize the target and is not counted as a mobile pass. Menu-role configuration has local tests, but moderator testing does not prove ordinary-member behavior. No direct Redis audit or live post/storage integration is claimed. The 96 repository tests, SDK type/schema checks and bundle build passed for the unchanged executable source. Detailed [desktop test evidence](https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor/blob/bbb21f6fe1e895bc99625c17ca0f49ad54805067/docs/reddit-private-upgrade-0.0.3.md) is public. Neither those tests nor an UNLISTED visibility flag establish Reddit review approval.
-
-See [development details](DEVELOPMENT.md) for local build/preview commands, source contracts, concurrency handling and historical setup evidence. This README is included in the app version's review information. No command in the local npm test/build/check scripts uploads, publishes, installs or enables the app.

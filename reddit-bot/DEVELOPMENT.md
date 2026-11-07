@@ -1,5 +1,7 @@
 # SaudiLaw jobs prototype
 
+**Historical engineering record, not current operating instructions.** The previous preview-only implementation below has been superseded locally by `operations.mjs`, `lib/ledger.mjs`, `storage.mjs`, `scheduling.mjs` and `reddit-adapters.mjs`. Installed private 0.0.3 remains unchanged. Use [README.md](README.md), [the current implementation record](../docs/reddit-posting-implementation-2026-11-07.md) and [review packet](../docs/reddit-posting-review-packet.md) for prepared functionality, exact gates, tests and unresolved integration work. Do not deploy or follow historical launch instructions as authorization.
+
 This file preserves engineering details and historical setup evidence. For current release scope and active policy URLs, use [README.md](README.md). The notices were adopted/published and their URLs saved in app details on 7 November 2026; older statements below about empty policy fields are superseded by the [publication receipt](../docs/reddit-policy-publication-2026-11-07.md). No review or posting approval is implied.
 
 Prepared for r/SaudiLaw: one ordinary Reddit text post per reviewed advertised job or training programme. **Private version `0.0.2` is installed only in r/saudilaw_jobs_dev; its authorized backend preview succeeded.** Feed checks were restored off, dry run is on and live posting remains hard-locked. Zero posts were observed; prior CLI inspection found no r/SaudiLaw installation and no later action targeted it. No Reddit credentials are needed for local tests or previews.

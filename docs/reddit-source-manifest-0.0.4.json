@@ -1,10 +1,10 @@
 {
-  "observedAt": "2026-11-07T01:28:56.775Z",
+  "observedAt": "2026-11-07T01:59:39.19Z",
   "app": "saudilaw-jobs",
   "candidateVersion": "0.0.4",
   "offline": true,
   "caveat": "Snapshot only; regenerate after code changes. Filename/private-key checks are not a complete secret audit.",
-  "fileCount": 15,
+  "fileCount": 21,
   "files": [
     {
       "path": ".gitignore",
@@ -18,18 +18,28 @@
     },
     {
       "path": "DEVELOPMENT.md",
-      "bytes": 12395,
-      "sha256": "e6f49a2d8f576a5a23a333f304c9f84f37d32e7bd0810f926abc32211e00e387"
+      "bytes": 13014,
+      "sha256": "f9fad9ede32d5ce61c4789735d9baa3a5097d948febba3633d0652291d044cdc"
     },
     {
       "path": "devvit.json",
-      "bytes": 2181,
-      "sha256": "c0ad316be44b71c1f47df95d57412dc7870e19cc7944b27aa001387e14464447"
+      "bytes": 5149,
+      "sha256": "c68c4cf8a8a05d26732a46ddbf8bc39d12bae4d1cf3fa6e677cb5dd17865737b"
     },
     {
       "path": "lib/core.mjs",
-      "bytes": 15452,
-      "sha256": "4967ed0a7d76c8b6c2455f64ac83d628a713c74bee8a1586103b87b82bbb5b3c"
+      "bytes": 17529,
+      "sha256": "88c8e466f5fb617d2175bbbc2d0cfb0af0a8e345c782b38863e194be47cdd22d"
+    },
+    {
+      "path": "lib/ledger.mjs",
+      "bytes": 22067,
+      "sha256": "20260374f45bfff83e5714c567325102a15704a9b6a9456e236bafec69377b92"
+    },
+    {
+      "path": "operations.mjs",
+      "bytes": 13358,
+      "sha256": "7def94050738d771f97c88e5169501c1fb7e13e026c5057561a66d66d07d56e7"
     },
     {
       "path": "package-lock.json",
@@ -48,13 +58,28 @@
     },
     {
       "path": "README.md",
-      "bytes": 6924,
-      "sha256": "bbb1ad3dd40cd17da97e8610160f542a8fc366d3121f661872e73ad95c3b266c"
+      "bytes": 6696,
+      "sha256": "ceb8ac4de151c6c27e2cfc51e2d5a284eea14b9ef5e41ad8db594ae51664ef08"
+    },
+    {
+      "path": "reddit-adapters.mjs",
+      "bytes": 3057,
+      "sha256": "5c3a9a80b288f6c7806626722bad35cfa4fdfd94b797eb93723fa9634c00f35f"
+    },
+    {
+      "path": "release-policy.mjs",
+      "bytes": 389,
+      "sha256": "bae84d241d3610b92cd9fed0c3977cee7f735801c0771f10578ce4f739b6aa55"
     },
     {
       "path": "runtime.mjs",
-      "bytes": 3161,
-      "sha256": "11f55ad7e45e348745cfd8280f464b0ec8d2fdeca45fc13248ec4be68420bfac"
+      "bytes": 3243,
+      "sha256": "dd38e0a1bb8f9cf05bc05e6aa6b216d86bdc480ce80e0b2928633c9a581c0086"
+    },
+    {
+      "path": "scheduling.mjs",
+      "bytes": 4670,
+      "sha256": "bff112f20065993116f6b79ea696ae0c99098dd0f5e6e0cee6c4939d28bbbd5b"
     },
     {
       "path": "server/http.mjs",
@@ -63,13 +88,18 @@
     },
     {
       "path": "server/index.ts",
-      "bytes": 1864,
-      "sha256": "fa944e51f3be5a1b12243a524766e351ad0ea4fa274f6391ea2b84eed1b76ccb"
+      "bytes": 3912,
+      "sha256": "2d92ce432cdc834f438537eb92910bc8469a4b26e582e2feaea0f8dd2452d303"
     },
     {
       "path": "server/menu-info.mjs",
-      "bytes": 2485,
-      "sha256": "8f20afb7d3a0a34a38c95936078272d8814d6b0a78b4f59573435af4c7d2e3f5"
+      "bytes": 3008,
+      "sha256": "f632c712eeeebbcb430a6e307b4dc377b3794f831107dea24f3ad7044dc19148"
+    },
+    {
+      "path": "storage.mjs",
+      "bytes": 2840,
+      "sha256": "ff20c67e7e73dde07113ea2aa8d3833c1473ebc954dc5edb03b811c6c3998dd6"
     },
     {
       "path": "transport.mjs",
@@ -82,11 +112,11 @@
       "sha256": "c5100b4676e35bff5de2873b1eed7303757651fc26daf893119c9f7faf2448ee"
     }
   ],
-  "zip": {
-    "path": "saudilaw-jobs-0.0.4-review-source.zip",
-    "bytes": 96089,
-    "sha256": "28a32feb0d40c66679ba2bad2f00718d83a02636230685f9e060b5a0306c5df2"
-  },
   "sourceRoot": "reddit-bot",
-  "status": "LOCAL ONLY - submission paused; not uploaded or reviewed"
+  "status": "Local posting candidate; both release gates false; not uploaded or submitted; supersedes the earlier README-only 0.0.4 archive",
+  "zip": {
+    "bytes": 151195,
+    "sha256": "79614697c9397d808373d60789217320f41c2d81c0b37e0e9bdbffbfd6b1e5e8",
+    "file": "saudilaw-jobs-0.0.4-review-source.zip"
+  }
 }

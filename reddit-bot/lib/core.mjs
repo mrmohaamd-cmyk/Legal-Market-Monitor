@@ -1,4 +1,11 @@
 // No network or Reddit calls here. Only the reviewed publication adapter may supply a feed.
+import { ledgerScope, getLedgerStatus, reserveAttempt, beginSubmission, finishSubmission, suppressAttempt, newAttemptId } from './ledger.mjs';
+
+export const PRIVATE_TEST_RECORD = Object.freeze({id: 'private-delivery-check-v1', firm_name: 'synthetic test', role_title: 'delivery check', location: 'private development community'});
+export const PRIVATE_TEST_POST = Object.freeze({
+  title: '[PRIVATE TEST — NOT A JOB] SaudiLaw Jobs delivery check',
+  text: 'This is a synthetic delivery check in the private SaudiLaw Jobs development community. It is not a vacancy, employer advertisement or application opportunity. There is no application link. Do not submit an application or personal information. This post exists only to verify the authorized posting and recovery workflow.'
+});
 export const VERIFICATION_WINDOW_MS = 168 * 60 * 60 * 1000;
 export const REVIEWED_SOURCES = Object.freeze({
   'ao-shearman-winter-2026-coop': {
@@ -145,48 +152,62 @@ export function claimKeys(record, subreddit = 'SaudiLaw', now = Date.now()) {
   };
 }
 
-export async function runBot({feed, clock = Date.now, now = clock(), enabled = false, dryRun = true, subreddit = 'SaudiLaw', storage, submit, registry = REVIEWED_SOURCES} = {}) {
-  if (subreddit !== 'SaudiLaw') return {status: 'blocked', reason: 'This prototype is scoped to r/SaudiLaw.'};
+export async function runBot({feed, clock = Date.now, now = clock(), enabled = false, dryRun = true, subreddit = 'SaudiLaw', mode = 'production', storage, submit, registry = REVIEWED_SOURCES, canSubmit = async () => true, createAttemptId = newAttemptId} = {}) {
+  try { ledgerScope(subreddit, mode); } catch { return {status: 'blocked', reason: 'Unsupported posting mode/community pair.'}; }
   if (enabled !== true) return {status: 'disabled'};
   // Snapshot the input before awaiting storage: another caller cannot change the post after its claims.
-  const snapshot = structuredClone(feed);
-  const report = evaluateFeed(snapshot, {now, registry});
+  const privateTest = mode === 'private-test';
+  const snapshot = privateTest ? null : structuredClone(feed);
+  const report = privateTest ? {valid: Number.isFinite(now), errors: [], candidates: [PRIVATE_TEST_RECORD], skipped: []} : evaluateFeed(snapshot, {now, registry});
   if (!report.valid) return {status: 'invalid-feed', report};
-  const previews = report.candidates.map(record => ({id: record.id, ...renderPost(record)}));
+  const render = record => privateTest ? PRIVATE_TEST_POST : renderPost(record);
+  const previews = report.candidates.map(record => ({id: record.id, ...render(record)}));
   // Missing, null, strings, or any value except literal false all retain dry-run behavior.
   if (dryRun !== false) return {status: 'dry-run', report, previews};
-  if (!storage?.get || !storage?.set || typeof submit !== 'function') return {status: 'blocked', reason: 'Durable storage and submit adapter are required.'};
+  if (typeof storage?.get !== 'function' || typeof storage?.compareAndSet !== 'function' || typeof submit !== 'function' || typeof canSubmit !== 'function') return {status: 'blocked', reason: 'Atomic ledger storage, posting guard and submit adapter are required.'};
+  const scope = {storage, subreddit, mode};
+  const status = await getLedgerStatus(scope);
+  if (status.status !== 'ready') return status;
   for (const record of report.candidates) {
+    // v1 had no index. Never silently ignore a legacy claim encountered during an
+    // explicitly approved migration; only a separate operator audit can resolve it.
     const keys = claimKeys(record, subreddit, now);
-    const attempt = JSON.stringify({state: 'pending', id: record.id, started_at: new Date(now).toISOString()});
     try {
-      if (await storage.get(keys.id) || await storage.get(keys.identity)) continue;
-      // Every claim is permanent. Partial writes, crashes and ambiguous responses require human reconciliation.
-      // Claiming the day first atomically caps ALL submissions, including unknown outcomes, at one per UTC day.
-      if (await storage.set(keys.day, attempt, {nx: true}) !== 'OK') return {status: 'daily-cap', id: record.id};
-      if (await storage.set(keys.id, attempt, {nx: true}) !== 'OK') return {status: 'claimed', id: record.id};
-      if (await storage.set(keys.identity, attempt, {nx: true}) !== 'OK') return {status: 'claimed', id: record.id};
+      if ((await Promise.all([storage.get(keys.id), storage.get(keys.identity), storage.get(keys.day)])).some(value => value !== undefined && value !== null)) return {status: 'legacy-state-blocked', reason: 'A legacy posting claim exists. Audit migration before posting.'};
     } catch {
-      return {status: 'storage-uncertain', id: record.id, reason: 'No submission attempted; retain all claims and reconcile storage before retrying.'};
+      return {status: 'storage-uncertain', reason: 'Legacy-claim access was not confirmed; no submission.'};
     }
+    const reserved = await reserveAttempt({...scope, record, now, attemptId: createAttemptId()});
+    if (reserved.status === 'duplicate') continue;
+    if (reserved.status !== 'reserved') return reserved;
+    const attemptId = reserved.attemptId;
+    let permitted;
+    try { permitted = await canSubmit({subreddit, mode, attemptId}); }
+    catch { return {status: 'guard-uncertain', attemptId, reason: 'Posting guard could not be checked. No submission; reserved work globally pauses posting.'}; }
     const submissionTime = clock();
-    if (!Number.isFinite(submissionTime) || submissionTime < now || new Date(submissionTime).toISOString().slice(0, 10) !== new Date(now).toISOString().slice(0, 10) || !fresh(snapshot.generated_at, submissionTime) || !eligibility(record, {now: submissionTime, registry}).eligible) {
-      return {status: 'eligibility-changed', id: record.id, reason: 'Evidence expired, the UTC day changed, or the clock changed before submission. No submission attempted; claims remain for reconciliation.'};
+    const current = time => Number.isSafeInteger(time) && time >= now && new Date(time).toISOString().slice(0, 10) === new Date(now).toISOString().slice(0, 10) &&
+      (privateTest || (fresh(snapshot.generated_at, time) && eligibility(record, {now: time, registry}).eligible));
+    if (permitted !== true || !current(submissionTime)) {
+      const cancelled = await suppressAttempt({...scope, attemptId, confirm: true});
+      if (cancelled.status !== 'suppressed') return cancelled;
+      return {status: permitted !== true ? 'guard-blocked' : 'eligibility-changed', attemptId, reason: 'No submission. The reserved identity and day remain permanently consumed.'};
     }
+    const begun = await beginSubmission({...scope, attemptId, now: submissionTime});
+    if (begun.status !== 'submitting') return begun;
+    // A crash after the durable transition is conservatively an uncertain submit.
+    // There is no automatic lease expiry or submission retry.
+    if (!current(clock())) return {status: 'eligibility-changed', attemptId, reason: 'Time or evidence changed after the durable submitting transition. No API call; posting remains globally paused.'};
     let posted;
     try {
-      posted = await submit({subredditName: subreddit, ...renderPost(record), runAs: 'APP'});
+      const post = render(record);
+      posted = await submit({subredditName: subreddit, title: post.title, text: `${post.text}\n\n${reserved.marker}`, runAs: 'APP'});
       if (!posted || typeof posted.id !== 'string' || !/^t3_[a-z0-9]+$/.test(posted.id)) throw new Error('Missing confirmed post ID.');
     } catch {
-      return {status: 'submission-uncertain', id: record.id, reason: 'Submission may have succeeded. Claims remain permanent; do not automatically retry.'};
+      return {status: 'submission-uncertain', attemptId, marker: reserved.marker, reason: 'Submission may have succeeded. All posting is paused; independently verify the owned APP post and reference.'};
     }
-    const receipt = JSON.stringify({state: 'posted', id: record.id, post_id: posted.id, started_at: new Date(now).toISOString()});
-    try {
-      for (const key of [keys.id, keys.identity, keys.day]) if (await storage.set(key, receipt) !== 'OK') throw new Error('Receipt write unconfirmed.');
-    } catch {
-      return {status: 'receipt-uncertain', id: record.id, postId: posted.id, reason: 'Post ID was returned; pending claims remain protective. Reconcile receipt without reposting.'};
-    }
-    return {status: 'posted', id: record.id, postId: posted.id};
+    const receipt = await finishSubmission({...scope, attemptId, postId: posted.id});
+    if (receipt.status === 'storage-uncertain') return {status: 'receipt-uncertain', attemptId, postId: posted.id, reason: 'Receipt commit was not confirmed. Inspect durable status; never retry the submission.'};
+    return {...receipt, id: record.id};
   }
   return {status: 'nothing-to-post', report};
 }

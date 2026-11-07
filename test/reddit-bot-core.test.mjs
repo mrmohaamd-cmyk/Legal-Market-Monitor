@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {REVIEWED_SOURCES, VERIFICATION_WINDOW_MS, timestamp, evaluateFeed, eligibility, renderPost, runBot, claimKeys} from '../reddit-bot/lib/core.mjs';
+import {initializeLedger, ledgerScope, getLedgerStatus} from '../reddit-bot/lib/ledger.mjs';
 
 // Synthetic records exercise policy; these are never evidence of real employer facts.
 const NOW = Date.parse('2026-11-07T00:00:00Z');
@@ -18,14 +19,17 @@ function record(id = 'segal-riyadh-student-intern-2026') {
     application_check: {checked_at: VERIFIED, result: 'form_available', note: 'Synthetic test evidence only.'}};
 }
 const feed = (...records) => ({generated_at: VERIFIED, verification_window_hours: 168, records: records.length ? records : [record()]});
-function storage() {
-  const data = new Map();
-  return {data, writes: [], async get(key) {return data.get(key);}, async set(key, value, options = {}) {
-    this.writes.push({key, value, options});
-    if (options.nx && data.has(key)) return undefined;
-    data.set(key, value); return 'OK';
+function memoryStorage(initial = []) {
+  const data = new Map(initial);
+  return {data, writes: [], async get(key) {return data.get(key);}, async compareAndSet(key, expected, value) {
+    this.writes.push({key, expected, value});
+    if (data.get(key) !== expected) return false;
+    data.set(key, value); return true;
   }};
 }
+const bootstrap = memoryStorage();
+assert.equal((await initializeLedger({storage: bootstrap, confirmedNoLegacyPosting: true, confirmedNoLostLedger: true})).status, 'initialized');
+const storage = () => memoryStorage(bootstrap.data);
 const live = (extra = {}) => ({feed: feed(), now: NOW, clock: () => NOW, enabled: true, dryRun: false, storage: storage(), submit: async () => ({id: 't3_test123'}), ...extra});
 
 test('actual published-format feed has three reviewed candidates at the recorded audit time', async () => {
@@ -160,8 +164,10 @@ test('confirmed posting writes permanent receipts then blocks repeats after midn
   const options = live({storage: store, submit: async params => {calls++; assert.equal(params.runAs, 'APP'); assert.equal(params.subredditName, 'SaudiLaw'); return {id: 't3_posted'};}});
   assert.equal((await runBot(options)).status, 'posted');
   assert.equal((await runBot({...options, now: NOW + 86400000})).status, 'nothing-to-post');
-  assert.equal(calls, 1); assert.equal(store.data.size, 3);
-  assert.ok(store.writes.every(({options}) => !('expiration' in options) && !('expire' in options)));
+  assert.equal(calls, 1); assert.equal(store.data.size, 1);
+  const persisted = [...store.data.values()].join('');
+  assert.ok(!persisted.includes(record().role_title));
+  assert.ok(!persisted.includes(record().application_url));
 });
 
 test('30 concurrent scheduler runs submit once and share an atomic daily limit', async () => {
@@ -203,7 +209,8 @@ test('evidence expiring during async storage operations is rechecked before subm
   let calls = 0;
   const store = storage();
   const result = await runBot(live({feed: feed(item), clock: () => NOW + 1, storage: store, submit: async () => {calls++;}}));
-  assert.equal(result.status, 'eligibility-changed'); assert.equal(calls, 0); assert.equal(store.data.size, 3);
+  assert.equal(result.status, 'eligibility-changed'); assert.equal(calls, 0);
+  assert.equal((await getLedgerStatus({storage: store})).suppressedCount, 1);
 });
 
 test('crossing UTC midnight during claim writes cannot use yesterday\'s daily slot', async () => {
@@ -216,37 +223,83 @@ test('submission timeout retains permanent claims and is never automatically ret
   const store = storage(); let calls = 0;
   const options = live({storage: store, submit: async () => {calls++; throw new Error('Timeout after Reddit accepted');}});
   assert.equal((await runBot(options)).status, 'submission-uncertain');
-  assert.equal((await runBot({...options, now: NOW + 86400000})).status, 'nothing-to-post');
-  assert.equal(calls, 1); assert.equal(store.data.size, 3);
-  assert.ok([...store.data.values()].every(value => JSON.parse(value).state === 'pending'));
+  assert.equal((await runBot({...options, now: NOW + 86400000})).status, 'paused');
+  assert.equal(calls, 1); assert.equal(store.data.size, 1);
+  assert.equal((await getLedgerStatus({storage: store})).active.state, 'submitting');
 });
 
 test('missing or malformed post receipt is uncertain and never triggers automatic retry', async () => {
   for (const response of [undefined, {}, {id: '123'}, {id: ''}]) {
     const options = live({submit: async () => response});
     assert.equal((await runBot(options)).status, 'submission-uncertain');
-    assert.equal((await runBot({...options, now: NOW + 86400000})).status, 'nothing-to-post');
+    assert.equal((await runBot({...options, now: NOW + 86400000})).status, 'paused');
   }
 });
 
-test('ambiguous Redis claim response, storage failure and partial claims prevent submission', async () => {
-  for (const failAt of [1, 2, 3]) {
-    const store = storage(); const set = store.set.bind(store); let writes = 0; let calls = 0;
-    store.set = async (...args) => {writes++; const result = await set(...args); if (writes === failAt) throw new Error('Reply lost'); return result;};
+test('atomic reservation and submitting-transition reply loss prevent submission and globally pause', async () => {
+  for (const failAt of [1, 2]) {
+    const store = storage(); const compare = store.compareAndSet.bind(store); let writes = 0; let calls = 0;
+    store.compareAndSet = async (...args) => {writes++; const result = await compare(...args); if (writes === failAt) throw new Error('Reply lost'); return result;};
     const result = await runBot(live({storage: store, submit: async () => {calls++; return {id: 't3_one'};}}));
     assert.equal(result.status, 'storage-uncertain'); assert.equal(calls, 0);
-    assert.equal(store.data.size, failAt);
+    assert.equal(store.data.size, 1);
+    assert.equal((await getLedgerStatus({storage: store})).status, 'paused');
   }
   let calls = 0;
-  const result = await runBot(live({storage: {get: async () => undefined, set: async () => true}, submit: async () => {calls++;}}));
-  assert.equal(result.status, 'daily-cap'); assert.equal(calls, 0);
+  const store = storage(); store.compareAndSet = async () => 'OK';
+  const result = await runBot(live({storage: store, submit: async () => {calls++;}}));
+  assert.equal(result.status, 'storage-uncertain'); assert.equal(calls, 0);
 });
 
 test('failure saving a confirmed Reddit receipt retains duplicate protection', async () => {
-  const store = storage(); const set = store.set.bind(store); let calls = 0;
-  store.set = async (...args) => {if (!args[2]?.nx) throw new Error('Receipt storage failed'); return set(...args);};
+  const store = storage(); const compare = store.compareAndSet.bind(store); let calls = 0; let writes = 0;
+  store.compareAndSet = async (...args) => {if (++writes === 3) throw new Error('Receipt storage failed'); return compare(...args);};
   const options = live({storage: store, submit: async () => {calls++; return {id: 't3_known'};}});
   const result = await runBot(options);
   assert.equal(result.status, 'receipt-uncertain'); assert.equal(result.postId, 't3_known');
-  assert.equal((await runBot({...options, now: NOW + 86400000})).status, 'nothing-to-post'); assert.equal(calls, 1);
+  assert.equal((await runBot({...options, now: NOW + 86400000})).status, 'paused'); assert.equal(calls, 1);
+});
+
+test('unresolved submission globally pauses different jobs on subsequent days', async () => {
+  const store = storage(); let calls = 0;
+  const options = live({storage: store, submit: async () => {calls++; throw new Error('Unknown result');}});
+  assert.equal((await runBot(options)).status, 'submission-uncertain');
+  const result = await runBot({...options, now: NOW + 86400000, clock: () => NOW + 86400000, feed: feed(record('ao-shearman-winter-2026-coop'))});
+  assert.equal(result.status, 'paused'); assert.equal(calls, 1);
+});
+
+test('missing ledgers and encountered legacy claims are never initialized or reset automatically', async () => {
+  let calls = 0;
+  const missing = memoryStorage();
+  assert.equal((await runBot(live({storage: missing, submit: async () => {calls++;}}))).status, 'uninitialized');
+  assert.equal(missing.data.size, 0);
+  const store = storage(); store.data.set(claimKeys(record(), 'SaudiLaw', NOW).id, '{"state":"pending"}');
+  assert.equal((await runBot(live({storage: store, submit: async () => {calls++;}}))).status, 'legacy-state-blocked');
+  assert.equal(calls, 0);
+});
+
+test('guard false permanently suppresses the reserved job; guard failure leaves a global pause', async () => {
+  for (const guard of [async () => false, async () => {throw new Error('Settings unavailable');}]) {
+    const store = storage(); let calls = 0;
+    const result = await runBot(live({storage: store, canSubmit: guard, submit: async () => {calls++;}}));
+    assert.equal(calls, 0);
+    if (result.status === 'guard-blocked') assert.equal((await getLedgerStatus({storage: store})).suppressedCount, 1);
+    else {assert.equal(result.status, 'guard-uncertain'); assert.equal((await getLedgerStatus({storage: store})).status, 'paused');}
+  }
+});
+
+test('private mode is an isolated one-time synthetic test, with no arbitrary render/feed content', async () => {
+  const store = memoryStorage();
+  const scope = {storage: store, subreddit: 'saudilaw_jobs_dev', mode: 'private-test'};
+  assert.equal((await initializeLedger({...scope, confirmedNoLegacyPosting: true, confirmedNoLostLedger: true})).status, 'initialized');
+  let submitted;
+  const options = {...live(), ...scope, feed: {bad: 'arbitrary employer/link'}, postRenderer: () => ({title: 'BAD', text: 'https://evil.example'}), submit: async post => {submitted = post; return {id: 't3_private'};}};
+  assert.equal((await runBot(options)).status, 'posted');
+  assert.equal(submitted.subredditName, 'saudilaw_jobs_dev');
+  assert.match(submitted.title, /^\[PRIVATE TEST — NOT A JOB\]/);
+  assert.match(submitted.text, /not a vacancy/); assert.match(submitted.text, /SaudiLaw Jobs attempt: SLJ2-[a-f0-9]{32}$/);
+  assert.doesNotMatch(submitted.text, /https?:\/\//);
+  assert.equal((await runBot({...options, now: NOW + 86400000})).status, 'nothing-to-post');
+  for (const bad of [{subreddit: 'SaudiLaw'}, {mode: 'production'}, {subreddit: 'another'}]) assert.equal((await runBot({...options, ...bad})).status, 'blocked');
+  assert.notEqual(ledgerScope('SaudiLaw').key, ledgerScope('saudilaw_jobs_dev', 'private-test').key);
 });

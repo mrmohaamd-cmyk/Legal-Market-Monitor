@@ -1,4 +1,5 @@
 import { sendJson } from './http.mjs';
+import { RELEASE_POLICY } from '../release-policy.mjs';
 
 // These destinations are fixed release-policy links, never supplied by a request.
 const destinations = Object.freeze({
@@ -26,6 +27,8 @@ export function menuInfoResponse(subredditName, action) {
     return { showToast: 'SaudiLaw Jobs information is unavailable in this community.' };
   }
   if (action === 'about') {
+    if (RELEASE_POLICY.productionPosting) return { showToast: 'SaudiLaw Jobs posts reviewed opportunities when moderators enable it. No applications are accepted. See Terms, Privacy or Contact moderators.' };
+    if (RELEASE_POLICY.privateTestPosting && community === 'saudilaw_jobs_dev') return { showToast: 'SaudiLaw Jobs is in private testing: one labelled test post can be created here. No applications are accepted. See Terms, Privacy or Contact moderators.' };
     return { showToast: "SaudiLaw Jobs is preview only; it does not publish jobs or accept applications. See Terms, Privacy or Contact moderators." };
   }
   if (!Object.hasOwn(destinations, action)) {

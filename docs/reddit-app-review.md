@@ -1,5 +1,7 @@
 # Reddit jobs app: review and launch notes
 
+Historical setup/research notes. The current authority for the prepared posting release is the [posting review packet](reddit-posting-review-packet.md). Private 0.0.3 desktop menu tests and policy publication subsequently completed; older statements below about 0.0.2 or missing notices are superseded. Posting integration and review submission remain incomplete.
+
 Status: private version `0.0.2` is installed only in r/saudilaw_jobs_dev after specific owner approval. Its backend preview succeeded with three candidates, five exclusions and no validation/bridge errors; visual toast display was not captured. Feed checks were restored off, dry run remains on and live posting stays hard-locked. Zero posts were observed and final CLI inspection found no r/SaudiLaw installation. GitHub fetch-domain approval is confirmed; general app/off-platform-link approval is not. Official documentation was reviewed in November 2026. Later uploads/upgrades, publication, live installation and posting need their applicable specific authorization; no paid commitment is authorized.
 
 ## Platform choice
