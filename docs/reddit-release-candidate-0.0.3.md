@@ -1,5 +1,7 @@
 # SaudiLaw Jobs 0.0.3 private-test candidate
 
+Historical preparation snapshot. For the approved upload, installed version and completed desktop menu tests, see the [current private-test receipt](reddit-private-upgrade-0.0.3.md). Statements below describe the candidate before deployment; they are not current app status.
+
 Prepared locally on 7 November 2026. **Not uploaded, installed, submitted for review or enabled.** This is a preview-only candidate; it is ready for the next authorized private integration test, not verified for production posting.
 
 ## Exact scope
