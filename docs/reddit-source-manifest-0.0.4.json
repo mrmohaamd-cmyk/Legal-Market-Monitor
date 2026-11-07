@@ -1,0 +1,92 @@
+{
+  "observedAt": "2026-11-07T01:28:56.775Z",
+  "app": "saudilaw-jobs",
+  "candidateVersion": "0.0.4",
+  "offline": true,
+  "caveat": "Snapshot only; regenerate after code changes. Filename/private-key checks are not a complete secret audit.",
+  "fileCount": 15,
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 82,
+      "sha256": "a9672491fe03338b931048e9b6dafbbede53725a8c16d4aaaf13d64baaa034ca"
+    },
+    {
+      "path": "build.mjs",
+      "bytes": 574,
+      "sha256": "64506ffe8e9cd7a17596b1121c4c9b722e49f2c97b834d9f97f5601e408deed0"
+    },
+    {
+      "path": "DEVELOPMENT.md",
+      "bytes": 12395,
+      "sha256": "e6f49a2d8f576a5a23a333f304c9f84f37d32e7bd0810f926abc32211e00e387"
+    },
+    {
+      "path": "devvit.json",
+      "bytes": 2181,
+      "sha256": "c0ad316be44b71c1f47df95d57412dc7870e19cc7944b27aa001387e14464447"
+    },
+    {
+      "path": "lib/core.mjs",
+      "bytes": 15452,
+      "sha256": "4967ed0a7d76c8b6c2455f64ac83d628a713c74bee8a1586103b87b82bbb5b3c"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 42720,
+      "sha256": "a686007bdb9103db88203e006a3cc26f433f8a1ce9a3a43b6f72bb73a73fcaa5"
+    },
+    {
+      "path": "package.json",
+      "bytes": 508,
+      "sha256": "1ade69de500cc220e26be6a0dd6082edb7ef14e1bd90127c7fc0568b0c67bb38"
+    },
+    {
+      "path": "preview.mjs",
+      "bytes": 2124,
+      "sha256": "589f2d1551d9a5acc9512c52b3a2f49448e3adafdf98954c53ad5735c025346a"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6924,
+      "sha256": "bbb1ad3dd40cd17da97e8610160f542a8fc366d3121f661872e73ad95c3b266c"
+    },
+    {
+      "path": "runtime.mjs",
+      "bytes": 3161,
+      "sha256": "11f55ad7e45e348745cfd8280f464b0ec8d2fdeca45fc13248ec4be68420bfac"
+    },
+    {
+      "path": "server/http.mjs",
+      "bytes": 487,
+      "sha256": "232eaaa24d89ad57ef1cc5eb0c29aa6dce193a04c9bd8aa20f12290155595a12"
+    },
+    {
+      "path": "server/index.ts",
+      "bytes": 1864,
+      "sha256": "fa944e51f3be5a1b12243a524766e351ad0ea4fa274f6391ea2b84eed1b76ccb"
+    },
+    {
+      "path": "server/menu-info.mjs",
+      "bytes": 2485,
+      "sha256": "8f20afb7d3a0a34a38c95936078272d8814d6b0a78b4f59573435af4c7d2e3f5"
+    },
+    {
+      "path": "transport.mjs",
+      "bytes": 2818,
+      "sha256": "1c3f9c8ec985c543e0547881387aaeeecf3dac587c3a2a2851620723aaecfe28"
+    },
+    {
+      "path": "tsconfig.json",
+      "bytes": 314,
+      "sha256": "c5100b4676e35bff5de2873b1eed7303757651fc26daf893119c9f7faf2448ee"
+    }
+  ],
+  "zip": {
+    "path": "saudilaw-jobs-0.0.4-review-source.zip",
+    "bytes": 96089,
+    "sha256": "28a32feb0d40c66679ba2bad2f00718d83a02636230685f9e060b5a0306c5df2"
+  },
+  "sourceRoot": "reddit-bot",
+  "status": "LOCAL ONLY - submission paused; not uploaded or reviewed"
+}
