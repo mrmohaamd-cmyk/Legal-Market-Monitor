@@ -1,0 +1,41 @@
+{
+  "app": "saudilaw-jobs",
+  "version": "0.0.2",
+  "community": "saudilaw_jobs_dev",
+  "visibility": "private",
+  "source": "Observed Reddit Devvit server log after moderator-menu invocation",
+  "retrievedAt": "2026-11-06T23:57:03.559Z",
+  "status": "dry-run",
+  "candidateCount": 3,
+  "candidateIds": [
+    "ao-shearman-winter-2026-coop",
+    "segal-riyadh-student-intern-2026",
+    "white-case-saudi-law-trainee-2027"
+  ],
+  "excludedCount": 5,
+  "excludedIds": [
+    "latham-riyadh-graduate-coop",
+    "latham-riyadh-trainee-associate",
+    "kirkland-riyadh-entry-level",
+    "pinsent-masons-riyadh-internship-2026",
+    "white-case-saudi-coop-2027"
+  ],
+  "errors": [],
+  "provenance": {
+    "api": "https://api.github.com/repos/mrmohaamd-cmyk/Legal-Market-Monitor/contents/dist/opportunities.json?ref=main",
+    "branch": "main",
+    "blobSha": "1591d9fb22bbfe2a2e8eeb5b8ad801f09e76d8b3"
+  },
+  "finalSettingsVerifiedAfterReload": {
+    "enabled": false,
+    "dryRun": true
+  },
+  "privateCommunityPostsObservedAfterTest": 0,
+  "productionCommunityInstalledApps": 0,
+  "recurringPostingEnabled": false,
+  "limitations": [
+    "Transient preview toast was not visually captured; backend completion is verified by the live server log.",
+    "No actual post submission or production activation was tested.",
+    "App terms/privacy details and general/off-platform-link review remain incomplete."
+  ]
+}
