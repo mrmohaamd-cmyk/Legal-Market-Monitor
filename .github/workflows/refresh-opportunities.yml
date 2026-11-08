@@ -17,7 +17,8 @@ concurrency:
 jobs:
   propose:
     if: github.repository == 'mrmohaamd-cmyk/Legal-Market-Monitor' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    # Keep the runner compatible with pinned Playwright 1.55.0.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: write
