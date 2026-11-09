@@ -1,7 +1,7 @@
 import {DEFAULT_SETTINGS,MAX_RECEIPT_BYTES,validateSettings,parseReceiptText,inspectReceipt,createSettingsExport} from './model.mjs';
 const $=id=>document.getElementById(id);
 const form=$('settings-form'),audit=[];
-let receipt=null,inspection=null,importGeneration=0,exportPending=false;
+let receipt=null,inspection=null,importGeneration=0,exportPending=false,draftRevision=0;
 function notice(message,error=false) {
   $('notice').textContent=message;
   $('notice').classList.toggle('error',error);
@@ -143,16 +143,17 @@ async function refreshFreshness() {
   }
 }
 form.addEventListener('submit',event=>event.preventDefault());
-form.addEventListener('input',()=>{validateDraft();$('draft-state').textContent='Edited · not applied';});
+form.addEventListener('input',()=>{draftRevision++;validateDraft();$('draft-state').textContent='Edited · not applied';});
 form.addEventListener('change',event=>{
   validateDraft();log('settings_changed','Draft setting edited: '+event.target.name+'.');
 });
 $('reset-draft').addEventListener('click',()=>{
-  resetForm();$('draft-state').textContent='Reset · not applied';
+  draftRevision++;resetForm();$('draft-state').textContent='Reset · not applied';
   log('draft_reset','Restored safe proposal defaults.');notice('Local draft reset. Live operations were not changed.');
 });
 $('export-settings').addEventListener('click',async()=>{
   const settings=validateDraft();if(!settings||exportPending)return;
+  const exportedRevision=draftRevision;
   exportPending=true;validateDraft();
   try {
     log('export_requested','Requested a proposed-settings file; nothing applied.');
@@ -161,8 +162,9 @@ $('export-settings').addEventListener('click',async()=>{
     const a=document.createElement('a');a.href=url;a.download='saudilaw-settings-proposal-'+result.exported_at.slice(0,10)+'.json';
     document.body.append(a);a.click();a.remove();
     setTimeout(()=>URL.revokeObjectURL(url),1000);
-    $('draft-state').textContent='Export prepared · not applied';
-    notice('Settings file prepared for download. No live settings changed.');
+    const unchanged=draftRevision===exportedRevision;
+    $('draft-state').textContent=unchanged?'Export prepared · not applied':'Earlier draft exported · new edits remain';
+    notice(unchanged?'Settings file prepared for download. No live settings changed.':'The earlier draft was prepared for download. Your newer edits have not been exported. No live settings changed.');
   } catch(error) {notice('Export failed: '+error.message,true);}
   finally {exportPending=false;validateDraft();}
 });
