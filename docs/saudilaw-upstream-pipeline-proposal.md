@@ -65,3 +65,18 @@ A source or translation failure quarantines the role. Retrieval has no automatic
 The existing monitor can report missed-run gaps when it resumes. It cannot report its own complete outage while not running. An independent watchdog is not implemented here; before activation, choose an already-authorized notification path or accept that limitation. Do not claim alert delivery, an end-to-end test, or live scheduled production verification from these unit tests.
 
 Validation status at preparation: tests written, not executed in the Windows thread. A separate authorized Linux cloud worker is to run them at the exact branch commit. Browser, deployment, employer live fetch and production posting are not part of this preparation.
+
+
+## Independent cloud validation received
+
+At commit 0d99584f2dd95fca8a11e6560794d2f62dee75ed, the coordinating Linux cloud worker reported 22 targeted pipeline tests passing, all 72 repository tests passing, and npm run build passing. The working tree remained clean before the deliberate live check.
+
+The read-only live check made exactly two allowlisted requests, retrieved 172109 bytes with zero transport failures, and produced one White & Case preview, zero accepted records, and the expected translation/unsupported/closed/standing-route quarantine reasons. Snapshot SHA-256: 7929b8746ab05740d8ecf5ffa3e70de9f9e848e24fb26f39568c354fddc55aec. Generated 2026-11-09T14:05:28.915Z; expires 2026-11-10T02:05:28.915Z. It exists only in the cloud test workspace; no feed publication or Reddit action occurred.
+
+This verifies the narrow upstream path, not discovery of new roles, approved bilingual wording, consumer integration or end-to-end production posting.
+
+## Dashboard addition
+
+tools/saudilaw-control/ adds a static local workspace outside the deployed dist/ directory. It can import and inspect disabled preview receipts, edit bounded proposal settings, and export the proposal with an unsigned local activity record. Its Reddit controls are visibly unconnected. No API, credentials, browser persistence or background network request is added.
+
+The snapshot freshness indicator is distinct from publication readiness: every imported result remains not publishable, with zero accepted records. Integrity alone never authenticates source content or translation approval. Exported settings are not consumed by the current CLI or any deployed process. See the workspace README for the cloud test route and remaining browser validation.

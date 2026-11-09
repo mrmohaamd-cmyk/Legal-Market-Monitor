@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; font-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>SaudiLaw · Pipeline workspace</title>
+<link rel="stylesheet" href="./styles.css">
+<script type="module" src="./app.mjs"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to workspace</a>
+<aside class="sidebar">
+  <a class="brand" href="#overview"><span class="brand-mark" aria-hidden="true">س</span><span>SaudiLaw<small>JOBS WORKSPACE</small></span></a>
+  <nav aria-label="Workspace sections">
+    <a href="#overview">Overview <span>01</span></a>
+    <a href="#settings">Draft settings <span>02</span></a>
+    <a href="#review">Review queue <span>03</span></a>
+    <a href="#activity">Session activity <span>04</span></a>
+  </nav>
+  <div class="sidebar-note"><span class="dot"></span> Local workspace<p>No live connection.<br>No credentials or uploads.</p></div>
+</aside>
+<div class="workspace">
+<header class="topbar"><span>r/SaudiLaw <span class="slash">/</span> Job pipeline</span><span class="badge neutral">DRAFT CONTROLS</span></header>
+<main id="main">
+<section id="overview" aria-labelledby="title">
+  <div class="page-heading"><div><p class="eyebrow">PIPELINE WORKSPACE</p><h1 id="title">Keep every step in view.</h1><p class="lead">Inspect a run receipt and prepare settings for an approved release.</p></div><label class="button primary file-button" for="receipt-file">Import run receipt<input id="receipt-file" type="file" accept=".json,application/json"></label></div>
+  <div class="boundary"><strong>This workspace cannot change live operations.</strong><span>Settings stay in this session until exported. Imported receipts are local files; their origin is not authenticated.</span></div>
+  <p id="notice" class="notice" role="status" aria-live="polite">Import a pipeline snapshot to inspect its reported results.</p>
+  <div class="metrics">
+    <article class="metric"><span>Receipt freshness</span><strong id="freshness">No receipt</strong><small id="freshness-detail">Last run not observed</small></article>
+    <article class="metric"><span>Source previews</span><strong id="preview-count">—</strong><small>Evidence to review, not accepted jobs</small></article>
+    <article class="metric"><span>Accepted for publication</span><strong>0</strong><small>Publication disabled in this build</small></article>
+    <article class="metric"><span>Reddit connection</span><strong>Not connected</strong><small>Live posting state not observed</small></article>
+  </div>
+  <div class="two-column overview-grid">
+    <article class="panel"><div class="panel-heading"><div><p class="eyebrow">FLOW</p><h2>From discovery to posting</h2></div><span class="badge amber">Review required</span></div>
+      <ol class="flow">
+        <li><span class="step">1</span><div><strong>Discover</strong><p>Existing six-hour monitor; this session has no live connection.</p></div><span class="stage-status">Unobserved</span></li>
+        <li><span class="step">2</span><div><strong>Verify sources</strong><p>Exact employer pages and application entry.</p></div><span id="verification-stage" class="stage-status">Import receipt</span></li>
+        <li><span class="step">3</span><div><strong>Review both languages</strong><p>Shared facts; exact Arabic and English wording.</p></div><span class="stage-status amber-text">Approval needed</span></li>
+        <li><span class="step">4</span><div><strong>Check duplicate ledger</strong><p>Reservations, previous posts and uncertain outcomes.</p></div><span class="stage-status">Unobserved</span></li>
+        <li><span class="step">5</span><div><strong>Publish on Reddit</strong><p>Requires authorized release and moderator controls.</p></div><span class="stage-status">Not connected</span></li>
+      </ol>
+    </article>
+    <article class="panel live-panel"><p class="eyebrow">REDDIT CONTROLS</p><h2>Live control stays with Reddit.</h2><p>The installed app has Job bot status, Start daily jobs and Stop daily jobs. They are not connected to this workspace.</p>
+      <div class="live-actions"><button disabled type="button" aria-describedby="live-limit">Start daily jobs</button><button disabled type="button" aria-describedby="live-limit">Stop daily jobs</button></div>
+      <p id="live-limit" class="small">These buttons do nothing here. Changing a draft cap to zero is not a live stop.</p>
+      <details><summary>What a stop means</summary><p>The app's Stop control invalidates scheduled callbacks and requests cancellation. It cannot retract a post already submitted or promise cancellation of an in-flight attempt. The current production state needs an authenticated moderator check.</p><p>Exported settings affect nothing immediately. Applying them would require a separate approved integration or release.</p></details>
+    </article>
+  </div>
+</section>
+<section id="settings" class="panel settings-panel" aria-labelledby="settings-title">
+  <div class="panel-heading"><div><p class="eyebrow">LOCAL PROPOSAL</p><h2 id="settings-title">Draft settings</h2><p>Propose tighter limits and a cadence. Nothing is sent or applied.</p></div><span id="draft-state" class="badge neutral">Unsaved local draft</span></div>
+  <form id="settings-form" novalidate>
+    <div class="settings-grid">
+      <fieldset><legend>Checking &amp; freshness</legend>
+        <label for="interval">Check interval <span>hours</span></label><input id="interval" name="verification_interval_hours" type="number" min="6" max="12" step="1" value="6" required><p class="help">Proposal only; the current monitor keeps its existing schedule.</p>
+        <label for="snapshot-age">Snapshot expiry <span>hours</span></label><input id="snapshot-age" name="snapshot_max_age_hours" type="number" min="1" max="12" step="1" value="12" required><p class="help">At least one check interval; never more than 12 hours.</p>
+        <label for="source-age">Source evidence expiry <span>hours</span></label><input id="source-age" name="source_max_age_hours" type="number" min="1" max="168" step="1" value="168" required><p class="help">Maximum seven days. Snapshot expiry cannot exceed this limit.</p>
+      </fieldset>
+      <fieldset><legend>Posting proposal</legend>
+        <label for="daily-cap">Maximum new posts <span>per UTC day</span></label><select id="daily-cap" name="proposed_daily_post_cap"><option value="0">0 — propose no posting</option><option value="1" selected>1 — bounded daily maximum</option></select><p class="help">This does not enable posting or stop the installed app.</p>
+        <label for="post-time">Preferred posting time <span>Riyadh · UTC+3</span></label><input id="post-time" name="proposed_post_time" type="time" value="09:00" required><p class="help">09:00 Riyadh corresponds to 06:00 UTC. A new cadence requires approval.</p>
+        <div class="fixed-settings"><span>Destination <strong>r/SaudiLaw</strong></span><span>Language <strong>Arabic + English</strong></span><span>Publication &amp; schedule <strong>Disabled in export</strong></span></div>
+      </fieldset>
+      <fieldset><legend>Sources &amp; safeguards</legend>
+        <label class="check"><input id="whitecase" name="whitecase_enabled" type="checkbox" checked><span>White &amp; Case<small>Saudi Law Trainee Program 2027 only</small></span></label>
+        <div class="unsupported"><strong>Other sources remain withheld</strong><p>A&amp;O and Segal need supported verification adapters. New discoveries require source and bilingual review. Standing recruitment routes are not vacancies.</p></div>
+        <ul class="guardrails"><li>Uncertain facts → quarantine</li><li>Duplicate identity → suppress</li><li>Unknown submission → pause for reconciliation</li><li>No automatic translation approval</li></ul>
+      </fieldset>
+    </div>
+    <div class="form-footer"><div><p id="settings-error" class="error" role="alert"></p><p class="small">Export contains proposed settings and an unsigned session record. No secrets.</p></div><div class="button-row"><button id="reset-draft" type="button" class="secondary">Reset draft</button><button id="export-settings" type="button" class="primary">Export proposed settings</button></div></div>
+  </form>
+</section>
+<section id="review" aria-labelledby="review-title">
+  <div class="section-heading"><div><p class="eyebrow">INSPECTION</p><h2 id="review-title">Review queue</h2></div><span id="queue-count" class="badge neutral">No receipt</span></div>
+  <div class="panel"><div id="receipt-meta" class="receipt-meta">No snapshot loaded. This is not a live feed.</div><div id="queue-empty" class="empty"><span aria-hidden="true">↥</span><h3>Bring a run into view.</h3><p>Import the JSON snapshot produced by the pipeline check. Files stay in this browser session.</p></div><div id="quarantine-table" hidden class="table-scroll"><table><caption>Reported quarantine outcomes</caption><thead><tr><th scope="col">Record</th><th scope="col">Reason</th><th scope="col">Action</th></tr></thead><tbody id="quarantine-rows"></tbody></table></div><div id="preview-list"></div></div>
+</section>
+<section id="activity" class="panel" aria-labelledby="activity-title"><div class="panel-heading"><div><p class="eyebrow">THIS SESSION ONLY</p><h2 id="activity-title">Activity record</h2></div><span class="small">Unsigned · resets on reload · last 100 actions</span></div><ol id="activity-list" class="activity"><li>No actions recorded.</li></ol></section>
+<footer>No live controls, automatic uploads or background network requests. Reloading clears this workspace.</footer>
+</main>
+</div>
+</body>
+</html>
