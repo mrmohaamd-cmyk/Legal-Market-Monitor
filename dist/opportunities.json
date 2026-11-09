@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-06T11:46:53Z",
+  "generated_at": "2026-11-08T13:36:48.095Z",
   "verification_window_hours": 168,
   "coverage": "42-firm target registry, not an exhaustive market census or 42 fully automated vacancy feeds. Public roles require first-party verification and review. Individual verification timestamps control freshness.",
   "coverage_audit": {
@@ -366,18 +366,18 @@
       "posted_at": null,
       "deadline_at": null,
       "first_seen_at": "2026-09-20T15:00:00+03:00",
-      "last_verified_at": "2026-11-06T11:46:32Z",
+      "last_verified_at": "2026-11-08T13:36:48.095Z",
       "materially_updated_at": "2026-10-29T23:18:54.239Z",
       "status": "open",
-      "provenance_notes": "First-party source and public application-entry review completed 2026-11-06T11:46:32Z. Official iCIMS requisition 11016 remains a general recruitment route for students and graduates. Its exact Apply link returned HTTP 200 with a role-specific email/profile entry; a separate browser review confirmed that public-entry journey. No intake, duration or deadline is stated. Accessible recruitment does not establish immediate headcount. No account, consent or application was submitted.",
+      "provenance_notes": "Automatic first-party route check at 2026-11-08T13:36:48.095Z. Latham requisition 11016 retains its reviewed general-recruitment description and Riyadh location. Its employer-provided iframe and exact Apply action reach a same-role public email/profile form. This verifies route availability, not immediate headcount. No login, consent, profile creation or application submission was performed.",
       "record_kind": "recruitment_route",
-      "last_reviewed_at": "2026-11-06T11:46:32Z",
+      "last_reviewed_at": "2026-11-08T13:36:48.095Z",
       "application_check": {
-        "checked_at": "2026-11-06T11:46:32Z",
+        "checked_at": "2026-11-08T13:36:48.095Z",
         "result": "login_required",
-        "note": "Official iCIMS requisition 11016 remains a general recruitment route for students and graduates. Its exact Apply link returned HTTP 200 with a role-specific email/profile entry; a separate browser review confirmed that public-entry journey. No intake, duration or deadline is stated. Accessible recruitment does not establish immediate headcount. No account, consent or application was submitted."
+        "note": "Latham requisition 11016 retains its reviewed general-recruitment description and Riyadh location. Its employer-provided iframe and exact Apply action reach a same-role public email/profile form. This verifies route availability, not immediate headcount. No login, consent, profile creation or application submission was performed."
       },
-      "availability_note": "Standing recruitment route; immediate vacancy or headcount is not confirmed."
+      "availability_note": "Standing recruitment route; this is not confirmation of immediate headcount."
     },
     {
       "id": "latham-riyadh-trainee-associate",
@@ -417,18 +417,18 @@
       "posted_at": null,
       "deadline_at": null,
       "first_seen_at": "2026-09-20T15:00:00+03:00",
-      "last_verified_at": "2026-11-06T11:46:36Z",
+      "last_verified_at": "2026-11-08T13:36:48.095Z",
       "materially_updated_at": "2026-10-29T23:18:54.239Z",
       "status": "open",
-      "provenance_notes": "First-party source and public application-entry review completed 2026-11-06T11:46:36Z. Official iCIMS requisition 11015 remains a general two-year trainee route. Its exact Apply link returned HTTP 200 with a role-specific email/profile entry; a separate browser review confirmed that public-entry journey. No intake or deadline is stated. Immediate headcount and detailed qualification thresholds are not established. No account, consent or application was submitted.",
+      "provenance_notes": "Automatic first-party route check at 2026-11-08T13:36:48.095Z. Latham requisition 11015 retains its reviewed general-recruitment description and Riyadh location. Its employer-provided iframe and exact Apply action reach a same-role public email/profile form. This verifies route availability, not immediate headcount. No login, consent, profile creation or application submission was performed.",
       "record_kind": "recruitment_route",
-      "last_reviewed_at": "2026-11-06T11:46:36Z",
+      "last_reviewed_at": "2026-11-08T13:36:48.095Z",
       "application_check": {
-        "checked_at": "2026-11-06T11:46:36Z",
+        "checked_at": "2026-11-08T13:36:48.095Z",
         "result": "login_required",
-        "note": "Official iCIMS requisition 11015 remains a general two-year trainee route. Its exact Apply link returned HTTP 200 with a role-specific email/profile entry; a separate browser review confirmed that public-entry journey. No intake or deadline is stated. Immediate headcount and detailed qualification thresholds are not established. No account, consent or application was submitted."
+        "note": "Latham requisition 11015 retains its reviewed general-recruitment description and Riyadh location. Its employer-provided iframe and exact Apply action reach a same-role public email/profile form. This verifies route availability, not immediate headcount. No login, consent, profile creation or application submission was performed."
       },
-      "availability_note": "Standing recruitment route; immediate vacancy or headcount is not confirmed."
+      "availability_note": "Standing recruitment route; this is not confirmation of immediate headcount."
     },
     {
       "id": "kirkland-riyadh-entry-level",
@@ -460,18 +460,18 @@
       "posted_at": null,
       "deadline_at": null,
       "first_seen_at": "2026-09-21T00:40:38Z",
-      "last_verified_at": "2026-11-06T11:46:53Z",
+      "last_verified_at": "2026-11-08T13:36:48.095Z",
       "materially_updated_at": "2026-10-29T23:18:54.239Z",
       "status": "open",
-      "provenance_notes": "First-party source and public application-entry review completed 2026-11-06T11:46:53Z. The official Saudi Arabia careers page returned HTTP 200 and continues to publish RY_Entry-Level_Legal_Recruiting@kirkland.com for entry-level legal applications. This is a standing recruitment contact, not a specific confirmed vacancy. Mailbox delivery, immediate headcount, eligibility and deadlines remain unverified. No email was sent.",
+      "provenance_notes": "Automatic first-party route check at 2026-11-08T13:36:48.095Z. The first-party Riyadh page still publishes its entry-level legal recruiting email inside the Apply Now — Entry Level card. This verifies a standing email route, not immediate headcount or mailbox delivery.",
       "record_kind": "recruitment_route",
-      "last_reviewed_at": "2026-11-06T11:46:53Z",
+      "last_reviewed_at": "2026-11-08T13:36:48.095Z",
       "application_check": {
-        "checked_at": "2026-11-06T11:46:53Z",
+        "checked_at": "2026-11-08T13:36:48.095Z",
         "result": "email_route",
-        "note": "The official Saudi Arabia careers page returned HTTP 200 and continues to publish RY_Entry-Level_Legal_Recruiting@kirkland.com for entry-level legal applications. This is a standing recruitment contact, not a specific confirmed vacancy. Mailbox delivery, immediate headcount, eligibility and deadlines remain unverified. No email was sent."
+        "note": "The first-party Riyadh page still publishes its entry-level legal recruiting email inside the Apply Now — Entry Level card. This verifies a standing email route, not immediate headcount or mailbox delivery."
       },
-      "availability_note": "Standing recruitment route; immediate vacancy or headcount is not confirmed."
+      "availability_note": "Standing recruitment route; this is not confirmation of immediate headcount."
     },
     {
       "id": "pinsent-masons-riyadh-internship-2026",
@@ -627,13 +627,13 @@
       "deadline_source_text": "Deadline passed (live portal); previously 30/10/2026, with no stated closing time or timezone",
       "provenance_notes": "Editorial review completed 2026-11-06T11:45:00Z, with first-party source retrieval and coordinated public application-entry browser checks. The first-party AllHires row for Saudi COOP Internship 2027, January 2027, now explicitly says Deadline passed. This is affirmative closure evidence. The prior published date was 30/10/2026; the exact closing time and timezone remain unknown. The record is archived as closed and its last successful open-availability verification is retained.",
       "record_kind": "advertised_opening",
-      "last_reviewed_at": "2026-11-06T11:45:00Z",
+      "last_reviewed_at": "2026-11-08T13:36:48.095Z",
       "application_check": {
-        "checked_at": "2026-11-06T11:45:00Z",
+        "checked_at": "2026-11-08T13:36:48.095Z",
         "result": "unverified",
-        "note": "The first-party AllHires row for Saudi COOP Internship 2027, January 2027, now explicitly says Deadline passed. This is affirmative closure evidence. The prior published date was 30/10/2026; the exact closing time and timezone remain unknown. The record is archived as closed and its last successful open-availability verification is retained."
+        "note": "The first-party portal explicitly marks Saudi COOP Internship 2027 (January 2027) “Deadline passed”. Other programmes on the page do not affect this finding."
       },
-      "availability_note": "Closed: the employer application portal explicitly marks this intake Deadline passed.",
+      "availability_note": "The first-party portal explicitly marks Saudi COOP Internship 2027 (January 2027) “Deadline passed”. Other programmes on the page do not affect this finding.",
       "review_due_at": "2026-10-30T21:00:00Z"
     },
     {
@@ -654,7 +654,7 @@
       "application_open_date": "2026-09-01",
       "deadline_at": null,
       "first_seen_at": "2026-10-03T09:27:43.979Z",
-      "last_verified_at": "2026-11-06T11:45:00Z",
+      "last_verified_at": "2026-11-08T13:36:48.095Z",
       "materially_updated_at": "2026-11-06T11:45:00Z",
       "status": "open",
       "id": "white-case-saudi-law-trainee-2027",
@@ -679,16 +679,16 @@
       "editorial_assessment": "A direct Saudi qualification pathway. Associate progression is conditional, not guaranteed; do not confuse it with the separate GCC English-law programme.",
       "programme_start_month": "2027-03",
       "deadline_source_text": "8 January 2027 (portal: 08/01/2027, DD/MM/YYYY; closing time and timezone not stated)",
-      "provenance_notes": "Editorial review completed 2026-11-06T11:45:00Z, with first-party source retrieval and coordinated public application-entry browser checks. The first-party AllHires row still lists Saudi Law Trainee Program 2027, March 2027, with 08/01/2027 and no Deadline passed label. The portal uses day/month/year, evidenced by adjacent 13/11/2026 and 15/11/2026 dates; this means 8 January 2027. Its public email/login entry is available; authenticated programme selection and submission were not tested. Employer eligibility remains unchanged. Closing time and timezone are not stated.",
+      "provenance_notes": "Automatic first-party route check at 2026-11-08T13:36:48.095Z. The exact Saudi Law Trainee Program 2027 row shows March 2027 and 08/01/2027, and the public email-entry form is available. Authentication, programme selection after login and submission were not tested. The review cutoff is editorial, not an employer closing instant. The separate first-party Saudi Law Trainee programme article also retains its reviewed programme and eligibility facts.",
       "record_kind": "advertised_opening",
-      "last_reviewed_at": "2026-11-06T11:45:00Z",
+      "last_reviewed_at": "2026-11-08T13:36:48.095Z",
       "application_check": {
-        "checked_at": "2026-11-06T11:45:00Z",
+        "checked_at": "2026-11-08T13:36:48.095Z",
         "result": "login_required",
-        "note": "The first-party AllHires row still lists Saudi Law Trainee Program 2027, March 2027, with 08/01/2027 and no Deadline passed label. The portal uses day/month/year, evidenced by adjacent 13/11/2026 and 15/11/2026 dates; this means 8 January 2027. Its public email/login entry is available; authenticated programme selection and submission were not tested. Employer eligibility remains unchanged. Closing time and timezone are not stated."
+        "note": "The exact Saudi Law Trainee Program 2027 row shows March 2027 and 08/01/2027, and the public email-entry form is available. Authentication, programme selection after login and submission were not tested. The review cutoff is editorial, not an employer closing instant. The separate first-party Saudi Law Trainee programme article also retains its reviewed programme and eligibility facts."
       },
-      "availability_note": "Public application entry is available; selection and submission require login. An editorial recheck is required by the start of 9 January in Riyadh; this is not an employer closing instant.",
-      "review_due_at": "2027-01-08T21:00:00Z"
+      "availability_note": null,
+      "review_due_at": "2027-01-07T21:00:00.000Z"
     }
   ]
 }
