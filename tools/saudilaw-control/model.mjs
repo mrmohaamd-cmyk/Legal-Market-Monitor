@@ -112,9 +112,11 @@ export async function inspectReceipt(receipt,{now=Date.now()}={}) {
   for(const q of receipt.quarantine) {
     if(!q||typeof q.reason!=='string'||!/^[a-z][a-z0-9_]{0,119}$/.test(q.reason)||!(typeof q.id==='string'&&/^[a-z0-9-]{1,100}$/.test(q.id)||Number.isSafeInteger(q.candidate_index)&&q.candidate_index>=0)) throw new Error('Invalid quarantine record.');
   }
+  const effectiveExpires=Math.min(expires,...receipt.previews.map(p=>timestamp(p.expires_at)));
   return {
-    health:now>=expires?'expired_preview':'fresh_preview',
-    fresh:now<expires,publishable:false,originVerified:false,publicationConnected:false,
+    health:now>=effectiveExpires?'expired_preview':'fresh_preview',
+    fresh:now<effectiveExpires,publishable:false,originVerified:false,publicationConnected:false,
+    effective_expires_at:new Date(effectiveExpires).toISOString(),
     sha256,generated_at:receipt.generated_at,expires_at:receipt.expires_at,
     previews:receipt.previews,quarantine:receipt.quarantine,
     blockers:['No live Reddit connection.','No records accepted for publication.','An imported digest does not establish source authenticity or translation approval.'],

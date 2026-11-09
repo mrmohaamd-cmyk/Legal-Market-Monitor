@@ -104,3 +104,15 @@ test('settings exports record proposal only, bind audit/settings and reject forg
     await assert.rejects(createSettingsExport(defaults(),{now:NOW,audit:bad}));
   await assert.rejects(createSettingsExport(defaults(),{now:NOW,receiptSha256:'not-a-hash'}));
 });
+
+test('source/editorial expiry takes priority over a later snapshot expiry',async()=>{
+  const r=await receipt();
+  r.previews[0].expires_at=new Date(NOW+3600000).toISOString();
+  await reseal(r);
+  assert.equal((await inspectReceipt(r,{now:NOW+3600000-1})).fresh,true);
+  const result=await inspectReceipt(r,{now:NOW+3600000});
+  assert.equal(result.health,'expired_preview');
+  assert.equal(result.fresh,false);
+  assert.equal(result.effective_expires_at,r.previews[0].expires_at);
+  assert.notEqual(result.effective_expires_at,result.expires_at);
+});

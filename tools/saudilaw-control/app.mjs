@@ -75,13 +75,14 @@ function clearReceipt(message='No receipt loaded.') {
   $('preview-list').replaceChildren();
 }
 function renderReceipt(result) {
+  result.fresh=result.fresh&&Date.now()<Date.parse(result.effective_expires_at);
   $('freshness').textContent=result.fresh?'Fresh preview':'Expired preview';
   $('freshness-detail').textContent=result.fresh?'Not ready to post':'Recheck required; do not reuse';
   $('preview-count').textContent=String(result.previews.length);
   $('verification-stage').textContent=result.previews.length+' reported preview'+(result.previews.length===1?'':'s');
   $('queue-count').textContent=result.quarantine.length+' held';
   $('receipt-meta').textContent='Imported receipt · integrity passed, origin not verified. Generated '+result.generated_at+
-    ' · expires '+result.expires_at+' · SHA-256 '+result.sha256;
+    ' · snapshot expires '+result.expires_at+' · earliest source/snapshot expiry '+result.effective_expires_at+' · SHA-256 '+result.sha256;
   $('queue-empty').hidden=true;
   $('quarantine-table').hidden=result.quarantine.length===0;
   const rows=$('quarantine-rows'); rows.replaceChildren();
@@ -129,6 +130,7 @@ async function refreshFreshness() {
   try {
     const next=await inspectReceipt(current);
     if(generation!==importGeneration||current!==receipt) return;
+    next.fresh=next.fresh&&Date.now()<Date.parse(next.effective_expires_at);
     const becameStale=inspection?.fresh&&!next.fresh;
     inspection=next;
     // Preserve open preview details during periodic freshness refresh.
