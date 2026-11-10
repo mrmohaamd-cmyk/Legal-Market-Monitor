@@ -15,7 +15,7 @@ export const supportsSegal = record => record?.id === recordId;
 export function createSegalReviewer({descriptionHash = reviewedDescriptionHash} = {}) {
   return async function reviewSegal(record, {sourceProof, applicationProof, now = Date.now()} = {}) {
     const evidence = [];
-    const pending = reason => ({outcome:'verification_pending', result:'unverified', reason, evidence});
+    const pending = (reason, extra={}) => ({outcome:'verification_pending', result:'unverified', reason, evidence, ...extra});
     if (!supportsSegal(record) || !Number.isFinite(now)) return pending('Unknown Segal record or invalid check time.');
     if (record.record_kind !== 'advertised_opening' || record.role_title !== 'Student Intern' || !sameUrl(record.source_url,SEGAL_SOURCE_URL) || !sameUrl(record.application_url,SEGAL_APPLICATION_URL)) return pending('The Segal vacancy identity, destination or classification changed; editorial review is required.');
     const source = inspectProof(sourceProof,SEGAL_SOURCE_URL,SEGAL_SOURCE_URL,now,evidence);
@@ -72,7 +72,12 @@ export function createSegalReviewer({descriptionHash = reviewedDescriptionHash} 
       node.tag==='input'&&node.attrs.type==='file'||
       (node.tag==='button'||node.tag==='label'||node.attrs.role==='button')&&/Upload your resume/i.test(textOf(node))
     ));
-    if(resumeControls.length!==1)return pending('The visible Segal resume-upload control was absent, disabled or ambiguous.');
+    if(resumeControls.length!==1){
+      const uploadDiagnostic=find(form,node=>['button','input','label'].includes(node.tag)||node.attrs.role==='button')
+        .filter(node=>node.attrs.id==='career-cv'||node.attrs.for==='career-cv'||/resume/i.test(node.attrs['aria-label']||'')||/Upload your resume/i.test(textOf(node)))
+        .slice(0,8).map(node=>({tag:node.tag,id:node.attrs.id||null,for:node.attrs.for||null,role:node.attrs.role||null,type:node.attrs.type||null,hasResumeLabel:/Upload your resume/i.test(textOf(node)),enabled:enabled(node)}));
+      return pending('The visible Segal resume-upload control was absent, disabled or ambiguous.',{uploadDiagnostic});
+    }
     const submits = find(form,node => node.tag === 'button' && (node.attrs.type || 'submit') === 'submit' && textOf(node) === 'Submit application' && enabled(node));
     if (submits.length !== 1) return pending('The public Segal Submit application control was absent, disabled or ambiguous.');
     return {outcome:'verified', result:'form_available', evidence,
