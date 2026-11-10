@@ -1,0 +1,92 @@
+[
+  {
+    "id": "latham-riyadh-graduate-coop",
+    "disposition": "excluded_route",
+    "recordSha256": "98a10c3167db5c7784c8d185c02a6c120732758d27c23073e90db74d0cd87917",
+    "observedAt": "2026-11-10T09:38:25.223Z",
+    "reason": "not_advertised_opening",
+    "proofs": [
+      {
+        "url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job",
+        "finalUrl": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job",
+        "kind": "http_html",
+        "status": 200,
+        "checkedAt": "2026-11-10T09:38:25.223Z",
+        "bodySha256": "52e71cbb98bc6f64935ab862c86696e263202a0ad3fee6f84e7e079b4aabb8be",
+        "bodyBytes": 197320
+      }
+    ]
+  },
+  {
+    "id": "latham-riyadh-trainee-associate",
+    "disposition": "excluded_route",
+    "recordSha256": "8befc3676d64ccdaa9898ad4ad098f689b6320a9d35ad5cf28e790a20fc9f59e",
+    "observedAt": "2026-11-10T09:38:25.223Z",
+    "reason": "not_advertised_opening",
+    "proofs": [
+      {
+        "url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job",
+        "finalUrl": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job",
+        "kind": "http_html",
+        "status": 200,
+        "checkedAt": "2026-11-10T09:38:25.223Z",
+        "bodySha256": "c77053f2a66dab8969bcca7560699d65b846c001e575cf6ef3c8f59014535353",
+        "bodyBytes": 197282
+      }
+    ]
+  },
+  {
+    "id": "kirkland-riyadh-entry-level",
+    "disposition": "excluded_route",
+    "recordSha256": "1165b7ef88a01bb0f6c3d840e6278e7d4b21d5132572cdb4bd10a4838299b9ef",
+    "observedAt": "2026-11-10T09:38:25.223Z",
+    "reason": "not_advertised_opening",
+    "proofs": [
+      {
+        "url": "https://www.kirkland.com/careers/asia/saudi-arabia",
+        "finalUrl": "https://www.kirkland.com/careers/asia/saudi-arabia",
+        "kind": "http_html",
+        "status": 200,
+        "checkedAt": "2026-11-10T09:38:25.223Z",
+        "bodySha256": "129618ddede0be2623e9c58894dbb0865aa170d7301bc06780849599db32c692",
+        "bodyBytes": 31663
+      }
+    ]
+  },
+  {
+    "id": "pinsent-masons-riyadh-internship-2026",
+    "disposition": "excluded_closed",
+    "recordSha256": "6093bffa1b374111f9bc95a2835bdb360cb9948ce7fe015e9e9fac37edc5044e",
+    "observedAt": "2026-11-10T09:45:19.445Z",
+    "reason": "closed_no_automatic_reopening",
+    "proofs": [
+      {
+        "url": "https://ehpy.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1004/jobs/preview/3672",
+        "finalUrl": "https://ehpy.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1004/job/3672",
+        "kind": "browser_dom",
+        "status": null,
+        "checkedAt": "2026-11-10T09:45:19.445Z",
+        "bodySha256": "f090ead2fee5c16f7835309ed3ac523a800217c39c00276ab857080b59769fa8",
+        "bodyBytes": 30678
+      }
+    ]
+  },
+  {
+    "id": "white-case-saudi-coop-2027",
+    "disposition": "excluded_closed",
+    "recordSha256": "e5c8d119c5dfbb1edea4f30e4d3ecc0627ac332670866c284bebc675cd5822b6",
+    "observedAt": "2026-11-10T09:38:25.223Z",
+    "reason": "closed_no_automatic_reopening",
+    "proofs": [
+      {
+        "url": "https://whitecase.grad.allhires.com/app/",
+        "finalUrl": "https://whitecase.grad.allhires.com/app/",
+        "kind": "http_html",
+        "status": 200,
+        "checkedAt": "2026-11-10T09:38:25.223Z",
+        "bodySha256": "69153298fe18b5492ca745b4c78328697464bcfc8f7ccbf11f1ec5a326545c1f",
+        "bodyBytes": 15227
+      }
+    ]
+  }
+]

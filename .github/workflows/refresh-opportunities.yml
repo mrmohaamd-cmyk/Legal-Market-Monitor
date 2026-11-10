@@ -18,7 +18,7 @@ jobs:
   propose:
     if: github.repository == 'mrmohaamd-cmyk/Legal-Market-Monitor' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     permissions:
       contents: write
       pull-requests: write
@@ -50,13 +50,31 @@ jobs:
           if-no-files-found: warn
       - name: Check first-party source evidence
         run: node scripts/reverify-opportunities.mjs dist/opportunities.json "$RUNNER_TEMP/source-check"
+      - name: Install pinned browsers for source and site checks
+        run: |
+          npm install --prefix "$RUNNER_TEMP/monitor-qa" --ignore-scripts --no-audit --no-fund playwright@1.55.0
+          "$RUNNER_TEMP/monitor-qa/node_modules/.bin/playwright" install --with-deps chromium webkit > "$RUNNER_TEMP/browser-install.log" 2>&1 || { tail -80 "$RUNNER_TEMP/browser-install.log"; exit 1; }
+          echo "PLAYWRIGHT_MODULE=$RUNNER_TEMP/monitor-qa/node_modules/playwright/index.mjs" >> "$GITHUB_ENV"
+      - name: Verify the three reviewed employers and prepare pending bilingual samples
+        run: node scripts/check-source-coverage.mjs "$RUNNER_TEMP/source-coverage"
+      - name: Renew only the nonpublishing coverage artifact
+        env:
+          SOURCE_COVERAGE_DIRECTORY: ${{ runner.temp }}/source-coverage
+          SOURCE_CANDIDATE_DIRECTORY: ${{ runner.temp }}/review-candidate
+        run: node scripts/publish-source-coverage.mjs
+      - name: Preserve source coverage and write receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-coverage-${{ github.run_id }}
+          path: ${{ runner.temp }}/source-coverage/
+          retention-days: 7
+          if-no-files-found: warn
       - name: Validate the proposed feed and browser journeys before changing a branch
         run: |
           cp "$RUNNER_TEMP/source-check/proposed-opportunities.json" dist/opportunities.json
           npm run build
-          npm install --prefix "$RUNNER_TEMP/monitor-qa" --ignore-scripts --no-audit --no-fund playwright@1.55.0
-          "$RUNNER_TEMP/monitor-qa/node_modules/.bin/playwright" install --with-deps chromium webkit > "$RUNNER_TEMP/browser-install.log" 2>&1 || { tail -80 "$RUNNER_TEMP/browser-install.log"; exit 1; }
-          PLAYWRIGHT_MODULE="$RUNNER_TEMP/monitor-qa/node_modules/playwright/index.mjs" node scripts/browser-check.mjs
+          node scripts/browser-check.mjs
       - name: Preserve check and proposed feed even if PR creation is unavailable
         if: always()
         uses: actions/upload-artifact@v4

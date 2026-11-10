@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-11-08T13:36:48.095Z",
+  "generated_at": "2026-11-10T09:45:19.445Z",
   "verification_window_hours": 168,
   "coverage": "42-firm target registry, not an exhaustive market census or 42 fully automated vacancy feeds. Public roles require first-party verification and review. Individual verification timestamps control freshness.",
   "coverage_audit": {
     "backfill_at": "2026-09-21T00:40:38Z",
     "target_firm_count": 42,
     "current_record_count": 8,
-    "current_route_firm_count": 6,
-    "closed_programme_count": 1,
+    "current_route_firm_count": 5,
+    "closed_programme_count": 2,
     "no_record_displayed_count": 35,
-    "scope_note": "The registry retains 42 target employers. Published-route bookkeeping is not a claim of current freshness: check each card. No record displayed does not mean no vacancy. Configured targets, readable sources and complete vacancy discovery are different; some sources require manual review. The 6 November review retains eight records: three advertised openings with supported application entry, three standing recruitment routes, one availability-unverified record and one confirmed closed programme. Ledger counts include retained review and archive records; they are not live vacancy counts.",
+    "scope_note": "The 42-employer registry retains eight records: three advertised openings, three standing recruitment routes and two closed named programmes. Counts are editorial bookkeeping, not proof of current source freshness or complete vacancy discovery. Each record retains its own evidence dates; missing records do not establish no vacancy. Pinsent requisition 3672 was positively closed on 10 November 2026 without treating its generic programme index as a new opening.",
     "firms": [
       {
         "firm_name": "A&O Shearman",
@@ -148,11 +148,11 @@
       },
       {
         "firm_name": "Pinsent Masons",
-        "review_state": "current_route",
+        "review_state": "closed_programme",
         "record_ids": [
           "pinsent-masons-riyadh-internship-2026"
         ],
-        "reviewed_at": "2026-11-06T11:45:00Z"
+        "reviewed_at": "2026-11-10T09:45:19.445Z"
       },
       {
         "firm_name": "Quinn Emanuel Urquhart & Sullivan",
@@ -496,8 +496,8 @@
       "application_url": "https://ehpy.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1004/jobs/preview/3672",
       "firm_careers_url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia",
       "firm_linkedin_url": null,
-      "source_summary": "The employer continues to advertise a Riyadh internship with rolling applications. Its linked Oracle application page could not be verified during this review; the record is withheld from current opportunities.",
-      "offer_summary": "Published programme details: 11 October 2026 start, three months and a monthly allowance. The start date has passed; availability of a current intake is unconfirmed.",
+      "source_summary": "The linked Oracle requisition 3672 is no longer available. Retained as a closed vacancy; the generic programme page is not evidence of another open intake.",
+      "offer_summary": "Historical programme details: 11 October 2026 start, three months and a monthly allowance. The named application job 3672 is now closed; no new intake is confirmed.",
       "responsibilities": [
         "Work alongside Riyadh lawyers and business professionals.",
         "Develop professional skills and commercial awareness; practice-group exposure depends on business requirements."
@@ -511,7 +511,7 @@
       "eligibility_state": "confirmed",
       "eligibility_summary": "Saudi national or long-term resident; penultimate-year law student or beyond at a recognised Saudi university; minimum GPA 2.5/4.0 or equivalent.",
       "eligibility_source_text": "The programme states Saudi nationality or long-term residence, penultimate-year-or-beyond law study at a recognised Saudi university, and a 2.5/4.0 minimum GPA or equivalent.",
-      "editorial_assessment": "Keep under verification review until a working application route or employer confirmation resolves availability. A past start date and blank application page do not prove closure. Published eligibility and programme details are retained as source facts; current acceptance is not certified.",
+      "editorial_assessment": "Confirmed closure of the exact application job, based on its visible employer application-page message. Do not reopen automatically or infer closure of all employer programmes.",
       "posted_at": null,
       "application_open_month": "2026-09",
       "programme_start_date": "2026-10-11",
@@ -519,17 +519,17 @@
       "deadline_at": null,
       "first_seen_at": "2026-09-30T08:38:53Z",
       "last_verified_at": "2026-10-03T08:52:00Z",
-      "materially_updated_at": "2026-10-29T23:18:54.239Z",
-      "status": "verification_pending",
-      "provenance_notes": "Editorial review completed 2026-11-06T11:45:00Z, with first-party source retrieval and coordinated public application-entry browser checks. The official index still labels internship applications open and the separate COOP closed. The internship page retains rolling applications, an 11 October 2026 start and three-month duration. In the browser review, linked Oracle requisition 3672 redirected to /sites/CX_1004/job/3672 but rendered blank with no application controls or closure message. Web retrieval could not inspect that destination either. Current acceptance remains unverified; the 3 October successful-verification timestamp is retained.",
+      "materially_updated_at": "2026-11-10T09:45:19.445Z",
+      "status": "closed",
+      "provenance_notes": "The exact linked Oracle requisition 3672 visibly states that this job is no longer available. This closes only that named vacancy; the generic internship index still advertises applications and does not establish another available intake. No application was submitted. The earlier successful open-verification timestamp is retained.",
       "record_kind": "advertised_opening",
-      "last_reviewed_at": "2026-11-06T11:45:00Z",
+      "last_reviewed_at": "2026-11-10T09:45:19.445Z",
       "application_check": {
-        "checked_at": "2026-11-06T11:45:00Z",
+        "checked_at": "2026-11-10T09:45:19.445Z",
         "result": "unverified",
-        "note": "The official index still labels internship applications open and the separate COOP closed. The internship page retains rolling applications, an 11 October 2026 start and three-month duration. In the browser review, linked Oracle requisition 3672 redirected to /sites/CX_1004/job/3672 but rendered blank with no application controls or closure message. Web retrieval could not inspect that destination either. Current acceptance remains unverified; the 3 October successful-verification timestamp is retained."
+        "note": "The exact linked Oracle requisition 3672 visibly states that this job is no longer available. This closes only that named vacancy; the generic internship index still advertises applications and does not establish another available intake. No application was submitted. The earlier successful open-verification timestamp is retained."
       },
-      "availability_note": "Availability unverified: the employer advertises open applications, but the linked application page could not be verified and the stated programme start has passed."
+      "availability_note": "Closed: the linked employer application job is no longer available."
     },
     {
       "id": "segal-riyadh-student-intern-2026",
