@@ -68,8 +68,11 @@ export function createSegalReviewer({descriptionHash = reviewedDescriptionHash} 
       const inputs = find(form,node => node.tag === 'input' && node.attrs.id === id && node.attrs.name === name && (node.attrs.type || 'text') === type && enabled(node));
       if (inputs.length !== 1) return pending('The required public Segal name, email or CV controls were not available together.');
     }
-    const resumeButtons=find(form,node=>node.tag==='button'&&node.attrs.id==='career-cv'&&textOf(node)==='Upload your resume'&&enabled(node));
-    if(resumeButtons.length!==1)return pending('The visible Segal resume-upload control was absent, disabled or ambiguous.');
+    const resumeControls=find(form,node=>node.attrs.id==='career-cv'&&enabled(node)&&(
+      node.tag==='input'&&node.attrs.type==='file'||
+      (node.tag==='button'||node.tag==='label'||node.attrs.role==='button')&&/Upload your resume/i.test(textOf(node))
+    ));
+    if(resumeControls.length!==1)return pending('The visible Segal resume-upload control was absent, disabled or ambiguous.');
     const submits = find(form,node => node.tag === 'button' && (node.attrs.type || 'submit') === 'submit' && textOf(node) === 'Submit application' && enabled(node));
     if (submits.length !== 1) return pending('The public Segal Submit application control was absent, disabled or ambiguous.');
     return {outcome:'verified', result:'form_available', evidence,

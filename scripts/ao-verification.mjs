@@ -6,7 +6,8 @@ import {find, textOf} from './html-evidence.mjs';
 export const AO_SOURCE_URL = 'https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504';
 export const AO_APPLICATION_URL = 'https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119';
 const recordId = 'ao-shearman-winter-2026-coop';
-const reviewedDescriptionHash = '3e6deb77a6b17f65e3b7f8407e6905b4fa7caeb6950f87db5b03934fd4b91ed0';
+// Refreshed from the complete rendered body reviewed on 10 November 2026.
+const reviewedDescriptionHash = '2247133cb1e0f79bc3a72ac3edaec90a659dcd5f2969c25a584590f9af5abfc6';
 // This is an early editorial stop at the beginning of the stated closing day
 // in Riyadh, not an inferred timezone for the employer's unspecified "5pm".
 const reviewDueAt = '2026-11-29T21:00:00.000Z';
