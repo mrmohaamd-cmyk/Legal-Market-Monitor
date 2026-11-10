@@ -62,6 +62,10 @@ test('AO material facts are required even with an intentionally matching synthet
   const custom = createAOReviewer({descriptionHash:hash(changed)});
   assert.equal((await custom(record,options(sourceHtml.replace(description,changed)))).outcome,'verification_pending');
 });
+test('AO exposes only the observed body fingerprint when the exact reviewed text changes',async () => {
+  const result=await reviewAO(record,options());assert.equal(result.outcome,'verification_pending');
+  assert.match(result.reason,/fingerprint changed/);assert.equal(result.observedDescriptionSha256,hash(description));
+});
 test('AO cannot use hidden or unresolved template controls, unrelated forms or disabled controls',async () => {
   for (const html of [
     `<template>${applicationHtml}</template>`,

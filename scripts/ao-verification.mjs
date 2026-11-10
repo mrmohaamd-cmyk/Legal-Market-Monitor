@@ -47,7 +47,9 @@ export function createAOReviewer({descriptionHash = reviewedDescriptionHash} = {
       'Monthly expense allowance.',
       'Applications open 14 September 2026 and close on 30 November 2026 at 5pm.'
     ];
-    if (materials.some(value => !description.includes(value)) || sha256(description) !== descriptionHash) return pending('The complete A&O description or material eligibility/deadline facts changed; editorial review is required.');
+    if (materials.some(value => !description.includes(value))) return pending('A&O material eligibility or deadline wording changed; editorial review is required.');
+    const observedDescriptionSha256=sha256(description);
+    if (observedDescriptionSha256 !== descriptionHash) return {...pending('The complete A&O source-text fingerprint changed; editorial review is required.'),observedDescriptionSha256};
     if (unavailable.test(textOf(main))) return pending('The A&O vacancy contains an availability warning requiring review.');
     const apply = find(job, node => node.tag === 'a' && hasClass(node,'job-apply'));
     if (!apply.length || apply.some(node => !enabled(node) || node.attrs['data-job-id'] !== '44638109504' || textOf(node) !== 'Apply' || !sameUrl(node.attrs.href,AO_APPLICATION_URL,AO_SOURCE_URL))) return pending('The exact employer-linked A&O Apply action was absent, disabled or changed.');

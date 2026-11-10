@@ -12,7 +12,7 @@ const description=[
   'You’ll have the right to work in Saudi Arabia for the duration of the internship.'
 ].join(' ');
 const sourceHtml=`<main id="main-content"><h1 class="detail__abc__jobTitle">Student Intern</h1><article class="detail__abc__jobMain">${description}</article><aside><div><h2>Job Reference</h2><p>SG-JOB-2026-0002</p></div><div><h2>Location</h2><p>Riyadh</p></div><div><h2>Employment type</h2><p>Internship</p></div></aside><a href="/en/careers/apply?job=student-intern">Apply now</a></main>`;
-const applicationHtml='<main id="main-content"><section id="apply"><form class="apply__abc__form"><section><input id="career-firstName" name="firstName"><input id="career-lastName" name="lastName"><input id="career-email" name="email" type="email"></section><section><select id="career-job" name="job"><option selected value="student-intern">Student Intern</option></select><p>Applying for <a href="/en/careers/jobs/student-intern">Student Intern</a></p></section><section><input id="career-cv" name="cv" type="file"></section><button>Submit application</button></form></section></main>';
+const applicationHtml='<main id="main-content"><section id="apply"><form class="apply__abc__form"><section><input id="career-firstName" name="firstName"><input id="career-lastName" name="lastName"><input id="career-email" name="email" type="email"></section><section><select id="career-job" name="job"><option selected value="student-intern">Student Intern</option></select><p>Applying for <a href="/en/careers/jobs/student-intern">Student Intern</a></p></section><section><button type="button" id="career-cv">Upload your resume</button></section><button>Submit application</button></form></section></main>';
 const record={id:'segal-riyadh-student-intern-2026',record_kind:'advertised_opening',role_title:'Student Intern',source_url:SEGAL_SOURCE_URL,application_url:SEGAL_APPLICATION_URL};
 const proof=(url,html)=>({schema:'saudilaw-browser-dom-proof/v1',requested_url:url,final_url:url,http_status:200,checked_at:new Date(now).toISOString(),visible_html:html,visible_html_sha256:hash(html)});
 const options=(source=sourceHtml,application=applicationHtml)=>({now,sourceProof:proof(SEGAL_SOURCE_URL,source),applicationProof:proof(SEGAL_APPLICATION_URL,application)});
@@ -69,7 +69,9 @@ test('Segal all editable inputs and submit must be in the same visible form',asy
     applicationHtml.replace('name="firstName"','name="firstName" readonly'),
     applicationHtml.replace('name="lastName"','name="lastName" disabled'),
     applicationHtml.replace('name="email" type="email"','name="email" type="hidden"'),
-    applicationHtml.replace('name="cv"','name="cv" disabled'),
+    applicationHtml.replace('id="career-cv"','id="career-cv" disabled'),
+    applicationHtml.replace('id="career-cv"','id="other-upload"'),
+    applicationHtml.replace('Upload your resume','Upload files'),
     applicationHtml.replace('<button>','<button disabled>'),
     applicationHtml.replace('<button>','</form><form><button>'),
     applicationHtml.replace('<form ','<form action="https://other.example/" '),

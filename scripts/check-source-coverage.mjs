@@ -54,7 +54,7 @@ export async function checkSourceCoverage({feed,browser,clock=Date.now}={}){
     proofs.push(proof);await page.close();
    }
    const result=await (entry.id.startsWith('ao-')?reviewAO:reviewSegal)(record,{sourceProof:proofs[0],applicationProof:proofs[1],now:clock()});
-   checks.push({id:entry.id,outcome:result.outcome,reason:result.reason,proofs:proofs.map(({visible_html,...p})=>({...p,visible_html_bytes:Buffer.byteLength(visible_html)}))});
+   checks.push({id:entry.id,outcome:result.outcome,reason:result.reason,...(result.observedDescriptionSha256?{observedDescriptionSha256:result.observedDescriptionSha256}:{}),proofs:proofs.map(({visible_html,...p})=>({...p,visible_html_bytes:Buffer.byteLength(visible_html)}))});
    observations[entry.id]=result.outcome==='verified'?{status:'verified',checkedAt:new Date(Math.min(...proofs.map(p=>Date.parse(p.checked_at)))).toISOString(),semanticSha256:sourceCoverageTuple(entry).semanticSha256,applicationResult:result.result,
     proofs:proofs.map(p=>({url:p.requested_url,finalUrl:p.final_url,kind:'browser_dom',status:p.http_status,checkedAt:p.checked_at,bodySha256:p.visible_html_sha256,bodyBytes:Buffer.byteLength(p.visible_html)}))}:{status:'attention_required',reason:safeReason(result.outcome)};
   }catch(error){observations[entry.id]={status:'attention_required',reason:'browser_evidence_unavailable'};checks.push({id:entry.id,outcome:'attention_required',reason:'browser_evidence_unavailable',errorClass:['TimeoutError','Error'].includes(error?.name)?error.name:'verification_error'});}

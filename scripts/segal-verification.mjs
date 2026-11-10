@@ -64,10 +64,12 @@ export function createSegalReviewer({descriptionHash = reviewedDescriptionHash} 
     if (roleSections.length !== 1) return pending('The selected Segal vacancy has no unambiguous role section.');
     const roleLinks = find(roleSections[0],node => node.tag === 'a' && textOf(node) === 'Student Intern');
     if (!/Applying for/.test(textOf(roleSections[0])) || roleLinks.length !== 1 || !enabled(roleLinks[0]) || !sameUrl(roleLinks[0].attrs.href,SEGAL_SOURCE_URL,SEGAL_APPLICATION_URL)) return pending('The selected Segal role is not linked back to the audited vacancy.');
-    for (const [id,name,type] of [['career-firstName','firstName','text'],['career-lastName','lastName','text'],['career-email','email','email'],['career-cv','cv','file']]) {
+    for (const [id,name,type] of [['career-firstName','firstName','text'],['career-lastName','lastName','text'],['career-email','email','email']]) {
       const inputs = find(form,node => node.tag === 'input' && node.attrs.id === id && node.attrs.name === name && (node.attrs.type || 'text') === type && enabled(node));
       if (inputs.length !== 1) return pending('The required public Segal name, email or CV controls were not available together.');
     }
+    const resumeButtons=find(form,node=>node.tag==='button'&&node.attrs.id==='career-cv'&&textOf(node)==='Upload your resume'&&enabled(node));
+    if(resumeButtons.length!==1)return pending('The visible Segal resume-upload control was absent, disabled or ambiguous.');
     const submits = find(form,node => node.tag === 'button' && (node.attrs.type || 'submit') === 'submit' && textOf(node) === 'Submit application' && enabled(node));
     if (submits.length !== 1) return pending('The public Segal Submit application control was absent, disabled or ambiguous.');
     return {outcome:'verified', result:'form_available', evidence,
