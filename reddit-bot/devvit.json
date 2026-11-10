@@ -1,0 +1,168 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "saudilaw-jobs",
+  "server": {
+    "dir": "build/server",
+    "entry": "index.cjs"
+  },
+  "permissions": {
+    "reddit": {
+      "enable": true,
+      "scope": "user"
+    },
+    "redis": true,
+    "http": {
+      "enable": true,
+      "domains": [
+        "api.github.com"
+      ]
+    }
+  },
+  "scheduler": {
+    "tasks": {
+      "check-jobs": {
+        "endpoint": "/internal/scheduler/check-jobs"
+      }
+    }
+  },
+  "menu": {
+    "items": [
+      {
+        "label": "SaudiLaw Jobs: About",
+        "description": "Read the app purpose and private-test status",
+        "location": "subreddit",
+        "forUserType": "user",
+        "endpoint": "/internal/menu/jobs-about"
+      },
+      {
+        "label": "SaudiLaw Jobs: Terms",
+        "description": "Open the app terms on GitHub",
+        "location": "subreddit",
+        "forUserType": "user",
+        "endpoint": "/internal/menu/jobs-terms"
+      },
+      {
+        "label": "SaudiLaw Jobs: Privacy",
+        "description": "Open the app privacy policy on GitHub",
+        "location": "subreddit",
+        "forUserType": "user",
+        "endpoint": "/internal/menu/jobs-privacy"
+      },
+      {
+        "label": "SaudiLaw Jobs: Contact moderators",
+        "description": "Open a message to r/SaudiLaw moderators; nothing is sent automatically",
+        "location": "subreddit",
+        "forUserType": "user",
+        "endpoint": "/internal/menu/jobs-support"
+      },
+      {
+        "label": "Preview SaudiLaw jobs",
+        "description": "Check the reviewed feed without posting or claiming jobs",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/preview-jobs"
+      },
+      {
+        "label": "Job bot status",
+        "description": "View posting and scheduler state",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-status"
+      },
+      {
+        "label": "Initialize posting ledger",
+        "description": "First-time setup only; never reset lost storage",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-initialize"
+      },
+      {
+        "label": "Publish next verified job",
+        "description": "Confirm one verified opportunity as the app",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-publish"
+      },
+      {
+        "label": "Start daily jobs",
+        "description": "Confirm daily checks at 09:00 Saudi time",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-start"
+      },
+      {
+        "label": "Stop daily jobs",
+        "description": "Pause future callbacks before cancelling jobs",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-stop"
+      },
+      {
+        "label": "Private posting test",
+        "description": "One clearly labelled synthetic test in the private community",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-private-test"
+      },
+      {
+        "label": "Reconcile bot post",
+        "description": "Verify an existing app post without reposting",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-reconcile"
+      },
+      {
+        "label": "Remove bot post",
+        "description": "Confirm author deletion of one verified app post",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-remove"
+      },
+      {
+        "label": "Cancel reserved attempt",
+        "description": "Cancel work that has not entered submission; never clear an uncertain post",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/jobs-cancel-reservation"
+      }
+    ]
+  },
+  "settings": {
+    "subreddit": {
+      "enabled": {
+        "type": "boolean",
+        "label": "Enable feed checks",
+        "defaultValue": false
+      },
+      "dryRun": {
+        "type": "boolean",
+        "label": "Production preview only (no job posts)",
+        "defaultValue": true
+      },
+      "privateTestEnabled": {
+        "type": "boolean",
+        "label": "Allow the separately approved one-post private test",
+        "defaultValue": false
+      }
+    }
+  },
+  "scripts": {
+    "build": "npm run build"
+  },
+  "dev": {
+    "subreddit": "saudilaw_jobs_dev"
+  },
+  "forms": {
+    "jobsStatus": "/internal/form/jobsStatus",
+    "jobsInitialize": "/internal/form/jobsInitialize",
+    "jobsPublish": "/internal/form/jobsPublish",
+    "jobsStart": "/internal/form/jobsStart",
+    "jobsPrivateTest": "/internal/form/jobsPrivateTest",
+    "jobsReconcile": "/internal/form/jobsReconcile",
+    "jobsRemove": "/internal/form/jobsRemove",
+    "jobsCancelReservation": "/internal/form/jobsCancelReservation"
+  },
+  "triggers": {
+    "onPostDelete": "/internal/triggers/post-delete"
+  }
+}

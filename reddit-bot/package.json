@@ -1,0 +1,22 @@
+{
+  "name": "saudilaw-jobs-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24.18.0" },
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit",
+    "preview": "node preview.mjs",
+    "check": "npm run typecheck && npm run build"
+  },
+  "dependencies": {
+    "@devvit/web": "0.15.2"
+  },
+  "devDependencies": {
+    "@devvit/shared-types": "0.15.2",
+    "@types/node": "24.10.1",
+    "esbuild": "0.28.2",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "evaluatedAt": "2026-11-06T22:17:54.716Z",
+  "mode": "dry-run",
+  "posted": 0,
+  "provenance": {
+    "api": "https://api.github.com/repos/mrmohaamd-cmyk/Legal-Market-Monitor/contents/dist/opportunities.json?ref=main",
+    "branch": "main",
+    "blobSha": "1591d9fb22bbfe2a2e8eeb5b8ad801f09e76d8b3",
+    "retrievedAt": "2026-11-06T22:17:55.184Z"
+  },
+  "valid": true,
+  "errors": [],
+  "candidates": [
+    "ao-shearman-winter-2026-coop",
+    "segal-riyadh-student-intern-2026",
+    "white-case-saudi-law-trainee-2027"
+  ],
+  "skipped": [
+    {
+      "id": "latham-riyadh-graduate-coop",
+      "reasons": [
+        "Standing recruitment route, not an advertised vacancy.",
+        "No reviewed vacancy/source registry entry."
+      ]
+    },
+    {
+      "id": "latham-riyadh-trainee-associate",
+      "reasons": [
+        "Standing recruitment route, not an advertised vacancy.",
+        "No reviewed vacancy/source registry entry."
+      ]
+    },
+    {
+      "id": "kirkland-riyadh-entry-level",
+      "reasons": [
+        "Standing recruitment route, not an advertised vacancy.",
+        "Current application entry is not verified.",
+        "No reviewed vacancy/source registry entry."
+      ]
+    },
+    {
+      "id": "pinsent-masons-riyadh-internship-2026",
+      "reasons": [
+        "Status is verification_pending.",
+        "Source verification is due.",
+        "Current application entry is not verified.",
+        "No reviewed vacancy/source registry entry."
+      ]
+    },
+    {
+      "id": "white-case-saudi-coop-2027",
+      "reasons": [
+        "Status is closed.",
+        "Source verification is due.",
+        "Current application entry is not verified.",
+        "review_due_at has passed; review required.",
+        "No reviewed vacancy/source registry entry."
+      ]
+    }
+  ]
+}

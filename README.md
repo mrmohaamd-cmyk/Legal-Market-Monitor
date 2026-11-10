@@ -18,6 +18,14 @@ The optional `review_due_at` is an earlier editorial recheck deadline, never an 
 
 The owner requested the seven-day window after the initial repair review. [The policy-change record](docs/freshness-policy-2026-11-06.md) distinguishes the current rule from historical 24-hour audit evidence; no verification dates changed with the policy.
 
+## Reddit jobs prototype
+
+[`reddit-bot/`](reddit-bot/README.md) implements one post per verified advertised opportunity, with atomic duplicate prevention, recovery after uncertain submissions, moderator controls and explicitly started daily scheduling. Production remains locked. The separately approved private-test gate permits only a fixed one-use synthetic fixture in r/saudilaw_jobs_dev. See the [private 0.0.4 test receipt](docs/reddit-private-posting-0.0.4.md) for completed checks and the remaining cleanup work.
+
+Private version `0.0.4` is installed only in the existing test community. Explicit ledger initialization and one synthetic APP post passed, including durable receipt and independent API/content verification. Duplicate rejection and author deletion remain unfinished because browser control failed before those actions. No real vacancy, recurring schedule or r/SaudiLaw installation has been created, and review remains unsubmitted. Native mobile, ordinary-member sessions, hosted concurrency/recovery and deletion-event behavior still need evidence.
+
+The owner approved and published the revised [terms](docs/saudilaw-jobs-terms.md) and [privacy notice](docs/saudilaw-jobs-privacy.md), effective 7 November 2026; Reddit's saved policy URLs remain unchanged. The pinned drafts are retained as approval evidence. The [review audit](docs/reddit-review-readiness-audit-2026-11-07.md) records why submission was paused; the [posting review packet](docs/reddit-posting-review-packet.md) provides the remaining gates. GitHub fetch approval does not establish app or off-platform-link approval. The opportunity feed and website behavior are unchanged.
+
 ## Optional public alert setup
 
 `dist/task-config.json` has `taskUrl: null`. The page therefore shows manual setup instructions and a working copy/download path rather than claiming that a shared task works. This optional ChatGPT alert route is separate from the owner's independent GitHub monitoring and does not control publication of the site.
