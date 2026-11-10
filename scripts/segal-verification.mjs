@@ -68,16 +68,8 @@ export function createSegalReviewer({descriptionHash = reviewedDescriptionHash} 
       const inputs = find(form,node => node.tag === 'input' && node.attrs.id === id && node.attrs.name === name && (node.attrs.type || 'text') === type && enabled(node));
       if (inputs.length !== 1) return pending('The required public Segal name, email or CV controls were not available together.');
     }
-    const resumeControls=find(form,node=>node.attrs.id==='career-cv'&&enabled(node)&&(
-      node.tag==='input'&&node.attrs.type==='file'||
-      (node.tag==='button'||node.tag==='label'||node.attrs.role==='button')&&/Upload your resume/i.test(textOf(node))
-    ));
-    if(resumeControls.length!==1){
-      const uploadDiagnostic=find(form,node=>['button','input','label'].includes(node.tag)||node.attrs.role==='button')
-        .filter(node=>node.attrs.id==='career-cv'||node.attrs.for==='career-cv'||/resume/i.test(node.attrs['aria-label']||'')||/Upload your resume/i.test(textOf(node)))
-        .slice(0,8).map(node=>({tag:node.tag,id:node.attrs.id||null,for:node.attrs.for||null,role:node.attrs.role||null,type:node.attrs.type||null,hasResumeLabel:/Upload your resume/i.test(textOf(node)),enabled:enabled(node)}));
-      return pending('The visible Segal resume-upload control was absent, disabled or ambiguous.',{uploadDiagnostic});
-    }
+    const upload=applicationProof.accessibleControls?.resumeUpload;
+    if(!upload||Object.keys(upload).sort().join(',')!=='enabled,id,name,role,visible'||upload.role!=='button'||upload.name!=='Upload your resume'||upload.id!=='career-cv'||upload.visible!==true||upload.enabled!==true)return pending('The accessible Segal resume-upload control was absent, disabled or ambiguous.');
     const submits = find(form,node => node.tag === 'button' && (node.attrs.type || 'submit') === 'submit' && textOf(node) === 'Submit application' && enabled(node));
     if (submits.length !== 1) return pending('The public Segal Submit application control was absent, disabled or ambiguous.');
     return {outcome:'verified', result:'form_available', evidence,

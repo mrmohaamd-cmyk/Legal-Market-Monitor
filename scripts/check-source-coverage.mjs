@@ -39,6 +39,7 @@ export async function checkSourceCoverage({feed,browser,clock=Date.now}={}){
    for(const source of entry.sources){
     const page=await context.newPage();
     page.setDefaultTimeout(30000);page.setDefaultNavigationTimeout(45000);
+    let accessibleControls=null;
     const response=await page.goto(source.url,{waitUntil:'domcontentloaded'});
     if(source.role==='vacancy'){
      await page.getByRole('heading',{name:entry.id.startsWith('ao-')?'Co-op Scheme - Winter 2026':'Student Intern',exact:true}).waitFor({state:'visible'});
@@ -48,9 +49,13 @@ export async function checkSourceCoverage({feed,browser,clock=Date.now}={}){
     }else{
      await page.locator('#career-job').waitFor({state:'visible'});
      await page.waitForFunction(()=>document.querySelector('#career-job')?.value==='student-intern'&&[...document.querySelectorAll('a')].some(a=>a.href==='https://www.segal.com.sa/en/careers/jobs/student-intern'&&a.textContent.trim()==='Student Intern'));
+     const resumeUpload=page.locator('#main-content #apply form').getByRole('button',{name:'Upload your resume',exact:true});
+     await resumeUpload.waitFor({state:'visible'});
+     if(await resumeUpload.count()!==1)throw new Error('resume_upload_ambiguous');
+     accessibleControls={resumeUpload:{role:'button',name:'Upload your resume',id:await resumeUpload.getAttribute('id'),visible:await resumeUpload.isVisible(),enabled:await resumeUpload.isEnabled()}};
     }
     const visible_html=await page.evaluate(projectVisibleHtml),checked_at=new Date(clock()).toISOString();
-    const proof={schema:'saudilaw-browser-dom-proof/v1',requested_url:source.url,final_url:page.url(),checked_at,http_status:response?.status()??null,visible_html,visible_html_sha256:sha(visible_html)};
+    const proof={schema:'saudilaw-browser-dom-proof/v1',requested_url:source.url,final_url:page.url(),checked_at,http_status:response?.status()??null,visible_html,visible_html_sha256:sha(visible_html),...(accessibleControls?{accessibleControls}:{})};
     proofs.push(proof);await page.close();
    }
    const result=await (entry.id.startsWith('ao-')?reviewAO:reviewSegal)(record,{sourceProof:proofs[0],applicationProof:proofs[1],now:clock()});

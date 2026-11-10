@@ -15,7 +15,7 @@ const sourceHtml=`<main id="main-content"><h1 class="detail__abc__jobTitle">Stud
 const applicationHtml='<main id="main-content"><section id="apply"><form class="apply__abc__form"><section><input id="career-firstName" name="firstName"><input id="career-lastName" name="lastName"><input id="career-email" name="email" type="email"></section><section><select id="career-job" name="job"><option selected value="student-intern">Student Intern</option></select><p>Applying for <a href="/en/careers/jobs/student-intern">Student Intern</a></p></section><section><input id="career-cv" type="file"></section><button>Submit application</button></form></section></main>';
 const record={id:'segal-riyadh-student-intern-2026',record_kind:'advertised_opening',role_title:'Student Intern',source_url:SEGAL_SOURCE_URL,application_url:SEGAL_APPLICATION_URL};
 const proof=(url,html)=>({schema:'saudilaw-browser-dom-proof/v1',requested_url:url,final_url:url,http_status:200,checked_at:new Date(now).toISOString(),visible_html:html,visible_html_sha256:hash(html)});
-const options=(source=sourceHtml,application=applicationHtml)=>({now,sourceProof:proof(SEGAL_SOURCE_URL,source),applicationProof:proof(SEGAL_APPLICATION_URL,application)});
+const options=(source=sourceHtml,application=applicationHtml)=>({now,sourceProof:proof(SEGAL_SOURCE_URL,source),applicationProof:{...proof(SEGAL_APPLICATION_URL,application),accessibleControls:{resumeUpload:{role:'button',name:'Upload your resume',id:'career-cv',visible:true,enabled:true}}}});
 const review=createSegalReviewer({descriptionHash:hash(description)});
 const pending=async(opts,rec=record)=>assert.equal((await review(rec,opts)).outcome,'verification_pending');
 
@@ -62,25 +62,28 @@ test('Segal URL-selected vacancy alone does not count: live option and backlink 
   ])await pending(options(sourceHtml,html));
 });
 test('Segal all editable inputs and submit must be in the same visible form',async()=>{
-  for(const html of [
+  for(const [index,html] of [
     `<template>${applicationHtml}</template>`,
     applicationHtml.replace('<form ','<form hidden '),
     applicationHtml.replace('<form ','<form inert '),
     applicationHtml.replace('name="firstName"','name="firstName" readonly'),
     applicationHtml.replace('name="lastName"','name="lastName" disabled'),
     applicationHtml.replace('name="email" type="email"','name="email" type="hidden"'),
-    applicationHtml.replace('id="career-cv"','id="career-cv" disabled'),
-    applicationHtml.replace('id="career-cv"','id="other-upload"'),
-    applicationHtml.replace('type="file"','type="hidden"'),
     applicationHtml.replace('<button>','<button disabled>'),
     applicationHtml.replace('<button>','</form><form><button>'),
     applicationHtml.replace('<form ','<form action="https://other.example/" '),
     applicationHtml.replace('</main>','<p>Applications are closed.</p></main>')
-  ])await pending(options(sourceHtml,html));
+  ].entries()){
+    const result=await review(record,options(sourceHtml,html));
+    assert.equal(result.outcome,'verification_pending',`fixture ${index}: ${result.reason}`);
+  }
 });
-test('Segal resume proof accepts the live file control or its visible upload-button projection',async()=>{
+test('Segal requires a visible enabled accessible resume-upload button bound to the reviewed control',async()=>{
+  for(const patch of [{role:'link'},{name:'Browse files'},{id:'other'},{visible:false},{enabled:false}]){
+    const opts=options();opts.applicationProof.accessibleControls.resumeUpload={...opts.applicationProof.accessibleControls.resumeUpload,...patch};await pending(opts);
+  }
   const buttonProjection=applicationHtml.replace('<input id="career-cv" type="file">','<button type="button" id="career-cv">Upload your resume</button>');
-  for(const html of [applicationHtml,buttonProjection])assert.equal((await review(record,options(sourceHtml,html))).outcome,'verified');
+  assert.equal((await review(record,options(sourceHtml,buttonProjection))).outcome,'verified');
 });
 test('Segal production export ignores per-call body hash override',async()=>{
   assert.equal((await reviewSegal(record,{...options(),descriptionHash:hash(description)})).outcome,'verification_pending');
