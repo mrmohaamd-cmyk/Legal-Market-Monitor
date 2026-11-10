@@ -11,7 +11,7 @@ const PRECEDING=new Set(['dist/saudilaw-publication-candidates.json','dist/saudi
 const hash=value=>/^[a-f0-9]{40}$/.test(value??'');
 const command=(args,cwd)=>execFileSync('git',args,{cwd,encoding:'utf8',stdio:['ignore','pipe','pipe']});
 export async function publishOwnerJobs(directory,{coverageDirectory,root=process.cwd(),env=process.env,execute=command,clock=Date.now}={}){
- if(env.GITHUB_REPOSITORY!==REPO||env.GITHUB_REF!==REF||!['schedule','workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)||!hash(env.GITHUB_SHA)||!directory||!coverageDirectory)throw new Error('canonical_workflow_required');
+ if(env.GITHUB_REPOSITORY!==REPO||env.GITHUB_REF!==REF||!['schedule','workflow_dispatch','push'].includes(env.GITHUB_EVENT_NAME)||!hash(env.GITHUB_SHA)||!directory||!coverageDirectory)throw new Error('canonical_workflow_required');
  const git=args=>execute(args,root),one=args=>git(args).trim(),head=()=>one(['rev-parse','HEAD']),remote=()=>one(['ls-remote','--heads','origin',REF]).split(/\s+/)[0];
  if(![`https://github.com/${REPO}`,`https://github.com/${REPO}.git`].includes(one(['remote','get-url','origin'])))throw new Error('wrong_remote');
  const prior=JSON.parse(await readFile(join(coverageDirectory,'coverage-write-receipt.json'),'utf8')),base=prior.commit;

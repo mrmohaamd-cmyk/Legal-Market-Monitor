@@ -22,14 +22,31 @@ function verifyBody(source,body){
  if(source.role!=='programme'&&unavailable.test(visible))throw new Error('source_closed');
  return doc;
 }
-function verifyApplication(doc,result){
+function verifyApplication(doc,result,resumeUploadConfirmed=false){
  const forms=find(doc,node=>node.tag==='form'&&enabled(node));
  const live=(form,predicate)=>find(form,node=>enabled(node)&&predicate(node));
  const submit=form=>live(form,node=>node.tag==='button'&&(node.attrs.type??'submit').toLowerCase()==='submit'||node.tag==='input'&&node.attrs.type?.toLowerCase()==='submit').length>0;
  const email=form=>live(form,node=>node.tag==='input'&&node.attrs.type?.toLowerCase()==='email'||node.tag==='input'&&/email|login|username/i.test(node.attrs.name??node.attrs.id??'')).length>0;
  // Anonymous entry controls only. This never establishes successful login or submission.
- const suitable=forms.some(form=>submit(form)&&email(form)&&(result==='login_required'||live(form,node=>node.tag==='input'&&node.attrs.type?.toLowerCase()==='file'||node.tag==='button'&&/upload.*resume|upload.*cv/i.test(textOf(node))).length>0));
+ const suitable=forms.some(form=>submit(form)&&email(form)&&(result==='login_required'||resumeUploadConfirmed&&forms.length===1||live(form,node=>node.tag==='input'&&node.attrs.type?.toLowerCase()==='file'||node.tag==='button'&&/upload.*resume|upload.*cv/i.test(textOf(node))).length>0));
  if(!suitable)throw new Error('application_controls_unverified');
+}
+async function settledVisibleHtml(page,remaining){
+ // CSS and hydration can temporarily expose navigation controls. Capture the
+ // same whole visible projection only after load and three stable samples;
+ // never drop changed content or silently replace a reviewed fingerprint.
+ await page.waitForLoadState('load',{timeout:Math.max(1,Math.min(10000,remaining()))});
+ let previous=null,unchanged=0;
+ for(let sample=0;sample<20;sample++){
+  remaining();
+  const body=await page.evaluate(projectVisibleHtml);
+  if(typeof body!=='string'||Buffer.byteLength(body)>2000000)throw new Error('source_unavailable');
+  unchanged=body===previous?unchanged+1:0;
+  if(unchanged===2)return body;
+  previous=body;
+  await page.waitForTimeout(Math.max(1,Math.min(250,remaining())));
+ }
+ throw new Error('source_evidence_unavailable');
 }
 async function browserReceipt(browser,source,job,remaining){
  if(!browser||typeof browser.newContext!=='function')throw new Error('source_evidence_unavailable');
@@ -48,10 +65,18 @@ async function browserReceipt(browser,source,job,remaining){
    const normalize=value=>value.normalize('NFKC').toLowerCase().replace(/\s+/g,' ').trim(),visible=normalize(document.body?.innerText??'');
    return phrases.every(phrase=>visible.includes(normalize(phrase)));
   },{phrases:source.requiredText},{timeout});
-  const body=await page.evaluate(projectVisibleHtml);
+  const body=await settledVisibleHtml(page,remaining);
   if(typeof body!=='string'||Buffer.byteLength(body)>2000000)throw new Error('source_unavailable');
+  let resumeUploadConfirmed=false;
+  if(source.role==='application'&&job.employerKey==='segal'&&source.url==='https://www.segal.com.sa/en/careers/apply?job=student-intern'){
+   // Reuse the existing Segal reviewer’s actual accessible upload control.
+   // The transparent file input is intentionally absent from visible HTML.
+   const form=page.locator('#main-content #apply form');
+   const upload=form.getByRole('button',{name:'Upload your resume',exact:true});
+   resumeUploadConfirmed=await form.count()===1&&await upload.count()===1&&await upload.getAttribute('id')==='career-cv'&&await upload.isVisible()&&await upload.isEnabled();
+  }
   if(!ownerSourceFinalUrlAllowed(source.url,page.url(),job.employerKey))throw new Error('source_destination_changed');
-  return {body,status:200,finalUrl:page.url()};
+  return {body,status:200,finalUrl:page.url(),resumeUploadConfirmed};
  }finally{await context.close();}
 }
 /** Inject retrieve/browser only from the fixed audited workflow, never an HTTP
@@ -88,7 +113,7 @@ export async function compileOwnerJobFeed({jobs,retrieve,browser,onSourceObserve
      const city=normalize(job.sourceIdentity.locationEn.split(',')[0]).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),locationObserved=new RegExp(`(?:^|[^\\p{L}\\p{N}])${city}(?:$|[^\\p{L}\\p{N}])`,'u').test(visible);
      if(headings.includes(normalize(job.sourceIdentity.roleTitleEn))&&locationObserved)roleObserved=true;
     }
-    if(source.role==='application')verifyApplication(doc,job.applicationResult);
+    if(source.role==='application')verifyApplication(doc,job.applicationResult,observed.resumeUploadConfirmed===true);
     const checkedAt=new Date(checkClock(clock)).toISOString();
     proofs.push({url:source.url,finalUrl:observed.finalUrl,kind:source.kind,status:200,checkedAt,bodySha256:sha(observed.body),bodyBytes:Buffer.byteLength(observed.body)});
     }catch(error){evidenceProblem??=error;}

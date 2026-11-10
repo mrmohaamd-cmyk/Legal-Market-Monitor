@@ -64,9 +64,9 @@ test('async caller mutation cannot replace the inspected job or approved source 
 });
 test('browser DOM verification uses fixed projection without form interaction and always closes context',async()=>{
  const {job,retrieve,bodies}=producerFixture();job.sources.forEach(source=>source.kind='browser_dom');let closed=0,navigations=0,evaluations=0,current;
- const page={setDefaultTimeout(){},setDefaultNavigationTimeout(){},async goto(url){current=url;navigations++;return {status:()=>200};},url:()=>current,locator:selector=>{assert.equal(selector,'body');return {waitFor:async()=>{}};},async waitForFunction(fn,arg){assert.equal(fn.name,'waitForRequiredSourceText');assert.ok(Array.isArray(arg.phrases));},async evaluate(fn){assert.equal(fn.name,'projectVisibleHtml');evaluations++;return bodies[current];}};
+ const page={setDefaultTimeout(){},setDefaultNavigationTimeout(){},async goto(url){current=url;navigations++;return {status:()=>200};},url:()=>current,locator:selector=>{assert.equal(selector,'body');return {waitFor:async()=>{}};},async waitForFunction(fn,arg){assert.equal(fn.name,'waitForRequiredSourceText');assert.ok(Array.isArray(arg.phrases));},async waitForLoadState(state){assert.equal(state,'load');},async waitForTimeout(ms){assert.ok(ms>0&&ms<=250);},async evaluate(fn){assert.equal(fn.name,'projectVisibleHtml');evaluations++;return bodies[current];}};
  const browser={newContext:async()=>({newPage:async()=>page,close:async()=>{closed++;}})};
- const feed=await compileOwnerJobFeed({jobs:[job],retrieve,browser,clock});assert.equal(feed.jobs[0].sourceStatus,'verified');assert.equal(navigations,2);assert.equal(evaluations,2);assert.equal(closed,2);
+ const feed=await compileOwnerJobFeed({jobs:[job],retrieve,browser,clock});assert.equal(feed.jobs[0].sourceStatus,'verified');assert.equal(navigations,2);assert.equal(evaluations,6);assert.equal(closed,2);
 });
 test('only the existing A&O ATS fragment derived from the exact job query is accepted',async()=>{
  for(const fragment of ['#jobDetails=98119_5040','#jobDetails=99999_5040']){
@@ -75,7 +75,7 @@ test('only the existing A&O ATS fragment derived from the exact job query is acc
   job.employerKey='ao-shearman';job.id='ao-shearman-synthetic-fragment-fixture';job.weekly.employer={ar:'A&O Shearman',en:'A&O Shearman'};job.weekly.source_url=source;job.weekly.application_url=application;job.context.evidence[0].url=source;
   const normalized=value=>value.normalize('NFKC').toLowerCase().replace(/[\p{P}\p{S}\s]+/gu,' ').trim();job.context.opportunityIdentity=hash('identity:'+['A&O Shearman',job.sourceIdentity.roleTitleEn,job.sourceIdentity.locationEn].map(normalized).join('|'));
   bodies[source]=bodies[oldSource];bodies[application]=bodies[oldApplication];job.sources[0].url=source;job.sources[1].url=application;job.sources.forEach(s=>s.kind='browser_dom');let current;
-  const page={setDefaultTimeout(){},setDefaultNavigationTimeout(){},async goto(url){current=url;return {status:()=>200};},url:()=>current===application?application+fragment:current,locator:()=>({waitFor:async()=>{}}),waitForFunction:async()=>{},evaluate:async()=>bodies[current]};
+  const page={setDefaultTimeout(){},setDefaultNavigationTimeout(){},async goto(url){current=url;return {status:()=>200};},url:()=>current===application?application+fragment:current,locator:()=>({waitFor:async()=>{}}),waitForFunction:async()=>{},waitForLoadState:async()=>{},waitForTimeout:async()=>{},evaluate:async()=>bodies[current]};
   const browser={newContext:async()=>({newPage:async()=>page,close:async()=>{}})};
   const feed=await compileOwnerJobFeed({jobs:[job],retrieve:async()=>{throw Error('unexpected HTTP');},browser,clock});assert.equal(feed.jobs[0].sourceStatus,fragment==='#jobDetails=98119_5040'?'verified':'attention_required');
  }
@@ -84,4 +84,32 @@ test('expired editorial deadline and run budget produce attention rather than st
  const {job,retrieve}=producerFixture();let calls=0;
  const feed=await compileOwnerJobFeed({jobs:[job],retrieve,clock:()=>PRODUCER_NOW+(calls++>1?7*60000:0)});
  assert.equal(feed.jobs[0].reason,'run_budget');assert.deepEqual(feed.jobs[0].proofs,[]);
+});
+test('transient load markup settles but persistent drift and changed stable facts stay held',async()=>{
+ for(const mode of ['transient','unstable','changed']){
+  const {job,retrieve,bodies}=producerFixture();job.sources.forEach(s=>s.kind='browser_dom');let current,samples=0,closed=0;
+  const page={setDefaultTimeout(){},setDefaultNavigationTimeout(){},async goto(url){current=url;samples=0;return {status:()=>200};},url:()=>current,locator:()=>({waitFor:async()=>{}}),waitForFunction:async()=>{},waitForLoadState:async()=>{},waitForTimeout:async()=>{},async evaluate(){samples++;return bodies[current]+(mode==='unstable'?'<p>'+samples+'</p>':mode==='changed'?'<p>New qualification required.</p>':samples===1?'<button>Loading navigation</button>':'');}};
+  const browser={newContext:async()=>({newPage:async()=>page,close:async()=>{closed++;}})};
+  const feed=await compileOwnerJobFeed({jobs:[job],retrieve,browser,clock});
+  assert.equal(closed,2);assert.equal(feed.publicationEnabled,false);
+  assert.equal(feed.jobs[0].sourceStatus,mode==='transient'?'verified':'attention_required');
+  if(mode==='unstable')assert.equal(feed.jobs[0].reason,'source_evidence_unavailable');
+  if(mode==='changed')assert.equal(feed.jobs[0].reason,'source_fingerprint_changed');
+ }
+});
+test('Segal transparent upload requires the exact visible enabled accessible control in its single form',async()=>{
+ for(const mode of ['valid','disabled','hidden','ambiguous','wrong-id']){
+  const {job,bodies,hash}=producerFixture();const old=job.sources.map(s=>s.url);
+  job.employerKey='segal';job.weekly.employer={ar:'سجال للمحاماة',en:'Segal Law Firm'};job.applicationResult='form_available';
+  job.weekly.source_url='https://www.segal.com.sa/en/careers/jobs/student-intern';job.weekly.application_url='https://www.segal.com.sa/en/careers/apply?job=student-intern';
+  job.sources.forEach((s,i)=>{s.kind='browser_dom';s.url=i?job.weekly.application_url:job.weekly.source_url;bodies[s.url]=bodies[old[i]];});
+  job.context.evidence[0].url=job.weekly.source_url;
+  const norm=v=>v.normalize('NFKC').toLowerCase().replace(/[\p{P}\p{S}\s]+/gu,' ').trim();job.context.opportunityIdentity=hash('identity:'+['Segal Law Firm',job.sourceIdentity.roleTitleEn,job.sourceIdentity.locationEn].map(norm).join('|'));
+  let current;const upload={count:async()=>mode==='ambiguous'?2:1,getAttribute:async()=>mode==='wrong-id'?'other':'career-cv',isVisible:async()=>mode!=='hidden',isEnabled:async()=>mode!=='disabled'};
+  const page={setDefaultTimeout(){},setDefaultNavigationTimeout(){},async goto(url){current=url;return {status:()=>200};},url:()=>current,locator:s=>s==='body'?{waitFor:async()=>{}}:{count:async()=>1,getByRole:(role,options)=>{assert.equal(s,'#main-content #apply form');assert.equal(role,'button');assert.deepEqual(options,{name:'Upload your resume',exact:true});return upload;}},waitForFunction:async()=>{},waitForLoadState:async()=>{},waitForTimeout:async()=>{},evaluate:async()=>bodies[current]};
+  const browser={newContext:async()=>({newPage:async()=>page,close:async()=>{}})};
+  const feed=await compileOwnerJobFeed({jobs:[job],browser,retrieve:async()=>{throw Error('No HTTP');},clock});
+  assert.equal(feed.jobs[0].sourceStatus,mode==='valid'?'verified':'attention_required');
+  if(mode!=='valid')assert.equal(feed.jobs[0].reason,'application_controls_unverified');
+ }
 });

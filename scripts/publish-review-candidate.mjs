@@ -10,7 +10,7 @@ const ref='refs/heads/main';
 const command=(args,cwd)=>execFileSync('git',args,{cwd,encoding:'utf8',stdio:['ignore','pipe','pipe']});
 const oneLine=value=>value.trim();
 export async function publishReviewCandidate(directory,{root=process.cwd(),env=process.env,execute=command,clock=Date.now}={}){
-  if(env.GITHUB_REPOSITORY!==REPO||env.GITHUB_REF!==ref||!['schedule','workflow_dispatch'].includes(env.GITHUB_EVENT_NAME)||!/^[a-f0-9]{40}$/.test(env.GITHUB_SHA??''))throw new Error('Candidate write requires the existing canonical main workflow.');
+  if(env.GITHUB_REPOSITORY!==REPO||env.GITHUB_REF!==ref||!['schedule','workflow_dispatch','push'].includes(env.GITHUB_EVENT_NAME)||!/^[a-f0-9]{40}$/.test(env.GITHUB_SHA??''))throw new Error('Candidate write requires the existing canonical main workflow.');
   if(!directory)throw new Error('Candidate evidence directory required.');
   const expected=env.GITHUB_SHA,git=args=>execute(args,root),head=()=>oneLine(git(['rev-parse','HEAD']));
   const remote=()=>oneLine(git(['ls-remote','--heads','origin',ref])).split(/\s+/)[0];

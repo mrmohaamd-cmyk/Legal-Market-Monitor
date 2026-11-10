@@ -76,6 +76,11 @@ async function fixture(t,{candidateChanged=true,candidateOutOfScope=false,existi
 }
 const pushes=f=>f.state.calls.filter(args=>args[0]==='push');
 
+test('main intake-change event uses the existing nonpublishing coverage writer',async t=>{
+ const f=await fixture(t);const result=await f.run({env:{...f.env,GITHUB_EVENT_NAME:'push'}});
+ assert.equal(result.status,'confirmed');assert.equal(result.publicationEnabled,false);assert.equal(pushes(f).length,1);
+});
+
 test('coverage writer commits only the exact coverage path after a confirmed candidate parent and independently verifies remote bytes',async t=>{
   const f=await fixture(t),candidateBefore=await readFile(join(f.root,CANDIDATE),'utf8');
   const result=await f.run();

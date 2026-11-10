@@ -1,6 +1,11 @@
 name: Prepare verified opportunity refresh
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'config/saudilaw-owner-jobs.json'
+      - 'scripts/pipeline/owner-job-feed.mjs'
   schedule:
     # Multiple opportunities to prepare review within the 7-day (168-hour) evidence window.
     # GitHub schedules are best effort and may still be delayed or skipped.

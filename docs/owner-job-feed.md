@@ -1,6 +1,6 @@
 # Structured owner job intake
 
-This separates content from the installed Reddit app. It adds no executable remote configuration, HTTP permission, employer, paid integration or new browser dependency. The input starts with **zero jobs**. It grants no publication or scheduling authorization.
+This separates content from the installed Reddit app. It adds no executable remote configuration, HTTP permission, employer, paid integration or new browser dependency. The input contains explicitly reviewed candidates; source failures remain held. It grants no publication or scheduling authorization.
 
 ## Routine preparation
 
@@ -8,12 +8,14 @@ This separates content from the installed Reddit app. It adds no executable remo
 2. Inspect the full official vacancy, its application route and the supporting firm-context evidence. Preserve every material eligibility condition and deadline qualification in both languages. Context claims need reciprocal evidence references. Cohort modules and individual profile data are not accepted by this minimal intake contract.
 3. Record exact source-document or visible-DOM SHA-256 and byte counts plus plaintext assertions. For a new source, the workflow check artifacts report independently observed hashes, byte counts and visible text to assist review. Diagnostics are **not** fresh publication proof or owner approval. Visible text is limited to 50,000 characters per source and explicitly marked when truncated; inspect the official page for remaining detail.
 4. Commit the structured input to the existing fixed public repository's main branch through its normal owner review. This changes data, not the Devvit app. Do not include private research registers, profile links, credentials or applicant data in this public input.
-5. The existing six-hour `refresh-opportunities.yml` workflow rechecks the listed official sources. It produces `dist/saudilaw-owner-jobs.json` with `publicationEnabled:false` regardless of success. A genuine source result must independently match each approved whole-source fingerprint and every required phrase, with anonymous live application controls present. No login or application is attempted.
+5. The existing six-hour `refresh-opportunities.yml` workflow also rechecks after a main-branch change to the owner intake or its verifier. Generated artifact writes do not match those paths, so they cannot trigger a refresh loop. It produces `dist/saudilaw-owner-jobs.json` with `publicationEnabled:false` regardless of success. A genuine source result must independently match each reviewed whole-source fingerprint and every required phrase, with anonymous live application controls present. No login or application is attempted.
 6. The owner reviews the exact bilingual payload in the Reddit controls and approves its immutable digest into installation-scoped storage. An incoming feed cannot grant approval. The app independently verifies the fixed GitHub-main origin, feed freshness, schema and exact owner grant before planning an opportunity.
 
 Only an existing approved employer's reviewed brand/protocol and the fixed renderer can be selected. Copy, facts, context, source pins and context-review leases are structured data; changing them changes the immutable digest and requires the owner's new review. The feed cannot provide HTML, CSS, JavaScript, templates, executable selectors, HTTP headers, credentials, a new rendering protocol or a new source host.
 
 ## Evidence limits
+
+Browser captures wait for page load and three equal visible-DOM samples, with at most twenty samples spaced 250 ms apart and the existing total run budget. This prevents capturing transient styling/hydration as reviewed content; it does not ignore fingerprint drift. Segal's transparent resume input is verified through the same exact, visible, enabled accessible upload control used by the existing Segal reviewer, scoped to its single application form. Hidden, disabled, ambiguous or changed controls still fail. A stable capture does not guarantee later stability; the A&O sign-in page can still remain held for fingerprint drift.
 
 This is explicit intake, not broad web discovery or a claim of exhaustive coverage. The owner remains responsible for faithful fact extraction and bilingual equivalence. The engine proves that the whole reviewed source has not changed and that the public entry route is still present. It does not establish successful authentication, successful application submission or future employer availability.
 
@@ -25,7 +27,7 @@ The feed expires after at most 12 hours and never outlives the conservative edit
 
 ## Fixed-main write boundary
 
-The feed publisher runs only in the canonical repository's existing scheduled/manual main workflow. It requires the preceding coverage write's positive receipt and permits only the existing candidate and coverage artifact commits between the workflow revision and the current main revision. It verifies the exact committed input and source report, writes only `dist/saudilaw-owner-jobs.json`, then independently reads the remote commit and exact blob. A lost or unconfirmed push is not automatically retried.
+The feed publisher runs only in the canonical repository's existing scheduled/manual or intake-change main workflow. It requires the preceding coverage write's positive receipt and permits only the existing candidate and coverage artifact commits between the workflow revision and the current main revision. It verifies the exact committed input and source report, writes only `dist/saudilaw-owner-jobs.json`, then independently reads the remote commit and exact blob. A lost or unconfirmed push is not automatically retried.
 
 The workflow uses its existing GitHub credential and concurrency group. It makes no Reddit request, does not merge job-data proposals and never starts a schedule. No new paid service is involved. The project's authorization remains **USD 20 total**, including previous spending; this implementation creates no new allowance.
 

@@ -132,6 +132,12 @@ test('Git write changes exactly the fixed candidate file and independently confi
   assert.equal(await readFile(join(r.root,'sentinel.txt'),'utf8'),'Preserve this file.\n');
   assert.equal(r.git(['show',`FETCH_HEAD:${CANDIDATE_PATH}`]),await readFile(join(r.evidence,'saudilaw-publication-candidates.json'),'utf8'));
 });
+test('main intake-change event retains the review-only candidate boundary',async t=>{
+ const r=await repository(t);const receipt=await publishReviewCandidate(r.evidence,{...r,env:{...r.env,GITHUB_EVENT_NAME:'push'},clock:()=>now});
+ assert.equal(receipt.status,'confirmed');
+ const candidate=JSON.parse(await readFile(join(r.root,CANDIDATE_PATH),'utf8'));
+ assert.equal(candidate.publication_enabled,false);assert.deepEqual(candidate.accepted,[]);
+});
 
 test('lost push acknowledgement is reconciled without retry; rejected push is never retried',async t=>{
   for(const persisted of [true,false])await t.test(String(persisted),async t=>{

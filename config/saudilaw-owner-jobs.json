@@ -1,4 +1,283 @@
 {
   "schema": "saudilaw-owner-job-input/v1",
-  "jobs": []
+  "jobs": [
+    {
+      "schema": "saudilaw-owner-job/v1",
+      "id": "ao-shearman-winter-2026-coop",
+      "employerKey": "ao-shearman",
+      "sourceIdentity": {
+        "roleTitleEn": "Co-op Scheme - Winter 2026",
+        "locationEn": "Riyadh, Saudi Arabia"
+      },
+      "weekly": {
+        "employer": {
+          "ar": "A&O Shearman",
+          "en": "A&O Shearman"
+        },
+        "role": {
+          "ar": "برنامج التدريب التعاوني — شتاء 2026",
+          "en": "Co-op Scheme - Winter 2026"
+        },
+        "location": {
+          "ar": "الرياض، المملكة العربية السعودية",
+          "en": "Riyadh, Saudi Arabia"
+        },
+        "category": "coop",
+        "eligibility_points": {
+          "ar": [
+            "طالب بكالوريوس قانون حاليًا، بمعدل تراكمي قوي؛ لم يُذكر حد رقمي للمعدل.",
+            "إجادة العربية والإنجليزية تحدثًا وكتابة، مع مهارات تواصل وبحث وتحليل قوية ودقة وتنظيم.",
+            "اجتياز التقييم المحدد ضمن الاختيار، والقدرة على العمل باستقلالية وضمن فريق والمبادرة بالتعلم.",
+            "قبل البدء: هوية وطنية أو إقامة، وسجل أكاديمي رسمي، وخطاب جامعي يثبت أن التدريب التعاوني متطلب للتخرج.",
+            "التقديم إلكتروني، ويتضمن الخبرة العملية وإجابات عن أسئلة تحريرية؛ الاختيار والمقابلات على أساس متجدد."
+          ],
+          "en": [
+            "Currently an undergraduate law student with a strong cumulative GPA; no numeric GPA threshold is stated.",
+            "Fluent spoken and written Arabic and English, with strong communication, research, analytical, accuracy and organisational skills.",
+            "Pass the designated selection assessment; work independently and collaboratively and show initiative to learn.",
+            "Before starting: national ID or Iqama, official transcript, and university letter confirming COOP is a graduation requirement.",
+            "Apply online with work experience and written answers; recruitment and interviews take place on a rolling basis."
+          ]
+        },
+        "deadline": {
+          "date": "2026-11-30",
+          "at": null,
+          "time_zone": null,
+          "published": true
+        },
+        "deadline_copy": {
+          "ar": "آخر موعد مذكور: 30 نوفمبر 2026، الساعة 5 مساءً؛ المنطقة الزمنية غير مذكورة. يُفضّل التقديم مبكرًا لأن الاختيار متجدد.",
+          "en": "Published deadline: 30 November 2026 at 5pm; the time zone is not specified. Apply early because recruitment is rolling."
+        },
+        "opportunity_summary": {
+          "ar": "تدريب لمدة 7 أشهر في مكتب الرياض، بدفعات في يناير وأغسطس، مع بحث وصياغة قانونية ومشاركة في المعاملات والمنازعات. يشمل بدل مصروفات شهريًا؛ النظر لاحقًا في وظيفة متدرب محتمل وليس مضمونًا.",
+          "en": "Seven-month Riyadh internship, with January and August intakes, covering legal research, drafting, transactions and disputes. A monthly expense allowance is offered; later consideration for a trainee role is possible, not guaranteed."
+        },
+        "application_url": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119",
+        "source_url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504"
+      },
+      "context": {
+        "schema": "saudilaw-opportunity-context-review/v1",
+        "opportunityIdentity": "2fe86a431e8524311a125281862ee68b808009248cbd7e037dec3b6289af3efb",
+        "researchedAt": "2026-11-10T23:46:49.635Z",
+        "reviewContext": {
+          "fixtureOnly": false,
+          "suppressed": false,
+          "note": "Primary vacancy reviewed in full; paraphrased bilingual context. This intake grants no content or schedule approval."
+        },
+        "evidence": [
+          {
+            "id": "firm-source",
+            "url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504",
+            "publisher": "A&O Shearman",
+            "checkedAt": "2026-11-10T23:46:22.991Z",
+            "claimIds": [
+              "firm-presence",
+              "firm-work"
+            ],
+            "locator": "Official vacancy description, programme and About us sections.",
+            "reviewStatus": "inspected_primary",
+            "bodySha256": "e74dbd89cc69d0ee57eb911b508eee18bc5676845fde3913b46a0bfc4d7d1064"
+          }
+        ],
+        "firm": {
+          "sentences": [
+            {
+              "id": "firm-presence",
+              "ar": "A&O Shearman مكتب محاماة دولي له مكتب في الرياض.",
+              "en": "A&O Shearman is an international law firm with a Riyadh office.",
+              "evidenceIds": [
+                "firm-source"
+              ]
+            },
+            {
+              "id": "firm-work",
+              "ar": "يتناول عمل مكتب الرياض معاملات ومنازعات في السعودية والمنطقة.",
+              "en": "Its Riyadh programme involves legal transactions and disputes in Saudi Arabia and the region.",
+              "evidenceIds": [
+                "firm-source"
+              ]
+            }
+          ]
+        },
+        "saudiDeal": null
+      },
+      "contextLease": {
+        "schema": "saudilaw-historical-context-lease/v1",
+        "kind": "reviewed_historical_context",
+        "reviewedAt": "2026-11-10T23:46:49.635Z",
+        "validUntil": "2026-11-17T23:40:39.767Z",
+        "claimIds": [
+          "firm-presence",
+          "firm-work"
+        ],
+        "reason": "Seven-day review lease for limited firm context supported by the inspected vacancy; this is not live vacancy evidence."
+      },
+      "sources": [
+        {
+          "url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504",
+          "role": "vacancy",
+          "kind": "browser_dom",
+          "bodySha256": "e74dbd89cc69d0ee57eb911b508eee18bc5676845fde3913b46a0bfc4d7d1064",
+          "bodyBytes": 25255,
+          "requiredText": [
+            "Co-op Scheme - Winter 2026",
+            "11180BR"
+          ]
+        },
+        {
+          "url": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119",
+          "role": "application",
+          "kind": "browser_dom",
+          "bodySha256": "0c3fb82f69c7484fd69bbe41790f7c38f17d391ffef9fbfbab77c1d1eae28f1a",
+          "bodyBytes": 11240,
+          "requiredText": [
+            "Sign In",
+            "E-Mail Address"
+          ]
+        }
+      ],
+      "applicationResult": "login_required",
+      "editorialCutoffAt": "2026-11-29T21:00:00.000Z"
+    },
+    {
+      "schema": "saudilaw-owner-job/v1",
+      "id": "segal-riyadh-student-intern-2026",
+      "employerKey": "segal",
+      "sourceIdentity": {
+        "roleTitleEn": "Student Intern",
+        "locationEn": "Riyadh, Saudi Arabia"
+      },
+      "weekly": {
+        "employer": {
+          "ar": "سجال للمحاماة",
+          "en": "Segal Law Firm"
+        },
+        "role": {
+          "ar": "متدرب جامعي",
+          "en": "Student Intern"
+        },
+        "location": {
+          "ar": "الرياض، المملكة العربية السعودية",
+          "en": "Riyadh, Saudi Arabia"
+        },
+        "category": "internship",
+        "eligibility_points": {
+          "ar": [
+            "طالب قانون حالي في جامعة معترف بها، بسجل أكاديمي قوي باستمرار؛ لم يُذكر حد رقمي للمعدل.",
+            "إجادة العربية والإنجليزية تحدثًا وقراءة وكتابة، واهتمام بالقانون والأعمال.",
+            "أهلية العمل في السعودية طوال مدة التدريب.",
+            "يشمل الاختيار طلب تقديم، وقد يتبعه تقييم إلكتروني ومقابلة أو مرحلة تقييم.",
+            "تبحث الجهة عن المبادرة والتعاون والتفكير النقدي وتحمل المسؤولية والاستعداد للتعلم والتكيف."
+          ],
+          "en": [
+            "Currently a law student at a recognised university with a consistently strong academic record; no numeric GPA threshold is stated.",
+            "Strong spoken, reading and written Arabic and English, with an interest in law and business.",
+            "Have the right to work in Saudi Arabia throughout the internship.",
+            "Selection includes an application and may include an online assessment followed by an interview or assessment stage.",
+            "The firm seeks initiative, collaboration, critical thinking, responsibility, learning and adaptability."
+          ]
+        },
+        "deadline": {
+          "date": null,
+          "at": null,
+          "time_zone": null,
+          "published": false
+        },
+        "deadline_copy": {
+          "ar": "لم يُذكر موعد نهائي في صفحة الفرصة التي جرى فحصها.",
+          "en": "No application deadline is stated on the inspected vacancy page."
+        },
+        "opportunity_summary": {
+          "ar": "تدريب في الرياض يتضمن عملًا قانونيًا وبحثًا ومهام فعلية داخل الفريق، مع تعلم عملي ودعم من المحامين. قد يُنظر في فرص لاحقة لدى سجال؛ لا يتضمن الإعلان وعدًا بالتوظيف.",
+          "en": "Riyadh internship with legal work, research and substantive team responsibilities, supported by practical learning and experienced lawyers. Later opportunities at Segal may be considered; employment is not promised."
+        },
+        "application_url": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
+        "source_url": "https://www.segal.com.sa/en/careers/jobs/student-intern"
+      },
+      "context": {
+        "schema": "saudilaw-opportunity-context-review/v1",
+        "opportunityIdentity": "fd0bff9657da3facda875af498f62a9f8861ab267280d992e08f40720a623568",
+        "researchedAt": "2026-11-10T23:46:49.635Z",
+        "reviewContext": {
+          "fixtureOnly": false,
+          "suppressed": false,
+          "note": "Primary vacancy reviewed in full; paraphrased bilingual context. This intake grants no content or schedule approval."
+        },
+        "evidence": [
+          {
+            "id": "firm-source",
+            "url": "https://www.segal.com.sa/en/careers/jobs/student-intern",
+            "publisher": "Segal Law Firm",
+            "checkedAt": "2026-11-10T23:46:27.946Z",
+            "claimIds": [
+              "firm-presence",
+              "firm-work"
+            ],
+            "locator": "Official vacancy description, programme and About us sections.",
+            "reviewStatus": "inspected_primary",
+            "bodySha256": "060ca6246db61e11a9a207007b52713f84cd81b304114fe154c65f366a1073cf"
+          }
+        ],
+        "firm": {
+          "sentences": [
+            {
+              "id": "firm-presence",
+              "ar": "سجال مكتب محاماة سعودي يقدم هذا التدريب في الرياض.",
+              "en": "Segal is a Saudi law firm offering this internship in Riyadh.",
+              "evidenceIds": [
+                "firm-source"
+              ]
+            },
+            {
+              "id": "firm-work",
+              "ar": "يصف المكتب عمله بأنه يجمع المعرفة القانونية وفهم الأعمال لمعالجة مسائل معقدة.",
+              "en": "The firm describes its work as combining legal and commercial perspectives on complex matters.",
+              "evidenceIds": [
+                "firm-source"
+              ]
+            }
+          ]
+        },
+        "saudiDeal": null
+      },
+      "contextLease": {
+        "schema": "saudilaw-historical-context-lease/v1",
+        "kind": "reviewed_historical_context",
+        "reviewedAt": "2026-11-10T23:46:49.635Z",
+        "validUntil": "2026-11-17T23:40:39.767Z",
+        "claimIds": [
+          "firm-presence",
+          "firm-work"
+        ],
+        "reason": "Seven-day review lease for limited firm context supported by the inspected vacancy; this is not live vacancy evidence."
+      },
+      "sources": [
+        {
+          "url": "https://www.segal.com.sa/en/careers/jobs/student-intern",
+          "role": "vacancy",
+          "kind": "browser_dom",
+          "bodySha256": "060ca6246db61e11a9a207007b52713f84cd81b304114fe154c65f366a1073cf",
+          "bodyBytes": 9350,
+          "requiredText": [
+            "Student Intern",
+            "SG-JOB-2026-0002"
+          ]
+        },
+        {
+          "url": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
+          "role": "application",
+          "kind": "browser_dom",
+          "bodySha256": "d25c30ff71255e1751cbe4bff0b3c0c2b1d44d57fce66eaee8b17e5cc9ddab69",
+          "bodyBytes": 9603,
+          "requiredText": [
+            "Student Intern",
+            "Submit"
+          ]
+        }
+      ],
+      "applicationResult": "form_available",
+      "editorialCutoffAt": null
+    }
+  ]
 }

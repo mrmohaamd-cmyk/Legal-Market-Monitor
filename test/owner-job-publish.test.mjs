@@ -36,6 +36,11 @@ test('workflow writer changes only fixed nonpublishing data and independently co
  assert.equal(receipt.status,'confirmed');assert.equal(receipt.publicationEnabled,false);assert.equal(s.getPushes(),1);assert.equal(s.git(['diff','--name-only',s.base,receipt.commit]).trim(),'dist/saudilaw-owner-jobs.json');
  const publicFeed=JSON.parse(await readFile(join(s.root,'dist/saudilaw-owner-jobs.json'),'utf8'));assert.equal(publicFeed.publicationEnabled,false);assert.equal(publicFeed.jobs[0].sourceStatus,'verified');
 });
+test('main input-change event retains the same fixed nonpublishing write boundary',async t=>{
+ const s=await setup(t);s.env.GITHUB_EVENT_NAME='push';
+ const receipt=await publishOwnerJobs(s.directory,{...s,clock:()=>PRODUCER_NOW});
+ assert.equal(receipt.status,'confirmed');assert.equal(receipt.publicationEnabled,false);assert.equal(s.getPushes(),1);
+});
 test('lost push acknowledgement is accepted only after positive remote confirmation; no retry',async t=>{
  for(const pushMode of ['lost-ack','unconfirmed']){
   const s=await setup(t,{pushMode});
