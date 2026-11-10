@@ -1,0 +1,36 @@
+# Structured owner job intake
+
+This separates content from the installed Reddit app. It adds no executable remote configuration, HTTP permission, employer, paid integration or new browser dependency. The input starts with **zero jobs**. It grants no publication or scheduling authorization.
+
+## Routine preparation
+
+1. Add an opening to `config/saudilaw-owner-jobs.json` as structured `saudilaw-owner-job/v1` JSON. The supported employers remain White & Case, A&O Shearman and Segal; location, career categories, official source hosts, text budgets and field shapes are fixed by `contracts/owner-job.mjs`.
+2. Inspect the full official vacancy, its application route and the supporting firm-context evidence. Preserve every material eligibility condition and deadline qualification in both languages. Context claims need reciprocal evidence references. Cohort modules and individual profile data are not accepted by this minimal intake contract.
+3. Record exact source-document or visible-DOM SHA-256 and byte counts plus plaintext assertions. For a new source, the workflow check artifacts report independently observed hashes, byte counts and visible text to assist review. Diagnostics are **not** fresh publication proof or owner approval. Visible text is limited to 50,000 characters per source and explicitly marked when truncated; inspect the official page for remaining detail.
+4. Commit the structured input to the existing fixed public repository's main branch through its normal owner review. This changes data, not the Devvit app. Do not include private research registers, profile links, credentials or applicant data in this public input.
+5. The existing six-hour `refresh-opportunities.yml` workflow rechecks the listed official sources. It produces `dist/saudilaw-owner-jobs.json` with `publicationEnabled:false` regardless of success. A genuine source result must independently match each approved whole-source fingerprint and every required phrase, with anonymous live application controls present. No login or application is attempted.
+6. The owner reviews the exact bilingual payload in the Reddit controls and approves its immutable digest into installation-scoped storage. An incoming feed cannot grant approval. The app independently verifies the fixed GitHub-main origin, feed freshness, schema and exact owner grant before planning an opportunity.
+
+Only an existing approved employer's reviewed brand/protocol and the fixed renderer can be selected. Copy, facts, context, source pins and context-review leases are structured data; changing them changes the immutable digest and requires the owner's new review. The feed cannot provide HTML, CSS, JavaScript, templates, executable selectors, HTTP headers, credentials, a new rendering protocol or a new source host.
+
+## Evidence limits
+
+This is explicit intake, not broad web discovery or a claim of exhaustive coverage. The owner remains responsible for faithful fact extraction and bilingual equivalence. The engine proves that the whole reviewed source has not changed and that the public entry route is still present. It does not establish successful authentication, successful application submission or future employer availability.
+
+Every body or projected-DOM change, even a harmless content or chrome change, conservatively holds that source for review. No semantic inference silently refreshes the pin. The official source role must fully match a visible h1/h2/h3 heading after case/whitespace normalization, and its approved Saudi city must be visible as a complete word in that vacancy/programme source; Saudi-only locations remain fixed in code. A generic careers page alone is insufficient. The official title/location define ledger identity independently of editorial phrasing. A fixed guard holds the retired White & Case 2027 trainee programme when it appears in vacancy/programme text, even under another incoming job ID or editorial title. Shared application portals are not globally blocked just because they also list that retired programme. Redirects, hidden-only text, missing/disabled controls, an explicit closure, transport failure or budget exhaustion also hold it. The sole final-URL exception is the existing A&O ATS's fixed job-details fragment derived from its exact job/site query; changed origins, paths, queries and arbitrary fragments reject. A partial failure has no positive source receipts in the public feed. Timestamp refreshes alone do not change the job digest or approval.
+
+The source check admits at most 12 jobs, five sources per job, 40 attempted source requests and six minutes of work. Source HTTP reads reuse the existing bounded transport. Browser checks reuse the workflow's pinned Playwright installation in fresh anonymous contexts; only a fixed DOM projection runs, with no form filling, clicks or owner-supplied browser code. The app's HTTP allowlist remains `api.github.com`.
+
+The feed expires after at most 12 hours and never outlives the conservative editorial deadline. It remains nonpublishing. Publication still needs an active explicit owner authorization window, fresh source proof, an exact owner content grant, current installation switches and the durable suppression/duplicate/outbox checks.
+
+## Fixed-main write boundary
+
+The feed publisher runs only in the canonical repository's existing scheduled/manual main workflow. It requires the preceding coverage write's positive receipt and permits only the existing candidate and coverage artifact commits between the workflow revision and the current main revision. It verifies the exact committed input and source report, writes only `dist/saudilaw-owner-jobs.json`, then independently reads the remote commit and exact blob. A lost or unconfirmed push is not automatically retried.
+
+The workflow uses its existing GitHub credential and concurrency group. It makes no Reddit request, does not merge job-data proposals and never starts a schedule. No new paid service is involved. The project's authorization remains **USD 20 total**, including previous spending; this implementation creates no new allowance.
+
+## Withdrawals and operational state
+
+Adding, reapproving or deleting a data entry never clears permanent record/identity claims, the historical withdrawal, consumed slots, unresolved attempts or the initialization marker. The removed White & Case opening must remain suppressed under its original legacy identity and record hash. A formatting fixture must never be copied into this input to replay it.
+
+Implementation tests and source preparation do not prove deployment, live production configuration or public publication. Keep publication paused until the tested engine is installed and its exact saved state is independently observed. An empty or malformed new configuration never activates posting. Schedule authorization and content approval are separate owner actions; neither renews the other.

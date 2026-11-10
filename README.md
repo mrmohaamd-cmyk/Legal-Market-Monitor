@@ -2,6 +2,12 @@
 
 A public static page for curated Saudi early-career legal opportunities. The canonical public deployment is GitHub Pages, built directly from this repository's `main` branch. A separate private GitHub Actions monitor checks official sources and maintains a review report. This repository also prepares a draft publication PR from conservative first-party rechecks. Neither workflow merges or publishes listings automatically. No application server, database, accounts, API keys or analytics are used in production.
 
+## Structured Reddit job candidates
+
+The existing source-refresh workflow can also recheck `config/saudilaw-owner-jobs.json` and renew the nonpublishing `dist/saudilaw-owner-jobs.json` evidence feed. The input starts empty. It accepts structured openings for White & Case, A&O Shearman and Segal only; exact reviewed source fingerprints, visible advertised-role text and public application controls must independently pass. Any source drift holds the job for review. It does not log in, fill forms, grant Reddit content approval or start a schedule.
+
+The Reddit app owner separately approves the exact bilingual revision and separately authorizes/resumes a bounded schedule window. Ordinary job-data edits and owner decisions do not require a Devvit app release; rendering, verification behavior, employers and permission changes still do. Permanent withdrawal and duplicate claims remain in the app's independent ledger. See [the intake and evidence procedure](docs/owner-job-feed.md) for data fields, conservative limitations and the narrow fixed-main write boundary.
+
 ## Brand premise
 
 This is not a law-firm site and should not simulate one. It is an independent monitor for ambitious early-career candidates. Its authority comes from visible provenance, a tightly defined Saudi-only scope, current-status handling and direct official routes—not prestige claims or decorative luxury. Retain the editorial hierarchy, source/fact distinction and calm, task-led interaction when maintaining the page.

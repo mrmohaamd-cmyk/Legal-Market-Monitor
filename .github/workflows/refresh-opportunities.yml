@@ -70,6 +70,21 @@ jobs:
           path: ${{ runner.temp }}/source-coverage/
           retention-days: 7
           if-no-files-found: warn
+      - name: Independently verify structured owner job candidates
+        run: node scripts/check-owner-jobs.mjs "$RUNNER_TEMP/owner-jobs"
+      - name: Renew only the nonpublishing owner job evidence feed
+        env:
+          OWNER_JOB_DIRECTORY: ${{ runner.temp }}/owner-jobs
+          SOURCE_COVERAGE_DIRECTORY: ${{ runner.temp }}/source-coverage
+        run: node scripts/publish-owner-jobs.mjs
+      - name: Preserve owner job evidence and positive write receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: owner-job-evidence-${{ github.run_id }}
+          path: ${{ runner.temp }}/owner-jobs/
+          retention-days: 7
+          if-no-files-found: warn
       - name: Validate the proposed feed and browser journeys before changing a branch
         run: |
           cp "$RUNNER_TEMP/source-check/proposed-opportunities.json" dist/opportunities.json
