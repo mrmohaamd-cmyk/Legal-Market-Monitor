@@ -1,0 +1,216 @@
+{
+  "schema": "saudilaw-source-coverage/v1",
+  "generated_at": "2026-11-10T11:07:20.531Z",
+  "expires_at": "2026-11-10T23:07:20.531Z",
+  "publication_enabled": false,
+  "accepted": [],
+  "entries": [
+    {
+      "id": "white-case-saudi-law-trainee-2027",
+      "identity": "white-case:saudi-law-trainee:2027-03",
+      "semantic_sha256": "a8d8e788facf5ccce657eb4cec50aca98099e23f3dae3854e7bd6f9674b85f3a",
+      "translation_sha256": "5c170396c18c8bc5db285af0dd8ed4b1f7f5c76127d9cfe24d08ce779a8a7cfd",
+      "rendering_version": "saudilaw-weekly-render/v1",
+      "translation_status": "pending",
+      "source_status": "verified",
+      "reason": null,
+      "checked_at": "2026-11-10T11:07:12.866Z",
+      "expires_at": "2026-11-10T23:07:20.531Z",
+      "application_result": "login_required",
+      "draft": {
+        "text": "**العربية**\n\nالرياض، المملكة العربية السعودية\n\n- بداية البرنامج: مارس 2027.\n- بحث قانوني ومراجعة مستندات واجتماعات وعمل بإشراف مهني عبر أقسام التدريب.\n- بكالوريوس قانون من جامعة سعودية، والسعي للحصول على ترخيص مزاولة المحاماة في السعودية.\n- الحد الأدنى للمعدل: 3.5 من 4.0 أو 4.5 من 5.0.\n- العربية لغة أم مع إجادتها تحدثًا وكتابةً.\n- الالتزام بمسار مهني قانوني دولي، بما فيه الحصول على درجة ماجستير في القانون وفق وصف جهة العمل «international LLM» قبل النظر في الانتقال إلى وظيفة محامٍ مشارك. الانتقال غير مضمون.\n- نمط العمل والراتب ومدة البرنامج غير محددة في هذه البيانات المراجعة.\n- آخر موعد معلن: 8 يناير 2027. وقت الإغلاق والمنطقة الزمنية غير محددين.\n- تم التحقق من نموذج إدخال البريد الإلكتروني العام فقط؛ لم يتم اختبار تسجيل الدخول أو اختيار البرنامج بعد الدخول أو إرسال طلب.\n- ملخص آلي لبيانات جهة العمل. قد تتغير الإتاحة؛ التقديم لدى جهة العمل مباشرة، والبوت لا يستقبل طلبات أو بيانات المتقدمين.\n\n**English**\n\nRiyadh, Saudi Arabia\n\n- Programme intake: March 2027.\n- Legal research, document checking, meetings and supervised work across training seats.\n- LLB from a Saudi university; seeking a Saudi licence to practise.\n- Minimum GPA: 3.5/4.0 or 4.5/5.0.\n- Native Arabic, fluent in writing and speech.\n- Commitment to an international legal career, including an international LLM before associate consideration. Progression is not guaranteed.\n- Work model, pay and programme duration are not specified in these reviewed facts.\n- Advertised application deadline: 8 January 2027. Closing time and timezone are unspecified.\n- Only the public email-entry form was checked; authentication, programme selection after login and submission were not tested.\n- Automated summary of employer information. Availability may change; apply directly to the employer. The bot does not accept applications or collect applicant information.\n\n[التقديم / Apply](https://whitecase.grad.allhires.com/app/) | [المصدر / Source](https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program)\n\nوقت التحقق / Checked: 2026-11-10T11:07:12.866Z\n\nالمرجع / Reference: white-case-saudi-law-trainee-2027",
+        "title": "[تدريب | Trainee] White & Case — برنامج التدريب في القانون السعودي لعام 2027 / Saudi Law Trainee Program 2027"
+      },
+      "draft_sha256": "990ba06e9d8f0f987ca77fd7017ae36ece1b44986419c5a39a0c597c70d33e2a",
+      "proofs": [
+        {
+          "bodyBytes": 15227,
+          "bodySha256": "c39670222b72a313a0e5fc89b172df726d0f42b98784ce77c237c2e2cdc65a3a",
+          "checkedAt": "2026-11-10T11:07:12.866Z",
+          "finalUrl": "https://whitecase.grad.allhires.com/app/",
+          "kind": "http_html",
+          "status": 200,
+          "url": "https://whitecase.grad.allhires.com/app/"
+        },
+        {
+          "bodyBytes": 156882,
+          "bodySha256": "e51cd39763d6c2bb2ddec60d49fbe88a22d774468738e7d444e4cb68a184799d",
+          "checkedAt": "2026-11-10T11:07:12.866Z",
+          "finalUrl": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+          "kind": "http_html",
+          "status": 200,
+          "url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program"
+        }
+      ]
+    },
+    {
+      "id": "ao-shearman-winter-2026-coop",
+      "identity": "ao-shearman:11180BR:98119",
+      "semantic_sha256": "f123dd37b6d322e015fb0d69b224bf7c08dbbc850f6d80a1e35eb5403cb71ff2",
+      "translation_sha256": "25aab7ad123abf7aa8a9e33818184c0c1fd8f2203985aae9bb58557e3a9e62af",
+      "rendering_version": "saudilaw-coverage-render/v1",
+      "translation_status": "pending",
+      "source_status": "verified",
+      "reason": null,
+      "checked_at": "2026-11-10T11:07:15.591Z",
+      "expires_at": "2026-11-10T23:07:20.531Z",
+      "application_result": "login_required",
+      "draft": {
+        "text": "**العربية**\n\nبرنامج حضوري مدته سبعة أشهر لطلاب بكالوريوس القانون. تشمل الشروط سجلًا أكاديميًا قويًا وإجادة العربية والإنجليزية تحدثًا وكتابةً. يلزم قبل البدء خطاب جامعي يؤكد أن التدريب التعاوني من متطلبات التخرج. يذكر الإعلان بدل مصروفات شهريًا دون تحديد قيمته.\n\nآخر موعد معلن: 30 نوفمبر 2026، الساعة 5 مساءً؛ المنطقة الزمنية غير مذكورة. تُراجع الطلبات تباعًا.\n\nيبدأ التقديم من صفحة الوظيفة المطابقة ثم تسجيل الدخول؛ لم يُرسل أي طلب.\n\n**English**\n\nAn office-based, seven-month programme for undergraduate Law students. Requirements include a strong academic record and spoken and written fluency in Arabic and English. Before starting, applicants need a university letter confirming that COOP training is a graduation requirement. The advert lists a monthly expense allowance without stating the amount.\n\nPublished deadline: 30 November 2026 at 5 pm; the timezone is not stated. Applications are reviewed on a rolling basis.\n\nThe matching job leads to sign-in to continue; no application was submitted.\n\n[التفاصيل / Details](https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504) · [التقديم / Apply](https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119)\n\nالتحقق / Checked: 2026-11-10T11:07:15.591Z",
+        "title": "A&O Shearman — تدريب تعاوني (شتاء 2026)، الرياض | A&O Shearman — Co-op Scheme – Winter 2026, Riyadh"
+      },
+      "draft_sha256": "7dc2038ec9a57d79bd171acf5c065d5205d75a0e6048f0dd7224d108ede3a778",
+      "proofs": [
+        {
+          "bodyBytes": 24714,
+          "bodySha256": "8bfd5ae4fde0b1a5272c04a2759ea65ee786d9b70caebaa81682f8109940e4ba",
+          "checkedAt": "2026-11-10T11:07:15.591Z",
+          "finalUrl": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504",
+          "kind": "browser_dom",
+          "status": 200,
+          "url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504"
+        },
+        {
+          "bodyBytes": 11167,
+          "bodySha256": "3e63ddc80d7d9a25dfd1e09b56806800d1908b3421dfc31575276c377dd51bd6",
+          "checkedAt": "2026-11-10T11:07:18.463Z",
+          "finalUrl": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119#jobDetails=98119_5040",
+          "kind": "browser_dom",
+          "status": 200,
+          "url": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119"
+        }
+      ]
+    },
+    {
+      "id": "segal-riyadh-student-intern-2026",
+      "identity": "segal:SG-JOB-2026-0002:student-intern",
+      "semantic_sha256": "50187ce2829434486c612fe483176722ffbc280fa3af26c61f9666cc649f0d7b",
+      "translation_sha256": "788dce69eabf1300ced44b219c1767c77d4bf1aeba38502802e87d6b8f75e8d4",
+      "rendering_version": "saudilaw-coverage-render/v1",
+      "translation_status": "pending",
+      "source_status": "verified",
+      "reason": null,
+      "checked_at": "2026-11-10T11:07:19.213Z",
+      "expires_at": "2026-11-10T23:07:20.531Z",
+      "application_result": "form_available",
+      "draft": {
+        "text": "**العربية**\n\nفرصة لطلاب القانون الملتحقين حاليًا بجامعة معترف بها، مع سجل أكاديمي قوي وإجادة العربية والإنجليزية تحدثًا وقراءةً وكتابةً. يشترط امتلاك حق العمل في السعودية طوال مدة التدريب. يشمل التدريب خبرة عملية وبحثًا قانونيًا مع دعم وإرشاد من الفريق.\n\nالموعد النهائي والمدة والمكافأة: غير مذكورة في الإعلان.\n\nنموذج التقديم العام متاح مع اختيار «Student Intern»؛ لم يُرسل أي طلب.\n\n**English**\n\nAn opportunity for current law students at a recognised university, with a strong academic record and spoken, reading and written proficiency in Arabic and English. Applicants must have the right to work in Saudi Arabia throughout the internship. The placement includes practical experience and legal research with team support and guidance.\n\nDeadline, duration and compensation: not stated in the advert.\n\nThe public application form has Student Intern selected; no application was submitted.\n\n[التفاصيل / Details](https://www.segal.com.sa/en/careers/jobs/student-intern) · [التقديم / Apply](https://www.segal.com.sa/en/careers/apply?job=student-intern)\n\nالتحقق / Checked: 2026-11-10T11:07:19.213Z",
+        "title": "سجال للمحاماة — طالب متدرب، الرياض | Segal Law Firm — Student Intern, Riyadh"
+      },
+      "draft_sha256": "1c4a21346949647b87df38a76061087fe56363df3457912f9d6af6b04ba56ece",
+      "proofs": [
+        {
+          "bodyBytes": 9350,
+          "bodySha256": "060ca6246db61e11a9a207007b52713f84cd81b304114fe154c65f366a1073cf",
+          "checkedAt": "2026-11-10T11:07:19.213Z",
+          "finalUrl": "https://www.segal.com.sa/en/careers/jobs/student-intern",
+          "kind": "browser_dom",
+          "status": 200,
+          "url": "https://www.segal.com.sa/en/careers/jobs/student-intern"
+        },
+        {
+          "bodyBytes": 9603,
+          "bodySha256": "d25c30ff71255e1751cbe4bff0b3c0c2b1d44d57fce66eaee8b17e5cc9ddab69",
+          "checkedAt": "2026-11-10T11:07:20.522Z",
+          "finalUrl": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
+          "kind": "browser_dom",
+          "status": 200,
+          "url": "https://www.segal.com.sa/en/careers/apply?job=student-intern"
+        }
+      ]
+    }
+  ],
+  "dispositions": [
+    {
+      "disposition": "excluded_route",
+      "id": "latham-riyadh-graduate-coop",
+      "observedAt": "2026-11-10T09:38:25.223Z",
+      "proofs": [
+        {
+          "bodyBytes": 197320,
+          "bodySha256": "52e71cbb98bc6f64935ab862c86696e263202a0ad3fee6f84e7e079b4aabb8be",
+          "checkedAt": "2026-11-10T09:38:25.223Z",
+          "finalUrl": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job",
+          "kind": "http_html",
+          "status": 200,
+          "url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11016/general-opportunity%3A-graduate-training-program-%28coop%29---riyadh/job"
+        }
+      ],
+      "reason": "not_advertised_opening",
+      "recordSha256": "98a10c3167db5c7784c8d185c02a6c120732758d27c23073e90db74d0cd87917"
+    },
+    {
+      "disposition": "excluded_route",
+      "id": "latham-riyadh-trainee-associate",
+      "observedAt": "2026-11-10T09:38:25.223Z",
+      "proofs": [
+        {
+          "bodyBytes": 197282,
+          "bodySha256": "c77053f2a66dab8969bcca7560699d65b846c001e575cf6ef3c8f59014535353",
+          "checkedAt": "2026-11-10T09:38:25.223Z",
+          "finalUrl": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job",
+          "kind": "http_html",
+          "status": 200,
+          "url": "https://eume-earlyassociatecareers-lw.icims.com/jobs/11015/general-opportunity%3A-trainee-associate---riyadh/job"
+        }
+      ],
+      "reason": "not_advertised_opening",
+      "recordSha256": "8befc3676d64ccdaa9898ad4ad098f689b6320a9d35ad5cf28e790a20fc9f59e"
+    },
+    {
+      "disposition": "excluded_route",
+      "id": "kirkland-riyadh-entry-level",
+      "observedAt": "2026-11-10T09:38:25.223Z",
+      "proofs": [
+        {
+          "bodyBytes": 31663,
+          "bodySha256": "129618ddede0be2623e9c58894dbb0865aa170d7301bc06780849599db32c692",
+          "checkedAt": "2026-11-10T09:38:25.223Z",
+          "finalUrl": "https://www.kirkland.com/careers/asia/saudi-arabia",
+          "kind": "http_html",
+          "status": 200,
+          "url": "https://www.kirkland.com/careers/asia/saudi-arabia"
+        }
+      ],
+      "reason": "not_advertised_opening",
+      "recordSha256": "1165b7ef88a01bb0f6c3d840e6278e7d4b21d5132572cdb4bd10a4838299b9ef"
+    },
+    {
+      "disposition": "excluded_closed",
+      "id": "pinsent-masons-riyadh-internship-2026",
+      "observedAt": "2026-11-10T09:45:19.445Z",
+      "proofs": [
+        {
+          "bodyBytes": 30678,
+          "bodySha256": "f090ead2fee5c16f7835309ed3ac523a800217c39c00276ab857080b59769fa8",
+          "checkedAt": "2026-11-10T09:45:19.445Z",
+          "finalUrl": "https://ehpy.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1004/job/3672",
+          "kind": "browser_dom",
+          "status": null,
+          "url": "https://ehpy.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1004/jobs/preview/3672"
+        }
+      ],
+      "reason": "closed_no_automatic_reopening",
+      "recordSha256": "6093bffa1b374111f9bc95a2835bdb360cb9948ce7fe015e9e9fac37edc5044e"
+    },
+    {
+      "disposition": "excluded_closed",
+      "id": "white-case-saudi-coop-2027",
+      "observedAt": "2026-11-10T09:38:25.223Z",
+      "proofs": [
+        {
+          "bodyBytes": 15227,
+          "bodySha256": "69153298fe18b5492ca745b4c78328697464bcfc8f7ccbf11f1ec5a326545c1f",
+          "checkedAt": "2026-11-10T09:38:25.223Z",
+          "finalUrl": "https://whitecase.grad.allhires.com/app/",
+          "kind": "http_html",
+          "status": 200,
+          "url": "https://whitecase.grad.allhires.com/app/"
+        }
+      ],
+      "reason": "closed_no_automatic_reopening",
+      "recordSha256": "e5c8d119c5dfbb1edea4f30e4d3ecc0627ac332670866c284bebc675cd5822b6"
+    }
+  ],
+  "sha256": "02043274f554e08aa66c370834fde3c33b1144aab1e14823b567ce4832fdcd30"
+}
