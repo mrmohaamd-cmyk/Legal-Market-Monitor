@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.sha }}
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
@@ -34,6 +34,20 @@ jobs:
         run: |
           node --test
           npm run build
+      - name: Prepare the fixed review-only candidate from fresh official evidence
+        run: node scripts/review-candidate.mjs dist/opportunities.json "$RUNNER_TEMP/review-candidate"
+      - name: Renew only the fixed candidate artifact on the unchanged main revision
+        env:
+          SOURCE_CANDIDATE_DIRECTORY: ${{ runner.temp }}/review-candidate
+        run: node scripts/publish-review-candidate.mjs
+      - name: Preserve candidate source evidence and positive write receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-candidate-${{ github.run_id }}
+          path: ${{ runner.temp }}/review-candidate/
+          retention-days: 7
+          if-no-files-found: warn
       - name: Check first-party source evidence
         run: node scripts/reverify-opportunities.mjs dist/opportunities.json "$RUNNER_TEMP/source-check"
       - name: Validate the proposed feed and browser journeys before changing a branch
@@ -67,6 +81,7 @@ jobs:
       - name: Explain review and publication boundary
         if: always()
         run: |
-          echo 'Checks prepare a draft PR only. No automatic merge or deployment occurs.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The fixed review-only candidate is renewed only after unchanged first-party evidence is rechecked; publication remains false and accepted remains empty.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'General feed changes still prepare a draft PR only. No automatic merge, Pages deployment or Reddit publication occurs.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Review the source evidence and merge only after authorization. The 7-day (168-hour) rule continues to expire records independently.' >> "$GITHUB_STEP_SUMMARY"
           echo 'If creating PRs with GITHUB_TOKEN is disabled in repository Actions settings, the proposed feed remains in the source-refresh artifact. No additional credential is created.' >> "$GITHUB_STEP_SUMMARY"
