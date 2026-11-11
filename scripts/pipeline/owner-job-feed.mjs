@@ -6,6 +6,7 @@ import {OWNER_JOB_FEED_SCHEMA,validateOwnerJob,validateOwnerJobFeed,ownerSourceF
 import {readHtml,textOf,find} from '../html-evidence.mjs';
 import {enabled,unavailable} from '../coverage-proof.mjs';
 import {projectVisibleHtml} from '../coverage-browser-dom.mjs';
+import {AO_SOURCE_URL} from '../ao-verification.mjs';
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const HOUR=3600000,MAX_JOBS=12,MAX_REQUESTS=40,MAX_RUN_MS=6*60*1000;
 const reason=error=>['source_fingerprint_changed','source_text_changed','source_unavailable','application_controls_unverified','source_closed','withdrawn_listing_suppressed','run_budget','source_destination_changed'].includes(error?.message)?error.message:'source_evidence_unavailable';
@@ -13,6 +14,13 @@ function checkClock(clock){const now=clock();if(!Number.isSafeInteger(now)||now<
 function positiveReceipt(response,source){
  if(response?.error||response?.status!==200||response?.url!==source.url||!/^text\/html(?:\s*;|$)/i.test(response?.contentType??'')||typeof response.body!=='string'||response.body_bytes!==Buffer.byteLength(response.body)||response.body_sha256!==sha(response.body))throw new Error('source_unavailable');
  return {body:response.body,status:200,finalUrl:response.url};
+}
+function canonicalEvidenceBody(source,body){
+ if(source.kind!=='browser_dom'||source.role!=='vacancy'||source.url!==AO_SOURCE_URL)return body;
+ // The employer regenerates the ten-hex ID on this Related content wrapper.
+ // Preserve its presence, heading, contents and every other projected byte.
+ const relatedContentId=/(<div id="data-content-feed-)[a-f0-9]{10}(" class="js-hub hub__wrapper content-feed initialized">\s*<h2 class="hub-item__heading">Related content<\/h2>)/;
+ return body.replace(relatedContentId,(_,prefix,suffix)=>`${prefix}0000000000${suffix}`);
 }
 function verifyBody(source,body){
  if(sha(body)!==source.bodySha256||Buffer.byteLength(body)!==source.bodyBytes)throw new Error('source_fingerprint_changed');
@@ -80,7 +88,7 @@ async function browserReceipt(browser,source,job,remaining){
  }finally{await context.close();}
 }
 /** Inject retrieve/browser only from the fixed audited workflow, never an HTTP
- * request. Approved whole-source fingerprints make all content drift a hold.
+ * request. Approved source fingerprints make all content drift a hold.
  * Human copy review remains independent from fresh source proof. */
 export async function compileOwnerJobFeed({jobs,retrieve,browser,onSourceObserved,clock=Date.now}={}){
  if(!Array.isArray(jobs)||jobs.length>MAX_JOBS||typeof retrieve!=='function')throw new Error('producer_input');
@@ -98,13 +106,14 @@ export async function compileOwnerJobFeed({jobs,retrieve,browser,onSourceObserve
     try{
     remaining();if(++requests>MAX_REQUESTS)throw new Error('run_budget');
     const observed=source.kind==='browser_dom'?await browserReceipt(browser,source,job,remaining):positiveReceipt(await retrieve(source.url),source);
+    const body=canonicalEvidenceBody(source,observed.body),bodySha256=sha(body),bodyBytes=Buffer.byteLength(body);
     remaining();
     if(onSourceObserved!==undefined){
      if(typeof onSourceObserved!=='function')throw new Error('producer_observer');
      // Detached diagnostics are private check artifacts; never part of the feed.
-     await onSourceObserved({jobId:job.id,url:source.url,kind:source.kind,status:200,finalUrl:observed.finalUrl,checkedAt:new Date(checkClock(clock)).toISOString(),bodySha256:sha(observed.body),bodyBytes:Buffer.byteLength(observed.body),visibleText:textOf(readHtml(observed.body))});
+     await onSourceObserved({jobId:job.id,url:source.url,kind:source.kind,status:200,finalUrl:observed.finalUrl,checkedAt:new Date(checkClock(clock)).toISOString(),bodySha256,bodyBytes,...(body!==observed.body&&{rawBodySha256:sha(observed.body)}),visibleText:textOf(readHtml(observed.body))});
     }
-    const doc=verifyBody(source,observed.body);
+    const doc=verifyBody(source,body);
     if(['vacancy','programme'].includes(source.role)){
      const normalize=value=>value.normalize('NFKC').toLowerCase().replace(/\s+/g,' ').trim(),visible=normalize(textOf(doc));
      const headings=find(doc,node=>['h1','h2','h3'].includes(node.tag)).map(node=>normalize(textOf(node)));
@@ -115,7 +124,7 @@ export async function compileOwnerJobFeed({jobs,retrieve,browser,onSourceObserve
     }
     if(source.role==='application')verifyApplication(doc,job.applicationResult,observed.resumeUploadConfirmed===true);
     const checkedAt=new Date(checkClock(clock)).toISOString();
-    proofs.push({url:source.url,finalUrl:observed.finalUrl,kind:source.kind,status:200,checkedAt,bodySha256:sha(observed.body),bodyBytes:Buffer.byteLength(observed.body)});
+    proofs.push({url:source.url,finalUrl:observed.finalUrl,kind:source.kind,status:200,checkedAt,bodySha256,bodyBytes});
     }catch(error){evidenceProblem??=error;}
    }
    if(evidenceProblem!==null)throw evidenceProblem;

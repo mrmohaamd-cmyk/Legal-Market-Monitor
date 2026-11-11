@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {compileOwnerJobFeed} from '../scripts/pipeline/owner-job-feed.mjs';
+import {AO_SOURCE_URL,AO_APPLICATION_URL} from '../scripts/ao-verification.mjs';
 import {producerFixture,PRODUCER_NOW} from './owner-job-producer-fixture.mjs';
 const clock=()=>PRODUCER_NOW;
 test('new structured vacancy gets independent source receipts without any publication grant',async()=>{
@@ -84,6 +85,37 @@ test('expired editorial deadline and run budget produce attention rather than st
  const {job,retrieve}=producerFixture();let calls=0;
  const feed=await compileOwnerJobFeed({jobs:[job],retrieve,clock:()=>PRODUCER_NOW+(calls++>1?7*60000:0)});
  assert.equal(feed.jobs[0].reason,'run_budget');assert.deepEqual(feed.jobs[0].proofs,[]);
+});
+test('the exact A&O vacancy tolerates only its rotating Related content ID',async()=>{
+ const wrapper=id=>`<div id="data-content-feed-${id}" class="js-hub hub__wrapper content-feed initialized"><h2 class="hub-item__heading">Related content</h2><a href="/careers">Careers</a></div>`;
+ for(const mode of ['rotated-id','changed-link','second-wrapper','other-vacancy']){
+  const {job,bodies,hash,source:oldSource,application:oldApplication}=producerFixture();
+  const source=mode==='other-vacancy'?AO_SOURCE_URL.replace('44638109504','44638109505'):AO_SOURCE_URL;
+  const vacancy=bodies[oldSource]+wrapper('0000000000');
+  job.employerKey='ao-shearman';job.weekly.employer={ar:'A&O Shearman',en:'A&O Shearman'};
+  job.weekly.source_url=source;job.weekly.application_url=AO_APPLICATION_URL;job.context.evidence[0].url=source;
+  job.context.opportunityIdentity=hash('identity:a o shearman|saudi trainee 2027|riyadh saudi arabia');
+  job.sources[0]={...job.sources[0],url:source,kind:'browser_dom',bodySha256:hash(vacancy),bodyBytes:Buffer.byteLength(vacancy)};
+  job.sources[1]={...job.sources[1],url:AO_APPLICATION_URL,kind:'browser_dom'};
+  bodies[source]=bodies[oldSource]+wrapper('cf2b2e3204');bodies[AO_APPLICATION_URL]=bodies[oldApplication];
+  if(mode==='changed-link')bodies[source]=bodies[source].replace('/careers','/closure');
+  if(mode==='second-wrapper')bodies[source]+=wrapper('dec0de0001');
+  let current;
+  const page={setDefaultTimeout(){},setDefaultNavigationTimeout(){},async goto(url){current=url;return {status:()=>200};},url:()=>current,locator:()=>({waitFor:async()=>{}}),waitForFunction:async()=>{},waitForLoadState:async()=>{},waitForTimeout:async()=>{},evaluate:async()=>bodies[current]};
+  const browser={newContext:async()=>({newPage:async()=>page,close:async()=>{}})};
+  const evidence=[];
+  const feed=await compileOwnerJobFeed({jobs:[job],retrieve:async()=>{throw Error('unexpected HTTP');},browser,clock,onSourceObserved:proof=>evidence.push(proof)});
+  assert.equal(feed.publicationEnabled,false);
+  if(mode==='rotated-id'){
+   assert.equal(feed.jobs[0].sourceStatus,'verified');
+   assert.equal(feed.jobs[0].proofs[0].bodySha256,hash(vacancy));
+   assert.equal(evidence[0].rawBodySha256,hash(bodies[source]));
+   assert.equal(evidence[1].rawBodySha256,undefined);
+  }else{
+   assert.equal(feed.jobs[0].reason,'source_fingerprint_changed');
+   assert.deepEqual(feed.jobs[0].proofs,[]);
+  }
+ }
 });
 test('transient load markup settles but persistent drift and changed stable facts stay held',async()=>{
  for(const mode of ['transient','unstable','changed']){
