@@ -1,11 +1,11 @@
 {
-  "expiresAt": "2026-11-12T07:42:50.125Z",
-  "generatedAt": "2026-11-11T19:42:50.125Z",
+  "expiresAt": "2026-11-12T19:21:57.103Z",
+  "generatedAt": "2026-11-12T07:21:57.103Z",
   "jobs": [
     {
-      "applicationResult": "login_required",
-      "checkedAt": "2026-11-11T19:42:43.671Z",
-      "expiresAt": "2026-11-12T07:42:50.125Z",
+      "applicationResult": null,
+      "checkedAt": null,
+      "expiresAt": null,
       "job": {
         "applicationResult": "login_required",
         "context": {
@@ -145,33 +145,14 @@
           "source_url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504"
         }
       },
-      "proofs": [
-        {
-          "bodyBytes": 25255,
-          "bodySha256": "0053a4a3f29ac2920866118971498bd5bea34a913a6472b3402eeaadd05b9144",
-          "checkedAt": "2026-11-11T19:42:43.671Z",
-          "finalUrl": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504",
-          "kind": "browser_dom",
-          "status": 200,
-          "url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504"
-        },
-        {
-          "bodyBytes": 11240,
-          "bodySha256": "0c3fb82f69c7484fd69bbe41790f7c38f17d391ffef9fbfbab77c1d1eae28f1a",
-          "checkedAt": "2026-11-11T19:42:47.843Z",
-          "finalUrl": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119#jobDetails=98119_5040",
-          "kind": "browser_dom",
-          "status": 200,
-          "url": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119"
-        }
-      ],
-      "reason": null,
-      "sourceStatus": "verified"
+      "proofs": [],
+      "reason": "source_fingerprint_changed",
+      "sourceStatus": "attention_required"
     },
     {
       "applicationResult": "form_available",
-      "checkedAt": "2026-11-11T19:42:48.697Z",
-      "expiresAt": "2026-11-12T07:42:50.125Z",
+      "checkedAt": "2026-11-12T07:21:55.759Z",
+      "expiresAt": "2026-11-12T19:21:57.103Z",
       "job": {
         "applicationResult": "form_available",
         "context": {
@@ -315,7 +296,7 @@
         {
           "bodyBytes": 9350,
           "bodySha256": "060ca6246db61e11a9a207007b52713f84cd81b304114fe154c65f366a1073cf",
-          "checkedAt": "2026-11-11T19:42:48.697Z",
+          "checkedAt": "2026-11-12T07:21:55.759Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/jobs/student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -324,7 +305,7 @@
         {
           "bodyBytes": 9603,
           "bodySha256": "d25c30ff71255e1751cbe4bff0b3c0c2b1d44d57fce66eaee8b17e5cc9ddab69",
-          "checkedAt": "2026-11-11T19:42:50.125Z",
+          "checkedAt": "2026-11-12T07:21:57.102Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -337,5 +318,5 @@
   ],
   "publicationEnabled": false,
   "schema": "saudilaw-owner-job-feed/v1",
-  "sha256": "dd74c447f4a29485155ab2143cb8902b595d3fae3df5b2242f4ddbd33d9a9961"
+  "sha256": "e2311cf56be0e8235d4082aca359fb335c24886318b46cb7441adef170918b94"
 }
