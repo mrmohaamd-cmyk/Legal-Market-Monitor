@@ -12,6 +12,7 @@ export const MAX_OWNER_JOB_FEED_BYTES=800000;
 export const OWNER_EMPLOYERS=Object.freeze({
   'white-case':Object.freeze({name:'White & Case',arabicName:'White & Case',hosts:Object.freeze(['www.whitecase.com','whitecase.grad.allhires.com']),fixtureId:'white-case-saudi-law-trainee-2027'}),
   'ao-shearman':Object.freeze({name:'A&O Shearman',arabicName:'A&O Shearman',hosts:Object.freeze(['www.aoshearman.com','careers.aoshearman.com','jobs.aoshearman.com']),fixtureId:'ao-shearman-winter-2026-coop'}),
+  'pinsent-masons':Object.freeze({name:'Pinsent Masons',arabicName:'Pinsent Masons',hosts:Object.freeze(['www.pinsentmasons.com']),fixtureId:'pinsent-masons-riyadh-coop-2027-01'}),
   segal:Object.freeze({name:'Segal Law Firm',arabicName:'سجال للمحاماة',hosts:Object.freeze(['www.segal.com.sa']),fixtureId:'segal-riyadh-student-intern-2026'})
 });
 const HOUR=3600000,HASH=/^[a-f0-9]{64}$/,ID=/^[a-z][a-z0-9-]{0,99}$/;
@@ -69,18 +70,21 @@ function validateContext(job,now){
   }
 
 }
-export function ownerJobRecord(job){const e=OWNER_EMPLOYERS[job.employerKey];return {id:job.id,firm_name:e.name,firm_slug:job.employerKey,role_title:job.sourceIdentity.roleTitleEn,location:job.sourceIdentity.locationEn,source_url:job.weekly.source_url,application_url:job.weekly.application_url,firm_careers_url:job.weekly.source_url};}
+export function ownerJobRecord(job){const e=OWNER_EMPLOYERS[job.employerKey];return {id:job.id,firm_name:e.name,firm_slug:job.employerKey,role_title:job.sourceIdentity.roleTitleEn+(job.sourceIdentity.intakeStartOn?' — intake '+job.sourceIdentity.intakeStartOn:''),location:job.sourceIdentity.locationEn,source_url:job.weekly.source_url,application_url:job.weekly.application_url,firm_careers_url:job.weekly.source_url};}
 export function validateOwnerJob(input,{now=Date.now()}={}){
   clock(now);const j=clone(input);if(Buffer.byteLength(canonical(j))>65000)throw Error('owner_job_budget');
-  exact(j,['schema','id','employerKey','sourceIdentity','weekly','context','contextLease','sources','applicationResult','editorialCutoffAt']);
+  exact(j,['schema','id','employerKey','sourceIdentity','weekly','context','contextLease','sources','applicationResult','editorialCutoffAt'],['availability']);
   const employer=OWNER_EMPLOYERS[j.employerKey];
+  const upcoming=j.availability?.status==='upcoming';
+  if(j.availability!==undefined){exact(j.availability,['status','opensOn']);if(!upcoming||!date(j.availability.opensOn)||Date.parse(j.availability.opensOn+'T00:00:00Z')-3*HOUR<=now)throw Error('owner_job_upcoming_date');}
   if(j.schema!==OWNER_JOB_SCHEMA||!ID.test(j.id??'')||!employer)throw Error('owner_job_identity');
   const w=j.weekly;exact(w,['employer','role','location','category','eligibility_points','deadline','application_url','source_url'],['opportunity_summary','deadline_copy']);
   pair(w.employer,150);pair(w.role,250);pair(w.location,200);
   if(w.employer.en!==employer.name||w.employer.ar!==employer.arabicName||!['trainee','graduate','junior','internship','coop'].includes(w.category))throw Error('owner_job_employer');
   // Official source identity is independent of editorial wording. Rephrasing a
   // role or changing a local candidate ID cannot reset its historical claims.
-  exact(j.sourceIdentity,['roleTitleEn','locationEn']);
+  exact(j.sourceIdentity,['roleTitleEn','locationEn'],['intakeStartOn']);
+  if(j.sourceIdentity.intakeStartOn!==undefined&&(!date(j.sourceIdentity.intakeStartOn)||upcoming&&j.sourceIdentity.intakeStartOn<j.availability.opensOn))throw Error('owner_job_intake_date');
   if(!plain(j.sourceIdentity.roleTitleEn,250)||!plain(j.sourceIdentity.locationEn,200))throw Error('owner_job_source_identity');
   // Saudi offices only; no data-controlled geographic or employer expansion.
   if(!/^(Riyadh|Jeddah|Dhahran|Al Khobar|Dammam), Saudi Arabia$/.test(j.sourceIdentity.locationEn)||w.location.en!==j.sourceIdentity.locationEn)throw Error('owner_job_location');
@@ -90,13 +94,14 @@ export function validateOwnerJob(input,{now=Date.now()}={}){
   for(const key of ['opportunity_summary','deadline_copy'])if(w[key]!==undefined)pair(w[key],key==='deadline_copy'?600:1600);
   if(!ownerEmployerUrl(w.application_url,j.employerKey)||!ownerEmployerUrl(w.source_url,j.employerKey))throw Error('owner_job_source_origin');
   validateDeadline(w.deadline);if(j.editorialCutoffAt!==ownerJobCutoff(w.deadline))throw Error('owner_job_cutoff');
-  if(!['login_required','form_available'].includes(j.applicationResult)||!Array.isArray(j.sources)||j.sources.length<2||j.sources.length>5)throw Error('owner_job_sources');
+  if(!(upcoming?j.applicationResult==='not_open_yet':['login_required','form_available'].includes(j.applicationResult))||upcoming&&w.application_url!==w.source_url||!Array.isArray(j.sources)||j.sources.length<(upcoming?1:2)||j.sources.length>5)throw Error('owner_job_sources');
   const urls=new Set();for(const s of j.sources){
     exact(s,['url','role','kind','bodySha256','bodyBytes','requiredText']);
-    if(!ownerEmployerUrl(s.url,j.employerKey)||urls.has(s.url)||!['application','vacancy','programme'].includes(s.role)||!['http_html','browser_dom'].includes(s.kind)||!HASH.test(s.bodySha256??'')||!Number.isSafeInteger(s.bodyBytes)||s.bodyBytes<1||s.bodyBytes>2000000||!Array.isArray(s.requiredText)||s.requiredText.length<1||s.requiredText.length>24||s.requiredText.some(p=>!plain(p,500)))throw Error('owner_job_source');urls.add(s.url);
+    if(s.kind==='http_visible_text'&&s.role!=='programme'||!ownerEmployerUrl(s.url,j.employerKey)||urls.has(s.url)||!['application','vacancy','programme'].includes(s.role)||!['http_html','browser_dom','http_visible_text'].includes(s.kind)||!HASH.test(s.bodySha256??'')||!Number.isSafeInteger(s.bodyBytes)||s.bodyBytes<1||s.bodyBytes>2000000||!Array.isArray(s.requiredText)||s.requiredText.length<1||s.requiredText.length>24||s.requiredText.some(p=>!plain(p,500)))throw Error('owner_job_source');urls.add(s.url);
   }
-  if(!j.sources.some(s=>s.role==='application'&&s.url===w.application_url)||!j.sources.some(s=>['vacancy','programme'].includes(s.role)&&s.url===w.source_url))throw Error('owner_job_source_roles');
+  if(!upcoming&&!j.sources.some(s=>s.role==='application'&&s.url===w.application_url)||!j.sources.some(s=>['vacancy','programme'].includes(s.role)&&s.url===w.source_url))throw Error('owner_job_source_roles');
   if(!j.sources.some(s=>['vacancy','programme'].includes(s.role)&&s.url===w.source_url&&s.requiredText.includes(j.sourceIdentity.roleTitleEn)))throw Error('owner_job_source_identity_assertion');
+  if(upcoming&&(!j.sources.some(s=>s.role==='programme'&&s.url===w.source_url)||w.deadline.date!==null&&j.availability.opensOn>=w.deadline.date))throw Error('owner_job_upcoming_source');
   validateContext(j,now);return j;
 }
 export function ownerJobDigest(job){return digest(job);}
@@ -120,7 +125,7 @@ export function validateOwnerJobFeed(input,{now=Date.now()}={}){
       if(!source||seen.has(proof.url)||!ownerSourceFinalUrlAllowed(source.url,proof.finalUrl,job.employerKey)||proof.kind!==source.kind||!(proof.status===200||source.kind==='browser_dom'&&proof.status===null)||proof.bodySha256!==source.bodySha256||proof.bodyBytes!==source.bodyBytes||at>generated||now-at>=168*HOUR)throw Error('owner_job_proof');seen.add(proof.url);times.push(at);
     }
     const checked=timestamp(item.checkedAt),until=timestamp(item.expiresAt);
-    if(checked!==Math.min(...times)||until<=now||until>Math.min(expires,checked+168*HOUR,job.editorialCutoffAt===null?Infinity:timestamp(job.editorialCutoffAt)))throw Error('owner_job_evidence_expiry');
+    if(checked!==Math.min(...times)||until<=now||until>Math.min(expires,checked+168*HOUR,...(job.availability?[Date.parse(job.availability.opensOn+'T00:00:00Z')-3*HOUR]:[]),job.editorialCutoffAt===null?Infinity:timestamp(job.editorialCutoffAt)))throw Error('owner_job_evidence_expiry');
   }
   return feed;
 }

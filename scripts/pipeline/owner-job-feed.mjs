@@ -8,6 +8,9 @@ import {enabled,unavailable} from '../coverage-proof.mjs';
 import {projectVisibleHtml} from '../coverage-browser-dom.mjs';
 import {AO_SOURCE_URL} from '../ao-verification.mjs';
 const sha=value=>createHash('sha256').update(value).digest('hex');
+export const HTTP_VISIBLE_TEXT_PROJECTION='saudilaw-http-visible-text/v1';
+export const projectHttpVisibleText=body=>textOf(readHtml(body));
+const evidenceBody=(source,body)=>source.kind==='http_visible_text'?projectHttpVisibleText(body):body;
 const HOUR=3600000,MAX_JOBS=12,MAX_REQUESTS=40,MAX_RUN_MS=6*60*1000;
 const reason=error=>['source_fingerprint_changed','source_text_changed','source_unavailable','application_controls_unverified','source_closed','withdrawn_listing_suppressed','run_budget','source_destination_changed'].includes(error?.message)?error.message:'source_evidence_unavailable';
 function checkClock(clock){const now=clock();if(!Number.isSafeInteger(now)||now<0)throw new Error('producer_clock');return now;}
@@ -23,7 +26,8 @@ function canonicalEvidenceBody(source,body){
  return body.replace(relatedContentId,(_,prefix,suffix)=>`${prefix}0000000000${suffix}`);
 }
 function verifyBody(source,body){
- if(sha(body)!==source.bodySha256||Buffer.byteLength(body)!==source.bodyBytes)throw new Error('source_fingerprint_changed');
+ const projected=evidenceBody(source,body);
+ if(sha(projected)!==source.bodySha256||Buffer.byteLength(projected)!==source.bodyBytes)throw new Error('source_fingerprint_changed');
  const doc=readHtml(body),normalize=value=>value.normalize('NFKC').toLowerCase().replace(/\s+/g,' ').trim(),visible=normalize(textOf(doc));
  if(source.requiredText.some(value=>!visible.includes(normalize(value))))throw new Error('source_text_changed');
  // A changed employer message requires review even if an applicant form remains.
@@ -106,12 +110,12 @@ export async function compileOwnerJobFeed({jobs,retrieve,browser,onSourceObserve
     try{
     remaining();if(++requests>MAX_REQUESTS)throw new Error('run_budget');
     const observed=source.kind==='browser_dom'?await browserReceipt(browser,source,job,remaining):positiveReceipt(await retrieve(source.url),source);
-    const body=canonicalEvidenceBody(source,observed.body),bodySha256=sha(body),bodyBytes=Buffer.byteLength(body);
+    const body=canonicalEvidenceBody(source,observed.body),bodySha256=sha(evidenceBody(source,body)),bodyBytes=Buffer.byteLength(evidenceBody(source,body));
     remaining();
     if(onSourceObserved!==undefined){
      if(typeof onSourceObserved!=='function')throw new Error('producer_observer');
      // Detached diagnostics are private check artifacts; never part of the feed.
-     await onSourceObserved({jobId:job.id,url:source.url,kind:source.kind,status:200,finalUrl:observed.finalUrl,checkedAt:new Date(checkClock(clock)).toISOString(),bodySha256,bodyBytes,...(body!==observed.body&&{rawBodySha256:sha(observed.body)}),visibleText:textOf(readHtml(observed.body))});
+     await onSourceObserved({jobId:job.id,url:source.url,kind:source.kind,status:200,finalUrl:observed.finalUrl,checkedAt:new Date(checkClock(clock)).toISOString(),bodySha256,bodyBytes,...((body!==observed.body||source.kind==='http_visible_text')&&{rawBodySha256:sha(observed.body),rawBodyBytes:Buffer.byteLength(observed.body)}),...(source.kind==='http_visible_text'&&{projection:HTTP_VISIBLE_TEXT_PROJECTION}),visibleText:textOf(readHtml(observed.body))});
     }
     const doc=verifyBody(source,body);
     if(['vacancy','programme'].includes(source.role)){
@@ -134,8 +138,9 @@ export async function compileOwnerJobFeed({jobs,retrieve,browser,onSourceObserve
   }catch(error){observations.push({job,sourceStatus:'attention_required',checkedAt:null,expiresAt:null,applicationResult:null,proofs:[],reason:reason(error)});}
  }
  const generated=checkClock(clock),expires=generated+12*HOUR;
- for(const item of observations)if(item.sourceStatus==='verified')item.expiresAt=new Date(Math.min(expires,timestamp(item.checkedAt)+168*HOUR,item.job.editorialCutoffAt===null?Infinity:timestamp(item.job.editorialCutoffAt))).toISOString();
+ for(const item of observations)if(item.sourceStatus==='verified')item.expiresAt=new Date(Math.min(expires,timestamp(item.checkedAt)+168*HOUR,item.job.editorialCutoffAt===null?Infinity:timestamp(item.job.editorialCutoffAt),item.job.availability?.status==='upcoming'?Date.parse(item.job.availability.opensOn+'T00:00:00Z')-3*HOUR:Infinity)).toISOString();
  const payload={schema:OWNER_JOB_FEED_SCHEMA,generatedAt:new Date(generated).toISOString(),expiresAt:new Date(expires).toISOString(),publicationEnabled:false,jobs:observations};
  const feed={...payload,sha256:digest(payload)};
  validateOwnerJobFeed(feed,{now:generated});return JSON.parse(canonical(feed));
 }
+
