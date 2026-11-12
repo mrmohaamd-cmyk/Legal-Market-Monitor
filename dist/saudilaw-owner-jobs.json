@@ -1,11 +1,11 @@
 {
-  "expiresAt": "2026-11-12T19:21:57.103Z",
-  "generatedAt": "2026-11-12T07:21:57.103Z",
+  "expiresAt": "2026-11-12T20:10:24.032Z",
+  "generatedAt": "2026-11-12T08:10:24.032Z",
   "jobs": [
     {
-      "applicationResult": null,
-      "checkedAt": null,
-      "expiresAt": null,
+      "applicationResult": "login_required",
+      "checkedAt": "2026-11-12T08:10:14.412Z",
+      "expiresAt": "2026-11-12T20:10:24.032Z",
       "job": {
         "applicationResult": "login_required",
         "context": {
@@ -145,14 +145,33 @@
           "source_url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504"
         }
       },
-      "proofs": [],
-      "reason": "source_fingerprint_changed",
-      "sourceStatus": "attention_required"
+      "proofs": [
+        {
+          "bodyBytes": 25255,
+          "bodySha256": "0053a4a3f29ac2920866118971498bd5bea34a913a6472b3402eeaadd05b9144",
+          "checkedAt": "2026-11-12T08:10:14.412Z",
+          "finalUrl": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504",
+          "kind": "browser_dom",
+          "status": 200,
+          "url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504"
+        },
+        {
+          "bodyBytes": 11240,
+          "bodySha256": "0c3fb82f69c7484fd69bbe41790f7c38f17d391ffef9fbfbab77c1d1eae28f1a",
+          "checkedAt": "2026-11-12T08:10:19.137Z",
+          "finalUrl": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119#jobDetails=98119_5040",
+          "kind": "browser_dom",
+          "status": 200,
+          "url": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119"
+        }
+      ],
+      "reason": null,
+      "sourceStatus": "verified"
     },
     {
       "applicationResult": "form_available",
-      "checkedAt": "2026-11-12T07:21:55.759Z",
-      "expiresAt": "2026-11-12T19:21:57.103Z",
+      "checkedAt": "2026-11-12T08:10:19.987Z",
+      "expiresAt": "2026-11-12T20:10:24.032Z",
       "job": {
         "applicationResult": "form_available",
         "context": {
@@ -296,7 +315,7 @@
         {
           "bodyBytes": 9350,
           "bodySha256": "060ca6246db61e11a9a207007b52713f84cd81b304114fe154c65f366a1073cf",
-          "checkedAt": "2026-11-12T07:21:55.759Z",
+          "checkedAt": "2026-11-12T08:10:19.987Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/jobs/student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -305,7 +324,7 @@
         {
           "bodyBytes": 9603,
           "bodySha256": "d25c30ff71255e1751cbe4bff0b3c0c2b1d44d57fce66eaee8b17e5cc9ddab69",
-          "checkedAt": "2026-11-12T07:21:57.102Z",
+          "checkedAt": "2026-11-12T08:10:20.923Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -314,9 +333,163 @@
       ],
       "reason": null,
       "sourceStatus": "verified"
+    },
+    {
+      "applicationResult": "not_open_yet",
+      "checkedAt": "2026-11-12T08:10:24.032Z",
+      "expiresAt": "2026-11-12T20:10:24.032Z",
+      "job": {
+        "applicationResult": "not_open_yet",
+        "availability": {
+          "opensOn": "2026-11-15",
+          "status": "upcoming"
+        },
+        "context": {
+          "evidence": [
+            {
+              "bodySha256": "373167f786e8f08e428bd5076cfd6fe449e1c615fb845dad75c9a625410e8e96",
+              "checkedAt": "2026-11-12T07:21:47.000Z",
+              "claimIds": [
+                "riyd-office",
+                "saudi-sectors"
+              ],
+              "id": "pinsent-kafd-announcement",
+              "locator": "Official announcement dated 14 May 2026: office relocation and Saudi sectors paragraphs.",
+              "publisher": "Pinsent Masons",
+              "reviewStatus": "inspected_primary",
+              "sourceCategory": "organization_primary",
+              "url": "https://www.pinsentmasons.com/about-us/announcements/pinsent-masons-joins-kafds-growing-business-community"
+            }
+          ],
+          "firm": {
+            "sentences": [
+              {
+                "ar": "مكتب محاماة دولي نقل مكتبه في الرياض إلى مركز الملك عبدالله المالي.",
+                "en": "An international law firm with its Riyadh office relocated to KAFD.",
+                "evidenceIds": [
+                  "pinsent-kafd-announcement"
+                ],
+                "id": "riyd-office"
+              },
+              {
+                "ar": "يقدم المشورة في قطاعات تشمل البنية التحتية والطاقة والعقارات والخدمات المالية.",
+                "en": "Its Saudi work spans infrastructure, energy, real estate and financial services.",
+                "evidenceIds": [
+                  "pinsent-kafd-announcement"
+                ],
+                "id": "saudi-sectors"
+              }
+            ]
+          },
+          "opportunityIdentity": "523dde7f5245ecc937d88bf7e923af429a2bf6ad310e49957f16d73a8d85f1de",
+          "researchedAt": "2026-11-12T07:23:01.854Z",
+          "reviewContext": {
+            "fixtureOnly": false,
+            "note": "Distinct January 2027 upcoming university co-op; not the closed Oracle 3672 vacancy.",
+            "suppressed": false
+          },
+          "saudiDeal": null,
+          "schema": "saudilaw-opportunity-context-review/v1"
+        },
+        "contextLease": {
+          "claimIds": [
+            "riyd-office",
+            "saudi-sectors"
+          ],
+          "kind": "reviewed_historical_context",
+          "reason": "Official dated firm announcement inspected; no ranking or largest-deal claim.",
+          "reviewedAt": "2026-11-12T07:23:01.854Z",
+          "schema": "saudilaw-historical-context-lease/v1",
+          "validUntil": "2026-11-19T07:23:01.854Z"
+        },
+        "editorialCutoffAt": "2026-12-09T21:00:00.000Z",
+        "employerKey": "pinsent-masons",
+        "id": "pinsent-masons-riyadh-coop-2027-01",
+        "schema": "saudilaw-owner-job/v1",
+        "sourceIdentity": {
+          "intakeStartOn": "2027-01-17",
+          "locationEn": "Riyadh, Saudi Arabia",
+          "roleTitleEn": "Cooperative Training Programme"
+        },
+        "sources": [
+          {
+            "bodyBytes": 9751,
+            "bodySha256": "3e62de8a666dcb6d9ecbdbc8f61e52e3c274a8897a4aeae6386b7dd008a79ec2",
+            "kind": "http_visible_text",
+            "requiredText": [
+              "Cooperative Training Programme",
+              "Riyadh",
+              "Applications open: 15th November 2026",
+              "Applications close: 10th December 2026",
+              "Programme start: 17th January 2027",
+              "In your final year of a law degree at a recognised university in Saudi Arabia",
+              "minimum GPA of 2.5 out of 4.0",
+              "A Saudi national or a long-term resident in Saudi Arabia"
+            ],
+            "role": "programme",
+            "url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/co-op-training-programme"
+          }
+        ],
+        "weekly": {
+          "application_url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/co-op-training-programme",
+          "category": "coop",
+          "deadline": {
+            "at": null,
+            "date": "2026-12-10",
+            "published": true,
+            "time_zone": null
+          },
+          "deadline_copy": {
+            "ar": "آخر موعد للتقديم: 10 ديسمبر 2026.",
+            "en": "Applications close 10 December 2026."
+          },
+          "eligibility_points": {
+            "ar": [
+              "طالب في السنة الأخيرة من تخصص القانون بجامعة معترف بها في السعودية.",
+              "معدل 2.5 من 4 أو ما يعادله، محقق أو متوقع.",
+              "سعودي أو مقيم في المملكة إقامة طويلة الأجل."
+            ],
+            "en": [
+              "Final-year law student at a recognised Saudi university.",
+              "Achieved or on track for a GPA of 2.5/4 or equivalent.",
+              "Saudi national or long-term resident in Saudi Arabia."
+            ]
+          },
+          "employer": {
+            "ar": "Pinsent Masons",
+            "en": "Pinsent Masons"
+          },
+          "location": {
+            "ar": "الرياض، المملكة العربية السعودية",
+            "en": "Riyadh, Saudi Arabia"
+          },
+          "opportunity_summary": {
+            "ar": "يفتح التقديم في 15 نوفمبر 2026. يبدأ التدريب في 17 يناير 2027.",
+            "en": "Applications open 15 November 2026. Training begins 17 January 2027."
+          },
+          "role": {
+            "ar": "التدريب التعاوني — دفعة يناير 2027",
+            "en": "Cooperative Training — January 2027 intake"
+          },
+          "source_url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/co-op-training-programme"
+        }
+      },
+      "proofs": [
+        {
+          "bodyBytes": 9751,
+          "bodySha256": "3e62de8a666dcb6d9ecbdbc8f61e52e3c274a8897a4aeae6386b7dd008a79ec2",
+          "checkedAt": "2026-11-12T08:10:24.032Z",
+          "finalUrl": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/co-op-training-programme",
+          "kind": "http_visible_text",
+          "status": 200,
+          "url": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/co-op-training-programme"
+        }
+      ],
+      "reason": null,
+      "sourceStatus": "verified"
     }
   ],
   "publicationEnabled": false,
   "schema": "saudilaw-owner-job-feed/v1",
-  "sha256": "e2311cf56be0e8235d4082aca359fb335c24886318b46cb7441adef170918b94"
+  "sha256": "3d0dd9bdca78761c648e5905e0a152583bc87fbbead814afe83e73d85636398c"
 }
