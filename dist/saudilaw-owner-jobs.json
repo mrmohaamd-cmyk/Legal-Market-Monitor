@@ -1,11 +1,11 @@
 {
-  "expiresAt": "2026-11-12T20:10:24.032Z",
-  "generatedAt": "2026-11-12T08:10:24.032Z",
+  "expiresAt": "2026-11-13T08:03:02.756Z",
+  "generatedAt": "2026-11-12T20:03:02.756Z",
   "jobs": [
     {
-      "applicationResult": "login_required",
-      "checkedAt": "2026-11-12T08:10:14.412Z",
-      "expiresAt": "2026-11-12T20:10:24.032Z",
+      "applicationResult": null,
+      "checkedAt": null,
+      "expiresAt": null,
       "job": {
         "applicationResult": "login_required",
         "context": {
@@ -145,33 +145,14 @@
           "source_url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504"
         }
       },
-      "proofs": [
-        {
-          "bodyBytes": 25255,
-          "bodySha256": "0053a4a3f29ac2920866118971498bd5bea34a913a6472b3402eeaadd05b9144",
-          "checkedAt": "2026-11-12T08:10:14.412Z",
-          "finalUrl": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504",
-          "kind": "browser_dom",
-          "status": 200,
-          "url": "https://careers.aoshearman.com/en/job/riyadh/co-op-scheme-winter-2026/3392/44638109504"
-        },
-        {
-          "bodyBytes": 11240,
-          "bodySha256": "0c3fb82f69c7484fd69bbe41790f7c38f17d391ffef9fbfbab77c1d1eae28f1a",
-          "checkedAt": "2026-11-12T08:10:19.137Z",
-          "finalUrl": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119#jobDetails=98119_5040",
-          "kind": "browser_dom",
-          "status": 200,
-          "url": "https://jobs.aoshearman.com/TGnewUI/Search/home/HomeWithPreLoad?PageType=JobDetails&partnerid=30147&siteid=5040&jobid=98119"
-        }
-      ],
-      "reason": null,
-      "sourceStatus": "verified"
+      "proofs": [],
+      "reason": "source_fingerprint_changed",
+      "sourceStatus": "attention_required"
     },
     {
       "applicationResult": "form_available",
-      "checkedAt": "2026-11-12T08:10:19.987Z",
-      "expiresAt": "2026-11-12T20:10:24.032Z",
+      "checkedAt": "2026-11-12T20:02:59.212Z",
+      "expiresAt": "2026-11-13T08:03:02.756Z",
       "job": {
         "applicationResult": "form_available",
         "context": {
@@ -315,7 +296,7 @@
         {
           "bodyBytes": 9350,
           "bodySha256": "060ca6246db61e11a9a207007b52713f84cd81b304114fe154c65f366a1073cf",
-          "checkedAt": "2026-11-12T08:10:19.987Z",
+          "checkedAt": "2026-11-12T20:02:59.212Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/jobs/student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -324,7 +305,7 @@
         {
           "bodyBytes": 9603,
           "bodySha256": "d25c30ff71255e1751cbe4bff0b3c0c2b1d44d57fce66eaee8b17e5cc9ddab69",
-          "checkedAt": "2026-11-12T08:10:20.923Z",
+          "checkedAt": "2026-11-12T20:03:00.373Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -336,8 +317,8 @@
     },
     {
       "applicationResult": "not_open_yet",
-      "checkedAt": "2026-11-12T08:10:24.032Z",
-      "expiresAt": "2026-11-12T20:10:24.032Z",
+      "checkedAt": "2026-11-12T20:03:02.756Z",
+      "expiresAt": "2026-11-13T08:03:02.756Z",
       "job": {
         "applicationResult": "not_open_yet",
         "availability": {
@@ -478,7 +459,7 @@
         {
           "bodyBytes": 9751,
           "bodySha256": "3e62de8a666dcb6d9ecbdbc8f61e52e3c274a8897a4aeae6386b7dd008a79ec2",
-          "checkedAt": "2026-11-12T08:10:24.032Z",
+          "checkedAt": "2026-11-12T20:03:02.756Z",
           "finalUrl": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/co-op-training-programme",
           "kind": "http_visible_text",
           "status": 200,
@@ -491,5 +472,5 @@
   ],
   "publicationEnabled": false,
   "schema": "saudilaw-owner-job-feed/v1",
-  "sha256": "3d0dd9bdca78761c648e5905e0a152583bc87fbbead814afe83e73d85636398c"
+  "sha256": "66281dde5f83f39f9180ca787e6504ef578af593290b9ed7bae6faf551c8c1b5"
 }
