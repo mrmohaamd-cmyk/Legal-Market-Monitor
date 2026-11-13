@@ -1,6 +1,6 @@
 {
-  "expiresAt": "2026-11-13T08:03:02.756Z",
-  "generatedAt": "2026-11-12T20:03:02.756Z",
+  "expiresAt": "2026-11-13T18:54:26.428Z",
+  "generatedAt": "2026-11-13T06:54:26.428Z",
   "jobs": [
     {
       "applicationResult": null,
@@ -151,8 +151,8 @@
     },
     {
       "applicationResult": "form_available",
-      "checkedAt": "2026-11-12T20:02:59.212Z",
-      "expiresAt": "2026-11-13T08:03:02.756Z",
+      "checkedAt": "2026-11-13T06:54:21.064Z",
+      "expiresAt": "2026-11-13T18:54:26.428Z",
       "job": {
         "applicationResult": "form_available",
         "context": {
@@ -296,7 +296,7 @@
         {
           "bodyBytes": 9350,
           "bodySha256": "060ca6246db61e11a9a207007b52713f84cd81b304114fe154c65f366a1073cf",
-          "checkedAt": "2026-11-12T20:02:59.212Z",
+          "checkedAt": "2026-11-13T06:54:21.064Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/jobs/student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -305,7 +305,7 @@
         {
           "bodyBytes": 9603,
           "bodySha256": "d25c30ff71255e1751cbe4bff0b3c0c2b1d44d57fce66eaee8b17e5cc9ddab69",
-          "checkedAt": "2026-11-12T20:03:00.373Z",
+          "checkedAt": "2026-11-13T06:54:22.564Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -317,8 +317,8 @@
     },
     {
       "applicationResult": "not_open_yet",
-      "checkedAt": "2026-11-12T20:03:02.756Z",
-      "expiresAt": "2026-11-13T08:03:02.756Z",
+      "checkedAt": "2026-11-13T06:54:26.428Z",
+      "expiresAt": "2026-11-13T18:54:26.428Z",
       "job": {
         "applicationResult": "not_open_yet",
         "availability": {
@@ -459,7 +459,7 @@
         {
           "bodyBytes": 9751,
           "bodySha256": "3e62de8a666dcb6d9ecbdbc8f61e52e3c274a8897a4aeae6386b7dd008a79ec2",
-          "checkedAt": "2026-11-12T20:03:02.756Z",
+          "checkedAt": "2026-11-13T06:54:26.428Z",
           "finalUrl": "https://www.pinsentmasons.com/careers/early-talent/saudi-arabia/co-op-training-programme",
           "kind": "http_visible_text",
           "status": 200,
@@ -472,5 +472,5 @@
   ],
   "publicationEnabled": false,
   "schema": "saudilaw-owner-job-feed/v1",
-  "sha256": "66281dde5f83f39f9180ca787e6504ef578af593290b9ed7bae6faf551c8c1b5"
+  "sha256": "933ee794934406b83cec7aa0fb65de12305b593b9799a5c953c29a73355c0a79"
 }
