@@ -5,7 +5,7 @@ import {readFile,writeFile,stat,mkdir} from 'node:fs/promises';
 import {resolve,join,dirname} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {canonical,digest} from '../contracts/reviewed-content.mjs';
-import {OWNER_JOB_FEED_PATH,MAX_OWNER_JOB_FEED_BYTES,validateOwnerJobFeed} from '../contracts/owner-job.mjs';
+import {OWNER_JOB_FEED_PATH,MAX_OWNER_JOB_FEED_BYTES,validateOwnerJobFeed,partitionOwnerJobs} from '../contracts/owner-job.mjs';
 const REPO='mrmohaamd-cmyk/Legal-Market-Monitor',REF='refs/heads/main',INPUT='config/saudilaw-owner-jobs.json';
 const PRECEDING=new Set(['dist/saudilaw-publication-candidates.json','dist/saudilaw-source-coverage.json']);
 const hash=value=>/^[a-f0-9]{40}$/.test(value??'');
@@ -31,7 +31,9 @@ export async function publishOwnerJobs(directory,{coverageDirectory,root=process
  const bytes=await readFile(file,'utf8'),reportBytes=await readFile(reportFile,'utf8'),feed=JSON.parse(bytes),report=JSON.parse(reportBytes),inputBytes=await readFile(join(root,INPUT),'utf8');
  const validate=()=>validateOwnerJobFeed(feed,{now:clock()});validate();
  if(report.schema!=='saudilaw-owner-job-check/v1'||report.sourceCommit!==base||report.workflowSourceCommit!==env.GITHUB_SHA||report.inputPath!==INPUT||report.inputSha256!==digest(JSON.parse(inputBytes))||report.feedSha256!==feed.sha256||report.generatedAt!==feed.generatedAt||report.publicationEnabled!==false)throw new Error('owner_source_binding');
- if(canonical(feed.jobs.map(item=>item.job))!==canonical(JSON.parse(inputBytes).jobs)||git(['show',`${env.GITHUB_SHA}:${INPUT}`])!==inputBytes)throw new Error('owner_input_changed');
+ const partition=partitionOwnerJobs(JSON.parse(inputBytes).jobs,{now:Date.parse(report.generatedAt)});
+ if(canonical(report.quarantined??[])!==canonical(partition.quarantined))throw new Error('owner_quarantine_binding');
+ if(canonical(feed.jobs.map(item=>item.job))!==canonical(partition.eligible)||git(['show',`${env.GITHUB_SHA}:${INPUT}`])!==inputBytes)throw new Error('owner_input_changed');
  const target=join(root,OWNER_JOB_FEED_PATH);let old=null;try{old=await readFile(target,'utf8');}catch(error){if(error.code!=='ENOENT')throw error;}
  if(old===bytes)return {status:'unchanged',commit:base,feedSha256:feed.sha256,publicationEnabled:false};
  const unchanged=async()=>{validate();if(await readFile(file,'utf8')!==bytes||await readFile(reportFile,'utf8')!==reportBytes||await readFile(join(root,INPUT),'utf8')!==inputBytes)throw new Error('owner_evidence_changed');};

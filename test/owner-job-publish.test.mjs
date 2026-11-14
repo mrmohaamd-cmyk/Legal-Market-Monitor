@@ -8,10 +8,15 @@ import {digest} from '../contracts/reviewed-content.mjs';
 import {compileOwnerJobFeed} from '../scripts/pipeline/owner-job-feed.mjs';
 import {publishOwnerJobs} from '../scripts/publish-owner-jobs.mjs';
 import {producerFixture,PRODUCER_NOW} from './owner-job-producer-fixture.mjs';
-async function setup(t,{pushMode='normal'}={}){
+async function setup(t,{pushMode='normal',mode='normal'}={}){
  const root=await mkdtemp(join(tmpdir(),'saudilaw-owner-publish-'));
  t.after(async()=>{const absolute=resolve(root),parent=resolve(tmpdir())+sep;if(!absolute.startsWith(parent)||!absolute.slice(parent.length).startsWith('saudilaw-owner-publish-'))throw Error('unsafe_cleanup');await rm(absolute,{recursive:true});});
+ const now=mode==='normal'?PRODUCER_NOW:Date.parse('2026-11-14T22:34:11Z');
  const git=args=>execFileSync('git',args,{cwd:root,encoding:'utf8',stdio:['ignore','pipe','pipe']}),input={schema:'saudilaw-owner-job-input/v1',jobs:[producerFixture().job]};
+ if(mode!=='normal'){
+ const pinsent=JSON.parse(await readFile(new URL('../config/saudilaw-owner-jobs.json',import.meta.url),'utf8')).jobs.find(j=>j.employerKey==='pinsent-masons');
+ input.jobs=mode==='all'?[pinsent]:[...input.jobs,pinsent];
+ }
  git(['init','-b','main']);git(['remote','add','origin','https://github.com/mrmohaamd-cmyk/Legal-Market-Monitor.git']);
  await mkdir(join(root,'config'));await writeFile(join(root,'config/saudilaw-owner-jobs.json'),JSON.stringify(input,null,2)+'\n');git(['add','.']);git(['-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-m','Synthetic fixture only']);
  const base=git(['rev-parse','HEAD']).trim();let remote=base,fetched=null,pushes=0;
@@ -24,12 +29,12 @@ async function setup(t,{pushMode='normal'}={}){
   return git(args);
  };
  const directory=join(root,'check'),coverageDirectory=join(root,'coverage');await mkdir(directory);await mkdir(coverageDirectory);
- const {retrieve}=producerFixture(),feed=await compileOwnerJobFeed({jobs:input.jobs,retrieve,clock:()=>PRODUCER_NOW});
- const report={schema:'saudilaw-owner-job-check/v1',sourceCommit:base,workflowSourceCommit:base,inputPath:'config/saudilaw-owner-jobs.json',inputSha256:digest(input),feedSha256:feed.sha256,generatedAt:feed.generatedAt,publicationEnabled:false};
+ const {retrieve}=producerFixture(),quarantined=[],feed=await compileOwnerJobFeed({jobs:input.jobs,retrieve,clock:()=>now,onQuarantined:q=>quarantined.push(q)});
+ const report={schema:'saudilaw-owner-job-check/v1',sourceCommit:base,workflowSourceCommit:base,inputPath:'config/saudilaw-owner-jobs.json',inputSha256:digest(input),feedSha256:feed.sha256,generatedAt:feed.generatedAt,publicationEnabled:false,quarantined};
  await writeFile(join(directory,'owner-jobs.json'),JSON.stringify(feed,null,2)+'\n');await writeFile(join(directory,'owner-job-check.json'),JSON.stringify(report,null,2)+'\n');
  await writeFile(join(coverageDirectory,'coverage-write-receipt.json'),JSON.stringify({status:'unchanged',commit:base,publicationEnabled:false}));
  const env={GITHUB_REPOSITORY:'mrmohaamd-cmyk/Legal-Market-Monitor',GITHUB_REF:'refs/heads/main',GITHUB_EVENT_NAME:'schedule',GITHUB_SHA:base};
- return {root,directory,coverageDirectory,env,execute,git,base,report,feed,getPushes:()=>pushes,setRemote:value=>remote=value};
+ return {now,input,root,directory,coverageDirectory,env,execute,git,base,report,feed,getPushes:()=>pushes,setRemote:value=>remote=value};
 }
 test('workflow writer changes only fixed nonpublishing data and independently confirms remote bytes',async t=>{
  const s=await setup(t),receipt=await publishOwnerJobs(s.directory,{...s,clock:()=>PRODUCER_NOW});
@@ -63,4 +68,28 @@ test('unrelated workflow parent code changes and stale evidence reject without p
  await writeFile(join(s.coverageDirectory,'coverage-write-receipt.json'),JSON.stringify({status:'confirmed',commit:changed,publicationEnabled:false}));
  await assert.rejects(()=>publishOwnerJobs(s.directory,{...s,clock:()=>PRODUCER_NOW}),/unexpected_workflow_parent/);assert.equal(s.getPushes(),0);
  const fresh=await setup(t);await assert.rejects(()=>publishOwnerJobs(fresh.directory,{...fresh,clock:()=>PRODUCER_NOW+13*3600000}),/owner_job_feed_freshness/);assert.equal(fresh.getPushes(),0);
+});
+
+test('writer binds mixed and all-quarantined batches without changing original configuration',async t=>{
+ for(const mode of ['mixed','all']){
+  const s=await setup(t,{mode}),before=await readFile(join(s.root,'config/saudilaw-owner-jobs.json'),'utf8');
+  const receipt=await publishOwnerJobs(s.directory,{...s,clock:()=>s.now});
+  assert.equal(receipt.status,'confirmed');assert.equal(s.getPushes(),1);
+  assert.equal(s.feed.jobs.length,mode==='mixed'?1:0);
+  assert.equal(await readFile(join(s.root,'config/saudilaw-owner-jobs.json'),'utf8'),before);
+ }
+});
+test('writer rejects missing, tampered, additional or misdated quarantine diagnostics before push',async t=>{
+ for(const mutation of ['missing','hash','job','reason','time','additional']){
+  const s=await setup(t,{mode:'mixed'});
+  if(mutation==='missing')delete s.report.quarantined;
+  if(mutation==='hash')s.report.quarantined[0].sha256='0'.repeat(64);
+  if(mutation==='job')s.report.quarantined[0].job.id='replacement';
+  if(mutation==='reason')s.report.quarantined[0].reason='open';
+  if(mutation==='time')s.report.quarantined[0].observedAt='2026-11-14T21:00:00.000Z';
+  if(mutation==='additional')s.report.quarantined.push(s.report.quarantined[0]);
+  await writeFile(join(s.directory,'owner-job-check.json'),JSON.stringify(s.report));
+  await assert.rejects(publishOwnerJobs(s.directory,{...s,clock:()=>s.now}),/owner_quarantine_binding/);
+  assert.equal(s.getPushes(),0);
+ }
 });
