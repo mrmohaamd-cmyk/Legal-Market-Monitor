@@ -18,8 +18,8 @@
       "members": [
         {
           "applicationResult": "login_required",
-          "checkedAt": "2026-11-15T13:40:45.605Z",
-          "expiresAt": "2026-11-16T01:40:46.363Z",
+          "checkedAt": "2026-11-15T18:57:34.923Z",
+          "expiresAt": "2026-11-16T06:57:35.904Z",
           "job": {
             "applicationResult": "login_required",
             "context": {
@@ -188,7 +188,7 @@
             {
               "bodyBytes": 8485,
               "bodySha256": "9b49c5aa6013f07b9d15fa46ae44ca44b7bac514b851c22cb6410b628104d262",
-              "checkedAt": "2026-11-15T13:40:45.605Z",
+              "checkedAt": "2026-11-15T18:57:34.923Z",
               "finalUrl": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
               "kind": "http_visible_text",
               "status": 200,
@@ -197,7 +197,7 @@
             {
               "bodyBytes": 1559,
               "bodySha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
-              "checkedAt": "2026-11-15T13:40:46.156Z",
+              "checkedAt": "2026-11-15T18:57:35.707Z",
               "finalUrl": "https://whitecase.grad.allhires.com/app/",
               "kind": "http_visible_text",
               "status": 200,
@@ -209,8 +209,8 @@
         },
         {
           "applicationResult": "login_required",
-          "checkedAt": "2026-11-15T13:40:46.310Z",
-          "expiresAt": "2026-11-16T01:40:46.363Z",
+          "checkedAt": "2026-11-15T18:57:35.867Z",
+          "expiresAt": "2026-11-16T06:57:35.904Z",
           "job": {
             "applicationResult": "login_required",
             "context": {
@@ -377,7 +377,7 @@
             {
               "bodyBytes": 11927,
               "bodySha256": "72553d43db3a234f126aacf7c42ebea3c50597412baa67f231b583e34e15a15a",
-              "checkedAt": "2026-11-15T13:40:46.310Z",
+              "checkedAt": "2026-11-15T18:57:35.867Z",
               "finalUrl": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law",
               "kind": "http_visible_text",
               "status": 200,
@@ -386,7 +386,7 @@
             {
               "bodyBytes": 1559,
               "bodySha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
-              "checkedAt": "2026-11-15T13:40:46.315Z",
+              "checkedAt": "2026-11-15T18:57:35.869Z",
               "finalUrl": "https://whitecase.grad.allhires.com/app/",
               "kind": "http_visible_text",
               "status": 200,
@@ -398,8 +398,8 @@
         },
         {
           "applicationResult": "login_required",
-          "checkedAt": "2026-11-15T13:40:46.359Z",
-          "expiresAt": "2026-11-16T01:40:46.363Z",
+          "checkedAt": "2026-11-15T18:57:35.900Z",
+          "expiresAt": "2026-11-16T06:57:35.904Z",
           "job": {
             "applicationResult": "login_required",
             "context": {
@@ -566,7 +566,7 @@
             {
               "bodyBytes": 11927,
               "bodySha256": "72553d43db3a234f126aacf7c42ebea3c50597412baa67f231b583e34e15a15a",
-              "checkedAt": "2026-11-15T13:40:46.359Z",
+              "checkedAt": "2026-11-15T18:57:35.900Z",
               "finalUrl": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law",
               "kind": "http_visible_text",
               "status": 200,
@@ -575,7 +575,7 @@
             {
               "bodyBytes": 1559,
               "bodySha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
-              "checkedAt": "2026-11-15T13:40:46.363Z",
+              "checkedAt": "2026-11-15T18:57:35.904Z",
               "finalUrl": "https://whitecase.grad.allhires.com/app/",
               "kind": "http_visible_text",
               "status": 200,
@@ -600,9 +600,9 @@
       }
     }
   ],
-  "expiresAt": "2026-11-16T01:40:46.363Z",
-  "generatedAt": "2026-11-15T13:40:46.363Z",
+  "expiresAt": "2026-11-16T06:57:35.904Z",
+  "generatedAt": "2026-11-15T18:57:35.904Z",
   "publicationEnabled": false,
   "schema": "saudilaw-owner-bundle-feed/v1",
-  "sha256": "24efa2f9deab50d9d3ee691927a68366b1a7ddc2027a5575910929500e31fd95"
+  "sha256": "0229069a630f39c28986265810e46269d1b80a8658794e8b721cea81eadcb53c"
 }
