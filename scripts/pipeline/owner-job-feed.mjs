@@ -13,7 +13,7 @@ export const HTTP_VISIBLE_TEXT_PROJECTION='saudilaw-http-visible-text/v1';
 export const projectHttpVisibleText=body=>textOf(readHtml(body));
 const evidenceBody=(source,body)=>source.kind==='http_visible_text'?projectHttpVisibleText(body):body;
 const HOUR=3600000,MAX_JOBS=12,MAX_REQUESTS=40,MAX_RUN_MS=6*60*1000;
-const reason=error=>['source_fingerprint_changed','source_text_changed','source_unavailable','application_controls_unverified','source_closed','withdrawn_listing_suppressed','run_budget','source_destination_changed'].includes(error?.message)?error.message:'source_evidence_unavailable';
+const reason=error=>['upcoming_requires_reverification','source_fingerprint_changed','source_text_changed','source_unavailable','application_controls_unverified','source_closed','withdrawn_listing_suppressed','run_budget','source_destination_changed'].includes(error?.message)?error.message:'source_evidence_unavailable';
 function checkClock(clock){const now=clock();if(!Number.isSafeInteger(now)||now<0)throw new Error('producer_clock');return now;}
 function positiveReceipt(response,source){
  if(response?.error||response?.status!==200||response?.url!==source.url||!/^text\/html(?:\s*;|$)/i.test(response?.contentType??'')||typeof response.body!=='string'||response.body_bytes!==Buffer.byteLength(response.body)||response.body_sha256!==sha(response.body))throw new Error('source_unavailable');
@@ -110,6 +110,9 @@ async function compileEvidence({jobs,retrieve,browser,onSourceObserved,clock=Dat
   const proofs=[];
   try{
    if(!bundleReview&&whiteCaseIdentityProfileFor(job)?.retainSuppression===true)throw Error('withdrawn_listing_suppressed');
+   // A planned opening date passing does not prove applications have opened.
+   // Preserve reviewed content, but do not renew proof or promote availability.
+   if(job.availability?.status==='upcoming'&&Date.parse(job.availability.opensOn+'T00:00:00Z')-3*HOUR<=checkClock(clock))throw new Error('upcoming_requires_reverification');
    if(job.editorialCutoffAt!==null&&timestamp(job.editorialCutoffAt)<=checkClock(clock))throw new Error('source_closed');
    let evidenceProblem=null,roleObserved=false;
    for(const source of job.sources){
@@ -151,6 +154,9 @@ async function compileEvidence({jobs,retrieve,browser,onSourceObserved,clock=Dat
   }catch(error){observations.push({job,sourceStatus:'attention_required',checkedAt:null,expiresAt:null,applicationResult:null,proofs:[],reason:reason(error)});}
  }
  const generated=checkClock(clock),expires=generated+12*HOUR;
+ // A source read may span the opening boundary. Never emit an already-expired
+ // verified item or let it prevent unrelated evidence from being reported.
+ for(const item of observations)if(item.sourceStatus==='verified'&&item.job.availability?.status==='upcoming'&&Date.parse(item.job.availability.opensOn+'T00:00:00Z')-3*HOUR<=generated)Object.assign(item,{sourceStatus:'attention_required',checkedAt:null,expiresAt:null,applicationResult:null,proofs:[],reason:'upcoming_requires_reverification'});
  for(const item of observations)if(item.sourceStatus==='verified')item.expiresAt=new Date(Math.min(expires,timestamp(item.checkedAt)+(recorded?12:168)*HOUR,item.job.editorialCutoffAt===null?Infinity:timestamp(item.job.editorialCutoffAt),item.job.availability?.status==='upcoming'?Date.parse(item.job.availability.opensOn+'T00:00:00Z')-3*HOUR:Infinity)).toISOString();
  const payload={schema:OWNER_JOB_FEED_SCHEMA,generatedAt:new Date(generated).toISOString(),expiresAt:new Date(expires).toISOString(),publicationEnabled:false,jobs:observations};
  const feed={...payload,sha256:digest(payload)};

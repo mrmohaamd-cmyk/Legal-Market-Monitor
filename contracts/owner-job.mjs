@@ -73,12 +73,12 @@ function validateContext(job,now){
 
 }
 export function ownerJobRecord(job){const e=OWNER_EMPLOYERS[job.employerKey];return {id:job.id,firm_name:e.name,firm_slug:job.employerKey,role_title:job.sourceIdentity.roleTitleEn+(job.sourceIdentity.intakeStartOn?' — intake '+job.sourceIdentity.intakeStartOn:''),location:job.sourceIdentity.locationEn,source_url:job.weekly.source_url,application_url:job.weekly.application_url,firm_careers_url:job.weekly.source_url};}
-export function validateOwnerJob(input,{now=Date.now()}={}){
+export function validateOwnerJob(input,{now=Date.now(),allowExpired=false}={}){
   clock(now);const j=clone(input);if(Buffer.byteLength(canonical(j))>65000)throw Error('owner_job_budget');
   exact(j,['schema','id','employerKey','sourceIdentity','weekly','context','contextLease','sources','applicationResult','editorialCutoffAt'],['availability','identityEvidenceProfile']);
   const employer=OWNER_EMPLOYERS[j.employerKey],identityProfile=whiteCaseIdentityProfileFor(j);
   const upcoming=j.availability?.status==='upcoming';
-  if(j.availability!==undefined){exact(j.availability,['status','opensOn']);if(!upcoming||!date(j.availability.opensOn)||Date.parse(j.availability.opensOn+'T00:00:00Z')-3*HOUR<=now)throw Error('owner_job_upcoming_date');}
+  if(j.availability!==undefined){exact(j.availability,['status','opensOn']);if(!upcoming||!date(j.availability.opensOn)||!allowExpired&&Date.parse(j.availability.opensOn+'T00:00:00Z')-3*HOUR<=now)throw Error('owner_job_upcoming_date');}
   if(j.schema!==OWNER_JOB_SCHEMA||!ID.test(j.id??'')||!employer)throw Error('owner_job_identity');
   const w=j.weekly;exact(w,['employer','role','location','category','eligibility_points','deadline','application_url','source_url'],['opportunity_summary','deadline_copy']);
   pair(w.employer,150);pair(w.role,250);pair(w.location,200);
@@ -115,7 +115,7 @@ export function validateOwnerJobFeed(input,{now=Date.now()}={}){
   const ids=new Set(),identities=new Set();
   for(const item of feed.jobs){
     exact(item,['job','sourceStatus','checkedAt','expiresAt','applicationResult','proofs','reason']);
-    const job=validateOwnerJob(item.job,{now}),identity=recordHashes(ownerJobRecord(job)).identityHash;
+    const job=validateOwnerJob(item.job,{now,allowExpired:item.sourceStatus==='attention_required'}),identity=recordHashes(ownerJobRecord(job)).identityHash;
     if(ids.has(job.id)||identities.has(identity))throw Error('owner_job_feed_duplicate');ids.add(job.id);identities.add(identity);
     if(item.sourceStatus==='attention_required'){
       if(!/^[a-z][a-z0-9_-]{0,119}$/.test(item.reason??'')||item.checkedAt!==null||item.expiresAt!==null||item.applicationResult!==null||!Array.isArray(item.proofs)||item.proofs.length)throw Error('owner_job_failed_evidence');continue;
