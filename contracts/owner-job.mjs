@@ -2,8 +2,9 @@
 // credentials, request destinations or runtime permissions.
 import {canonical,digest,timestamp} from './reviewed-content.mjs';
 import {createHash} from 'node:crypto';
+import {whiteCaseIdentityProfileFor,validateWhiteCaseIdentitySources} from './white-case-identity.mjs';
 const normalizeIdentity=value=>value.normalize('NFKC').toLowerCase().replace(/[\p{P}\p{S}\s]+/gu,' ').trim();
-const recordHashes=record=>({recordHash:createHash('sha256').update('record:'+record.id).digest('hex'),identityHash:createHash('sha256').update('identity:'+[record.firm_name,record.role_title,record.location].map(normalizeIdentity).join('|')).digest('hex')});
+export const recordHashes=record=>({recordHash:createHash('sha256').update('record:'+record.id).digest('hex'),identityHash:createHash('sha256').update('identity:'+[record.firm_name,record.role_title,record.location].map(normalizeIdentity).join('|')).digest('hex')});
 
 export const OWNER_JOB_SCHEMA='saudilaw-owner-job/v1';
 export const OWNER_JOB_FEED_SCHEMA='saudilaw-owner-job-feed/v1';
@@ -45,7 +46,8 @@ function validateDeadline(d){
 export function ownerJobCutoff(deadline){validateDeadline(deadline);return !deadline.published?null:deadline.at??new Date(Date.parse(deadline.date+'T00:00:00Z')-3*HOUR).toISOString();}
 function validateContext(job,now){
   const c=job.context,lease=job.contextLease,identity=recordHashes(ownerJobRecord(job)).identityHash;
-  if(!c||c.opportunityIdentity!==identity||c.reviewContext?.fixtureOnly!==false||c.reviewContext?.suppressed!==false||c.cohort!==null&&c.cohort!==undefined)throw Error('owner_job_context');
+  const profile=whiteCaseIdentityProfileFor(job);if(profile&&c?.reviewContext?.suppressed!==profile.retainSuppression)throw Error('owner_job_profile_suppression');
+  if(!c||c.opportunityIdentity!==identity||c.reviewContext?.fixtureOnly!==false||(c.reviewContext?.suppressed!==false&&!(c.reviewContext?.suppressed===true&&whiteCaseIdentityProfileFor(job)?.retainSuppression===true))||c.cohort!==null&&c.cohort!==undefined)throw Error('owner_job_context');
   if(timestamp(c.researchedAt)>now||!Array.isArray(c.evidence)||c.evidence.some(e=>!ownerEmployerUrl(e.url,job.employerKey)))throw Error('owner_job_context_origin');
   exact(lease,['schema','kind','reviewedAt','validUntil','claimIds','reason']);
   const reviewed=timestamp(lease.reviewedAt),until=timestamp(lease.validUntil),ids=[...(c.firm?.sentences??[]),...(c.saudiDeal?.facts??[])].map(x=>x.id).sort();
@@ -73,8 +75,8 @@ function validateContext(job,now){
 export function ownerJobRecord(job){const e=OWNER_EMPLOYERS[job.employerKey];return {id:job.id,firm_name:e.name,firm_slug:job.employerKey,role_title:job.sourceIdentity.roleTitleEn+(job.sourceIdentity.intakeStartOn?' — intake '+job.sourceIdentity.intakeStartOn:''),location:job.sourceIdentity.locationEn,source_url:job.weekly.source_url,application_url:job.weekly.application_url,firm_careers_url:job.weekly.source_url};}
 function validateOwnerJobStructure(input,{now=Date.now()}={}){
   clock(now);const j=clone(input);if(Buffer.byteLength(canonical(j))>65000)throw Error('owner_job_budget');
-  exact(j,['schema','id','employerKey','sourceIdentity','weekly','context','contextLease','sources','applicationResult','editorialCutoffAt'],['availability']);
-  const employer=OWNER_EMPLOYERS[j.employerKey];
+  exact(j,['schema','id','employerKey','sourceIdentity','weekly','context','contextLease','sources','applicationResult','editorialCutoffAt'],['availability','identityEvidenceProfile']);
+  const employer=OWNER_EMPLOYERS[j.employerKey],identityProfile=whiteCaseIdentityProfileFor(j);
   const upcoming=j.availability?.status==='upcoming';
   if(j.availability!==undefined){exact(j.availability,['status','opensOn']);if(!upcoming||!date(j.availability.opensOn))throw Error('owner_job_upcoming_date');}
   if(j.schema!==OWNER_JOB_SCHEMA||!ID.test(j.id??'')||!employer)throw Error('owner_job_identity');
@@ -97,12 +99,12 @@ function validateOwnerJobStructure(input,{now=Date.now()}={}){
   if(!(upcoming?j.applicationResult==='not_open_yet':['login_required','form_available'].includes(j.applicationResult))||upcoming&&w.application_url!==w.source_url||!Array.isArray(j.sources)||j.sources.length<(upcoming?1:2)||j.sources.length>5)throw Error('owner_job_sources');
   const urls=new Set();for(const s of j.sources){
     exact(s,['url','role','kind','bodySha256','bodyBytes','requiredText']);
-    if(s.kind==='http_visible_text'&&s.role!=='programme'||!ownerEmployerUrl(s.url,j.employerKey)||urls.has(s.url)||!['application','vacancy','programme'].includes(s.role)||!['http_html','browser_dom','http_visible_text'].includes(s.kind)||!HASH.test(s.bodySha256??'')||!Number.isSafeInteger(s.bodyBytes)||s.bodyBytes<1||s.bodyBytes>2000000||!Array.isArray(s.requiredText)||s.requiredText.length<1||s.requiredText.length>24||s.requiredText.some(p=>!plain(p,500)))throw Error('owner_job_source');urls.add(s.url);
+    if(s.kind==='http_visible_text'&&s.role!=='programme'&&!(identityProfile&&s.role==='application')||!ownerEmployerUrl(s.url,j.employerKey)||urls.has(s.url)||!['application','vacancy','programme'].includes(s.role)||!['http_html','browser_dom','http_visible_text'].includes(s.kind)||!HASH.test(s.bodySha256??'')||!Number.isSafeInteger(s.bodyBytes)||s.bodyBytes<1||s.bodyBytes>2000000||!Array.isArray(s.requiredText)||s.requiredText.length<1||s.requiredText.length>24||s.requiredText.some(p=>!plain(p,500)))throw Error('owner_job_source');urls.add(s.url);
   }
   if(!upcoming&&!j.sources.some(s=>s.role==='application'&&s.url===w.application_url)||!j.sources.some(s=>['vacancy','programme'].includes(s.role)&&s.url===w.source_url))throw Error('owner_job_source_roles');
-  if(!j.sources.some(s=>['vacancy','programme'].includes(s.role)&&s.url===w.source_url&&s.requiredText.includes(j.sourceIdentity.roleTitleEn)))throw Error('owner_job_source_identity_assertion');
+  if(!identityProfile&&!j.sources.some(s=>['vacancy','programme'].includes(s.role)&&s.url===w.source_url&&s.requiredText.includes(j.sourceIdentity.roleTitleEn)))throw Error('owner_job_source_identity_assertion');
   if(upcoming&&(!j.sources.some(s=>s.role==='programme'&&s.url===w.source_url)||w.deadline.date!==null&&j.availability.opensOn>=w.deadline.date))throw Error('owner_job_upcoming_source');
-  validateContext(j,now);return j;
+  validateWhiteCaseIdentitySources(j);validateContext(j,now);return j;
 }
 // Strict consumer guard remains unchanged. Only the producer's partition may
 // retain a structurally valid, time-expired upcoming record as diagnostics.

@@ -1,0 +1,608 @@
+{
+  "bundles": [
+    {
+      "audience": {
+        "ar": "طلاب وخريجو القانون؛ وتقبل فرصتا الخليج تخصصات أخرى وفق شروطهما",
+        "en": "Law students and graduates; GCC opportunities also admit other disciplines under their requirements"
+      },
+      "constraint": {
+        "ar": "تنص بوابة التقديم على الاكتفاء بطلب واحد لأحد برامج التدريب القصير (Vacation Scheme) أو عقود التدريب (Training Contract) خلال دورة التوظيف الواحدة. اختر المسار المناسب لك قبل التقديم.",
+        "en": "The application portal limits applicants to one vacation-scheme or training-contract vacancy per recruitment cycle. Choose the route that suits you before applying."
+      },
+      "deadline": {
+        "ar": "8 يناير 2027",
+        "en": "8 January 2027"
+      },
+      "employerKey": "white-case",
+      "id": "white-case-saudi-gcc-three-programmes-2027-2029",
+      "members": [
+        {
+          "applicationResult": "login_required",
+          "checkedAt": "2026-11-15T18:57:34.923Z",
+          "expiresAt": "2026-11-16T06:57:35.904Z",
+          "job": {
+            "applicationResult": "login_required",
+            "context": {
+              "evidence": [
+                {
+                  "bodySha256": "313c463c613e121bdf6c7a5f3095e771b951f5d09756ad6867059330552c1cd5",
+                  "checkedAt": "2026-11-15T07:34:22.464Z",
+                  "claimIds": [
+                    "firm-presence",
+                    "firm-practice"
+                  ],
+                  "id": "firm-source",
+                  "locator": "Riyadh office overview and practice description.",
+                  "publisher": "White & Case",
+                  "reviewStatus": "inspected_primary",
+                  "sourceCategory": "organization_primary",
+                  "url": "https://www.whitecase.com/locations/emea/riyadh"
+                },
+                {
+                  "bodySha256": "7d2359cf3b4ce34e1a54764990d50c3aeec83b813b005c9065ed131005bacfd2",
+                  "checkedAt": "2026-11-15T07:33:46.463Z",
+                  "claimIds": [
+                    "saudi-deal"
+                  ],
+                  "id": "deal-source",
+                  "locator": "27 October 2026 announcement: seller, property and approximately SAR 2 billion consideration.",
+                  "publisher": "White & Case",
+                  "reviewStatus": "inspected_primary",
+                  "sourceCategory": "organization_primary",
+                  "url": "https://www.whitecase.com/news/press-release/white-case-advises-thakher-development-company-sale-novotel-thakher-makkah"
+                }
+              ],
+              "firm": {
+                "sentences": [
+                  {
+                    "ar": "افتتح وايت آند كيس مكتب الرياض عام 1993.",
+                    "en": "White & Case opened its Riyadh office in 1993.",
+                    "evidenceIds": [
+                      "firm-source"
+                    ],
+                    "id": "firm-presence"
+                  },
+                  {
+                    "ar": "تشمل ممارساته التمويل الإسلامي وأسواق المال والاندماج والاستحواذ والمنازعات.",
+                    "en": "Its practices include Islamic finance, capital markets, M&A and disputes.",
+                    "evidenceIds": [
+                      "firm-source"
+                    ],
+                    "id": "firm-practice"
+                  }
+                ]
+              },
+              "opportunityIdentity": "f237ab920958c006c913b5036491a3e9f875695384be06979e1ac746d4444608",
+              "researchedAt": "2026-11-15T07:36:21.569Z",
+              "reviewContext": {
+                "fixtureOnly": false,
+                "note": "Owner requested inclusion in three-programme review; original Reddit withdrawal suppression remains and requires audited native supersession, not employer closure.",
+                "suppressed": true
+              },
+              "saudiDeal": {
+                "facts": [
+                  {
+                    "ar": "قدّم المكتب المشورة لشركة ذاخر بشأن بيع أبراج نوفوتيل ذاخر مكة و14 قطعة أرض مجاورة لدانانتارا إندونيسيا، بنحو ملياري ريال.",
+                    "en": "The firm advised Thakher on the sale of Novotel Thakher Makkah towers and 14 adjoining plots to Danantara Indonesia for approximately SAR 2 billion.",
+                    "evidenceIds": [
+                      "deal-source"
+                    ],
+                    "id": "saudi-deal"
+                  }
+                ]
+              },
+              "schema": "saudilaw-opportunity-context-review/v1"
+            },
+            "contextLease": {
+              "claimIds": [
+                "firm-presence",
+                "firm-practice",
+                "saudi-deal"
+              ],
+              "kind": "reviewed_historical_context",
+              "reason": "Rechecked employer office and historical matter; no claim of live publication eligibility.",
+              "reviewedAt": "2026-11-15T07:36:21.569Z",
+              "schema": "saudilaw-historical-context-lease/v1",
+              "validUntil": "2026-11-22T07:36:21.570Z"
+            },
+            "editorialCutoffAt": "2027-01-07T21:00:00.000Z",
+            "employerKey": "white-case",
+            "id": "white-case-saudi-law-trainee-2027",
+            "identityEvidenceProfile": "white-case-programmes-2027-2029/v1",
+            "schema": "saudilaw-owner-job/v1",
+            "sourceIdentity": {
+              "locationEn": "Riyadh, Saudi Arabia",
+              "roleTitleEn": "Saudi Law Trainee Program 2027"
+            },
+            "sources": [
+              {
+                "bodyBytes": 8485,
+                "bodySha256": "9b49c5aa6013f07b9d15fa46ae44ca44b7bac514b851c22cb6410b628104d262",
+                "kind": "http_visible_text",
+                "requiredText": [
+                  "Saudi Law Trainee Program overview",
+                  "Riyadh"
+                ],
+                "role": "programme",
+                "url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program"
+              },
+              {
+                "bodyBytes": 1559,
+                "bodySha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
+                "kind": "http_visible_text",
+                "requiredText": [
+                  "Saudi Law Trainee Program 2027 March 2027 08/01/2027",
+                  "To begin the application process, please enter your email to login or create an account."
+                ],
+                "role": "application",
+                "url": "https://whitecase.grad.allhires.com/app/"
+              }
+            ],
+            "weekly": {
+              "application_url": "https://whitecase.grad.allhires.com/app/",
+              "category": "trainee",
+              "deadline": {
+                "at": null,
+                "date": "2027-01-08",
+                "published": true,
+                "time_zone": null
+              },
+              "deadline_copy": {
+                "ar": "8 يناير 2027؛ لم تُذكر ساعة إغلاق أو منطقة زمنية.",
+                "en": "8 January 2027; no closing time or time zone is stated."
+              },
+              "eligibility_points": {
+                "ar": [
+                  "طلاب وخريجو بكالوريوس القانون (LLB) من جامعة سعودية ممن يسعون إلى الحصول على رخصة مزاولة المحاماة في السعودية.",
+                  "معدل لا يقل عن 3.5 من 4 أو 4.5 من 5.",
+                  "العربية لغة أم، مع إجادتها كتابة وتحدثاً.",
+                  "الالتزام بمسار قانوني دولي، بما يشمل الحصول على ماجستير في القانون وفق وصف المكتب «international LLM» قبل النظر في التعيين بوظيفة محامٍ (Associate)."
+                ],
+                "en": [
+                  "Saudi-university LLB students and graduates seeking a Saudi licence to practise.",
+                  "Minimum GPA of 3.5/4 or 4.5/5.",
+                  "Native Arabic with fluent written and spoken Arabic.",
+                  "Commitment to an international legal career, including an international LLM before consideration for an associate role."
+                ]
+              },
+              "employer": {
+                "ar": "White & Case",
+                "en": "White & Case"
+              },
+              "location": {
+                "ar": "الرياض، المملكة العربية السعودية",
+                "en": "Riyadh, Saudi Arabia"
+              },
+              "opportunity_summary": {
+                "ar": "في الرياض، للراغبين في التأهل للمحاماة في السعودية. تدريب تحت الإشراف يتضمن أربع فترات تدريب في مجالات عمل مختلفة، وقد تُخفض إلى ثلاث لحملة ماجستير القانون (LLM). مدة البرنامج والأجر غير محددين.",
+                "en": "Riyadh, March 2027: a Saudi-qualification route with supervised work and four seats, potentially three for LLM holders. Duration and pay are not stated."
+              },
+              "role": {
+                "ar": "برنامج التدريب في القانون السعودي — مارس 2027",
+                "en": "Saudi Law Trainee Program 2027"
+              },
+              "source_url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program"
+            }
+          },
+          "proofs": [
+            {
+              "bodyBytes": 8485,
+              "bodySha256": "9b49c5aa6013f07b9d15fa46ae44ca44b7bac514b851c22cb6410b628104d262",
+              "checkedAt": "2026-11-15T18:57:34.923Z",
+              "finalUrl": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+              "kind": "http_visible_text",
+              "status": 200,
+              "url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program"
+            },
+            {
+              "bodyBytes": 1559,
+              "bodySha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
+              "checkedAt": "2026-11-15T18:57:35.707Z",
+              "finalUrl": "https://whitecase.grad.allhires.com/app/",
+              "kind": "http_visible_text",
+              "status": 200,
+              "url": "https://whitecase.grad.allhires.com/app/"
+            }
+          ],
+          "reason": null,
+          "sourceStatus": "verified"
+        },
+        {
+          "applicationResult": "login_required",
+          "checkedAt": "2026-11-15T18:57:35.867Z",
+          "expiresAt": "2026-11-16T06:57:35.904Z",
+          "job": {
+            "applicationResult": "login_required",
+            "context": {
+              "evidence": [
+                {
+                  "bodySha256": "313c463c613e121bdf6c7a5f3095e771b951f5d09756ad6867059330552c1cd5",
+                  "checkedAt": "2026-11-15T07:34:22.464Z",
+                  "claimIds": [
+                    "firm-presence",
+                    "firm-practice"
+                  ],
+                  "id": "firm-source",
+                  "locator": "Riyadh office overview and practice description.",
+                  "publisher": "White & Case",
+                  "reviewStatus": "inspected_primary",
+                  "sourceCategory": "organization_primary",
+                  "url": "https://www.whitecase.com/locations/emea/riyadh"
+                },
+                {
+                  "bodySha256": "7d2359cf3b4ce34e1a54764990d50c3aeec83b813b005c9065ed131005bacfd2",
+                  "checkedAt": "2026-11-15T07:33:46.463Z",
+                  "claimIds": [
+                    "saudi-deal"
+                  ],
+                  "id": "deal-source",
+                  "locator": "27 October 2026 announcement: seller, property and approximately SAR 2 billion consideration.",
+                  "publisher": "White & Case",
+                  "reviewStatus": "inspected_primary",
+                  "sourceCategory": "organization_primary",
+                  "url": "https://www.whitecase.com/news/press-release/white-case-advises-thakher-development-company-sale-novotel-thakher-makkah"
+                }
+              ],
+              "firm": {
+                "sentences": [
+                  {
+                    "ar": "افتتح وايت آند كيس مكتب الرياض عام 1993.",
+                    "en": "White & Case opened its Riyadh office in 1993.",
+                    "evidenceIds": [
+                      "firm-source"
+                    ],
+                    "id": "firm-presence"
+                  },
+                  {
+                    "ar": "تشمل ممارساته التمويل الإسلامي وأسواق المال والاندماج والاستحواذ والمنازعات.",
+                    "en": "Its practices include Islamic finance, capital markets, M&A and disputes.",
+                    "evidenceIds": [
+                      "firm-source"
+                    ],
+                    "id": "firm-practice"
+                  }
+                ]
+              },
+              "opportunityIdentity": "7d8e82def9a8bdea416730376b556cb0afdf9395b81314b9c46ba77017fededb",
+              "researchedAt": "2026-11-15T07:36:21.569Z",
+              "reviewContext": {
+                "fixtureOnly": false,
+                "note": "Reviewed programme input only; no publication grant or live-state assertion.",
+                "suppressed": false
+              },
+              "saudiDeal": {
+                "facts": [
+                  {
+                    "ar": "قدّم المكتب المشورة لشركة ذاخر بشأن بيع أبراج نوفوتيل ذاخر مكة و14 قطعة أرض مجاورة لدانانتارا إندونيسيا، بنحو ملياري ريال.",
+                    "en": "The firm advised Thakher on the sale of Novotel Thakher Makkah towers and 14 adjoining plots to Danantara Indonesia for approximately SAR 2 billion.",
+                    "evidenceIds": [
+                      "deal-source"
+                    ],
+                    "id": "saudi-deal"
+                  }
+                ]
+              },
+              "schema": "saudilaw-opportunity-context-review/v1"
+            },
+            "contextLease": {
+              "claimIds": [
+                "firm-presence",
+                "firm-practice",
+                "saudi-deal"
+              ],
+              "kind": "reviewed_historical_context",
+              "reason": "Rechecked employer office and historical matter; no claim of live publication eligibility.",
+              "reviewedAt": "2026-11-15T07:36:21.569Z",
+              "schema": "saudilaw-historical-context-lease/v1",
+              "validUntil": "2026-11-22T07:36:21.570Z"
+            },
+            "editorialCutoffAt": "2027-01-07T21:00:00.000Z",
+            "employerKey": "white-case",
+            "id": "white-case-gcc-english-law-trainee-2029",
+            "identityEvidenceProfile": "white-case-programmes-2027-2029/v1",
+            "schema": "saudilaw-owner-job/v1",
+            "sourceIdentity": {
+              "locationEn": "Riyadh, Saudi Arabia",
+              "roleTitleEn": "GCC English Law Trainee Program 2029"
+            },
+            "sources": [
+              {
+                "bodyBytes": 11927,
+                "bodySha256": "72553d43db3a234f126aacf7c42ebea3c50597412baa67f231b583e34e15a15a",
+                "kind": "http_visible_text",
+                "requiredText": [
+                  "GCC English Law Trainee Program overview",
+                  "Riyadh"
+                ],
+                "role": "programme",
+                "url": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law"
+              },
+              {
+                "bodyBytes": 1559,
+                "bodySha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
+                "kind": "http_visible_text",
+                "requiredText": [
+                  "GCC English Law Trainee Program 2029 08/01/2027",
+                  "To begin the application process, please enter your email to login or create an account."
+                ],
+                "role": "application",
+                "url": "https://whitecase.grad.allhires.com/app/"
+              }
+            ],
+            "weekly": {
+              "application_url": "https://whitecase.grad.allhires.com/app/",
+              "category": "trainee",
+              "deadline": {
+                "at": null,
+                "date": "2027-01-08",
+                "published": true,
+                "time_zone": null
+              },
+              "deadline_copy": {
+                "ar": "8 يناير 2027؛ لم تُذكر ساعة إغلاق أو منطقة زمنية.",
+                "en": "8 January 2027; no closing time or time zone is stated."
+              },
+              "eligibility_points": {
+                "ar": [
+                  "إجادة العربية تحدثاً وكتابة، وارتباط قوي بالشرق الأوسط ورغبة جادة في العمل القانوني بالمنطقة.",
+                  "تقدير بكالوريوس 2:1 أو أعلى، محقق أو متوقع، أو ما يعادله؛ وAAB في A levels أو ما يعادلها، أو 38 نقطة على الأقل في البكالوريا الدولية.",
+                  "التقديم متاح لطلاب السنة قبل الأخيرة والسنة الأخيرة والخريجين من مختلف التخصصات، وفق شروط المسار."
+                ],
+                "en": [
+                  "Fluent spoken and written Arabic, strong ties to the Middle East and a genuine commitment to a legal career in the region.",
+                  "An achieved or predicted undergraduate 2:1 or above, or equivalent; AAB at A levels or equivalent, or at least 38 IB points.",
+                  "Applications are open to penultimate-year students, finalists and graduates from any degree discipline, subject to the route requirements."
+                ]
+              },
+              "employer": {
+                "ar": "White & Case",
+                "en": "White & Case"
+              },
+              "location": {
+                "ar": "الرياض، المملكة العربية السعودية",
+                "en": "Riyadh, Saudi Arabia"
+              },
+              "opportunity_summary": {
+                "ar": "دراسة وتأهيل مهني في لندن، ثم عقد تدريب لمدة سنتين في الرياض يبدأ في مارس أو سبتمبر 2029، مع أربع فترات تدريب إحداها في لندن. تشمل الدراسة SQE1 وSQE2 وSQE Plus؛ ويكمل غير خريجي القانون برنامج PGDL أولاً.",
+                "en": "Study and qualification in London, followed by a two-year training contract in Riyadh starting in March or September 2029, with four seats including one in London. Studies include SQE1, SQE2 and SQE Plus; non-law graduates first complete the PGDL."
+              },
+              "role": {
+                "ar": "برنامج تأهيل المحامين وفق النظام الإنجليزي — دفعة 2029",
+                "en": "GCC English Law Trainee Program 2029"
+              },
+              "source_url": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law"
+            }
+          },
+          "proofs": [
+            {
+              "bodyBytes": 11927,
+              "bodySha256": "72553d43db3a234f126aacf7c42ebea3c50597412baa67f231b583e34e15a15a",
+              "checkedAt": "2026-11-15T18:57:35.867Z",
+              "finalUrl": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law",
+              "kind": "http_visible_text",
+              "status": 200,
+              "url": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law"
+            },
+            {
+              "bodyBytes": 1559,
+              "bodySha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
+              "checkedAt": "2026-11-15T18:57:35.869Z",
+              "finalUrl": "https://whitecase.grad.allhires.com/app/",
+              "kind": "http_visible_text",
+              "status": 200,
+              "url": "https://whitecase.grad.allhires.com/app/"
+            }
+          ],
+          "reason": null,
+          "sourceStatus": "verified"
+        },
+        {
+          "applicationResult": "login_required",
+          "checkedAt": "2026-11-15T18:57:35.900Z",
+          "expiresAt": "2026-11-16T06:57:35.904Z",
+          "job": {
+            "applicationResult": "login_required",
+            "context": {
+              "evidence": [
+                {
+                  "bodySha256": "313c463c613e121bdf6c7a5f3095e771b951f5d09756ad6867059330552c1cd5",
+                  "checkedAt": "2026-11-15T07:34:22.464Z",
+                  "claimIds": [
+                    "firm-presence",
+                    "firm-practice"
+                  ],
+                  "id": "firm-source",
+                  "locator": "Riyadh office overview and practice description.",
+                  "publisher": "White & Case",
+                  "reviewStatus": "inspected_primary",
+                  "sourceCategory": "organization_primary",
+                  "url": "https://www.whitecase.com/locations/emea/riyadh"
+                },
+                {
+                  "bodySha256": "7d2359cf3b4ce34e1a54764990d50c3aeec83b813b005c9065ed131005bacfd2",
+                  "checkedAt": "2026-11-15T07:33:46.463Z",
+                  "claimIds": [
+                    "saudi-deal"
+                  ],
+                  "id": "deal-source",
+                  "locator": "27 October 2026 announcement: seller, property and approximately SAR 2 billion consideration.",
+                  "publisher": "White & Case",
+                  "reviewStatus": "inspected_primary",
+                  "sourceCategory": "organization_primary",
+                  "url": "https://www.whitecase.com/news/press-release/white-case-advises-thakher-development-company-sale-novotel-thakher-makkah"
+                }
+              ],
+              "firm": {
+                "sentences": [
+                  {
+                    "ar": "افتتح وايت آند كيس مكتب الرياض عام 1993.",
+                    "en": "White & Case opened its Riyadh office in 1993.",
+                    "evidenceIds": [
+                      "firm-source"
+                    ],
+                    "id": "firm-presence"
+                  },
+                  {
+                    "ar": "تشمل ممارساته التمويل الإسلامي وأسواق المال والاندماج والاستحواذ والمنازعات.",
+                    "en": "Its practices include Islamic finance, capital markets, M&A and disputes.",
+                    "evidenceIds": [
+                      "firm-source"
+                    ],
+                    "id": "firm-practice"
+                  }
+                ]
+              },
+              "opportunityIdentity": "0e0dd2ad1c8012c6976ac3ae3f7f37bdb66641aa77bcc62d78f0ba8276cc36c6",
+              "researchedAt": "2026-11-15T07:36:21.569Z",
+              "reviewContext": {
+                "fixtureOnly": false,
+                "note": "Reviewed programme input only; no publication grant or live-state assertion.",
+                "suppressed": false
+              },
+              "saudiDeal": {
+                "facts": [
+                  {
+                    "ar": "قدّم المكتب المشورة لشركة ذاخر بشأن بيع أبراج نوفوتيل ذاخر مكة و14 قطعة أرض مجاورة لدانانتارا إندونيسيا، بنحو ملياري ريال.",
+                    "en": "The firm advised Thakher on the sale of Novotel Thakher Makkah towers and 14 adjoining plots to Danantara Indonesia for approximately SAR 2 billion.",
+                    "evidenceIds": [
+                      "deal-source"
+                    ],
+                    "id": "saudi-deal"
+                  }
+                ]
+              },
+              "schema": "saudilaw-opportunity-context-review/v1"
+            },
+            "contextLease": {
+              "claimIds": [
+                "firm-presence",
+                "firm-practice",
+                "saudi-deal"
+              ],
+              "kind": "reviewed_historical_context",
+              "reason": "Rechecked employer office and historical matter; no claim of live publication eligibility.",
+              "reviewedAt": "2026-11-15T07:36:21.569Z",
+              "schema": "saudilaw-historical-context-lease/v1",
+              "validUntil": "2026-11-22T07:36:21.570Z"
+            },
+            "editorialCutoffAt": "2027-01-07T21:00:00.000Z",
+            "employerKey": "white-case",
+            "id": "white-case-gcc-spring-vacation-scheme-2027",
+            "identityEvidenceProfile": "white-case-programmes-2027-2029/v1",
+            "schema": "saudilaw-owner-job/v1",
+            "sourceIdentity": {
+              "locationEn": "Riyadh, Saudi Arabia",
+              "roleTitleEn": "GCC English Law Trainee Program – Spring Vacation Scheme"
+            },
+            "sources": [
+              {
+                "bodyBytes": 11927,
+                "bodySha256": "72553d43db3a234f126aacf7c42ebea3c50597412baa67f231b583e34e15a15a",
+                "kind": "http_visible_text",
+                "requiredText": [
+                  "Vacation Scheme – Spring 2027",
+                  "Riyadh"
+                ],
+                "role": "programme",
+                "url": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law"
+              },
+              {
+                "bodyBytes": 1559,
+                "bodySha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
+                "kind": "http_visible_text",
+                "requiredText": [
+                  "GCC English Law Trainee Program – Spring Vacation Scheme 4-16 April 2027 08/01/2027",
+                  "To begin the application process, please enter your email to login or create an account."
+                ],
+                "role": "application",
+                "url": "https://whitecase.grad.allhires.com/app/"
+              }
+            ],
+            "weekly": {
+              "application_url": "https://whitecase.grad.allhires.com/app/",
+              "category": "internship",
+              "deadline": {
+                "at": null,
+                "date": "2027-01-08",
+                "published": true,
+                "time_zone": null
+              },
+              "deadline_copy": {
+                "ar": "8 يناير 2027؛ لم تُذكر ساعة إغلاق أو منطقة زمنية.",
+                "en": "8 January 2027; no closing time or time zone is stated."
+              },
+              "eligibility_points": {
+                "ar": [
+                  "إجادة العربية تحدثاً وكتابة، وارتباط قوي بالشرق الأوسط ورغبة جادة في العمل القانوني بالمنطقة.",
+                  "تقدير بكالوريوس 2:1 أو أعلى، محقق أو متوقع، أو ما يعادله؛ وAAB في A levels أو ما يعادلها، أو 38 نقطة على الأقل في البكالوريا الدولية.",
+                  "طلاب القانون في السنة قبل الأخيرة أو الأخيرة، وطلاب التخصصات الأخرى في السنة الأخيرة، والخريجون من جميع التخصصات."
+                ],
+                "en": [
+                  "Fluent spoken and written Arabic, strong ties to the Middle East and a genuine commitment to a legal career in the region.",
+                  "An achieved or predicted undergraduate 2:1 or above, or equivalent; AAB at A levels or equivalent, or at least 38 IB points.",
+                  "Penultimate- or final-year law students, final-year non-law students and graduates from any discipline."
+                ]
+              },
+              "employer": {
+                "ar": "White & Case",
+                "en": "White & Case"
+              },
+              "location": {
+                "ar": "الرياض، المملكة العربية السعودية",
+                "en": "Riyadh, Saudi Arabia"
+              },
+              "opportunity_summary": {
+                "ar": "تدريب قصير في الرياض أو دبي أو أبوظبي من 4 إلى 16 أبريل 2027، مع بدل للمصروفات لم يُحدد مقداره. يتضمن تقييمات قد تؤدي إلى عرض للانضمام إلى برنامج التأهيل؛ القبول غير مضمون.",
+                "en": "A short placement in Riyadh, Dubai or Abu Dhabi from 4 to 16 April 2027, with an expense stipend of unspecified value. Assessments may lead to a trainee-programme offer; admission is not guaranteed."
+              },
+              "role": {
+                "ar": "برنامج التدريب الربيعي — 4 إلى 16 أبريل 2027",
+                "en": "GCC English Law Trainee Program – Spring Vacation Scheme"
+              },
+              "source_url": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law"
+            }
+          },
+          "proofs": [
+            {
+              "bodyBytes": 11927,
+              "bodySha256": "72553d43db3a234f126aacf7c42ebea3c50597412baa67f231b583e34e15a15a",
+              "checkedAt": "2026-11-15T18:57:35.900Z",
+              "finalUrl": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law",
+              "kind": "http_visible_text",
+              "status": 200,
+              "url": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law"
+            },
+            {
+              "bodyBytes": 1559,
+              "bodySha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
+              "checkedAt": "2026-11-15T18:57:35.904Z",
+              "finalUrl": "https://whitecase.grad.allhires.com/app/",
+              "kind": "http_visible_text",
+              "status": 200,
+              "url": "https://whitecase.grad.allhires.com/app/"
+            }
+          ],
+          "reason": null,
+          "sourceStatus": "verified"
+        }
+      ],
+      "metadata": {
+        "ar": "الرياض؛ والتدريب الربيعي متاح أيضاً في دبي وأبوظبي",
+        "en": "Riyadh; the spring vacation scheme is also available in Dubai and Abu Dhabi"
+      },
+      "overview": {
+        "ar": "برنامج للتأهيل السعودي، وبرنامج للتأهيل وفق النظام الإنجليزي، وتدريب ربيعي قصير؛ لكل فرصة شروط مستقلة.",
+        "en": "Saudi qualification, English-law qualification and a short spring placement: three opportunities with distinct requirements."
+      },
+      "title": {
+        "ar": "ثلاث فرص للتدريب القانوني في السعودية والخليج",
+        "en": "Three Saudi and GCC training opportunities"
+      }
+    }
+  ],
+  "expiresAt": "2026-11-16T06:57:35.904Z",
+  "generatedAt": "2026-11-15T18:57:35.904Z",
+  "publicationEnabled": false,
+  "schema": "saudilaw-owner-bundle-feed/v1",
+  "sha256": "0229069a630f39c28986265810e46269d1b80a8658794e8b721cea81eadcb53c"
+}

@@ -7,6 +7,7 @@ import {readHtml,textOf,find} from '../html-evidence.mjs';
 import {enabled,unavailable} from '../coverage-proof.mjs';
 import {projectVisibleHtml} from '../coverage-browser-dom.mjs';
 import {AO_SOURCE_URL} from '../ao-verification.mjs';
+import {whiteCaseIdentityProfileFor} from '../../contracts/white-case-identity.mjs';
 const sha=value=>createHash('sha256').update(value).digest('hex');
 export const HTTP_VISIBLE_TEXT_PROJECTION='saudilaw-http-visible-text/v1';
 export const projectHttpVisibleText=body=>textOf(readHtml(body));
@@ -94,7 +95,11 @@ async function browserReceipt(browser,source,job,remaining){
 /** Inject retrieve/browser only from the fixed audited workflow, never an HTTP
  * request. Approved source fingerprints make all content drift a hold.
  * Human copy review remains independent from fresh source proof. */
-export async function compileOwnerJobFeed({jobs,retrieve,browser,onSourceObserved,onQuarantined,clock=Date.now}={}){
+export function compileOwnerJobFeed(options={}){return compileEvidence(options,false);}
+// Source review only: does not clear native ledger suppression or enable publishing.
+export function compileOwnerBundleEvidence(options={}){return compileEvidence(options,true);}
+export function compileOwnerBundleRecordedEvidence(options={}){return compileEvidence(options,true,true);}
+async function compileEvidence({jobs,retrieve,browser,onSourceObserved,onQuarantined,clock=Date.now}={},bundleReview,recorded=false){
  if(!Array.isArray(jobs)||jobs.length>MAX_JOBS||typeof retrieve!=='function')throw new Error('producer_input');
  const started=checkClock(clock),snapshot=JSON.parse(canonical(jobs)),reviewed=partitionOwnerJobs(snapshot,{now:started}).eligible;
  if(new Set(reviewed.map(job=>job.id)).size!==reviewed.length)throw new Error('producer_duplicate_job');
@@ -104,30 +109,38 @@ export async function compileOwnerJobFeed({jobs,retrieve,browser,onSourceObserve
  for(const job of reviewed){
   const proofs=[];
   try{
+   if(!bundleReview&&whiteCaseIdentityProfileFor(job)?.retainSuppression===true)throw Error('withdrawn_listing_suppressed');
    if(job.editorialCutoffAt!==null&&timestamp(job.editorialCutoffAt)<=checkClock(clock))throw new Error('source_closed');
    let evidenceProblem=null,roleObserved=false;
    for(const source of job.sources){
     try{
     remaining();if(++requests>MAX_REQUESTS)throw new Error('run_budget');
-    const observed=source.kind==='browser_dom'?await browserReceipt(browser,source,job,remaining):positiveReceipt(await retrieve(source.url),source);
+    let observed;
+    if(recorded){
+     if(source.kind==='browser_dom')throw Error('source_unavailable');
+     const response=await retrieve(source.url),captured=timestamp(response?.checkedAt),at=checkClock(clock);
+     if(captured>at||captured<=at-12*HOUR)throw Error('source_unavailable');
+     observed={...positiveReceipt(response,source),checkedAt:new Date(captured).toISOString()};
+    }else observed=source.kind==='browser_dom'?await browserReceipt(browser,source,job,remaining):positiveReceipt(await retrieve(source.url),source);
     const body=canonicalEvidenceBody(source,observed.body),bodySha256=sha(evidenceBody(source,body)),bodyBytes=Buffer.byteLength(evidenceBody(source,body));
     remaining();
     if(onSourceObserved!==undefined){
      if(typeof onSourceObserved!=='function')throw new Error('producer_observer');
      // Detached diagnostics are private check artifacts; never part of the feed.
-     await onSourceObserved({jobId:job.id,url:source.url,kind:source.kind,status:200,finalUrl:observed.finalUrl,checkedAt:new Date(checkClock(clock)).toISOString(),bodySha256,bodyBytes,...((body!==observed.body||source.kind==='http_visible_text')&&{rawBodySha256:sha(observed.body),rawBodyBytes:Buffer.byteLength(observed.body)}),...(source.kind==='http_visible_text'&&{projection:HTTP_VISIBLE_TEXT_PROJECTION}),visibleText:textOf(readHtml(observed.body))});
+     await onSourceObserved({jobId:job.id,url:source.url,kind:source.kind,status:200,finalUrl:observed.finalUrl,checkedAt:observed.checkedAt??new Date(checkClock(clock)).toISOString(),bodySha256,bodyBytes,...((body!==observed.body||source.kind==='http_visible_text')&&{rawBodySha256:sha(observed.body),rawBodyBytes:Buffer.byteLength(observed.body)}),...(source.kind==='http_visible_text'&&{projection:HTTP_VISIBLE_TEXT_PROJECTION}),visibleText:textOf(readHtml(observed.body))});
     }
     const doc=verifyBody(source,body);
     if(['vacancy','programme'].includes(source.role)){
      const normalize=value=>value.normalize('NFKC').toLowerCase().replace(/\s+/g,' ').trim(),visible=normalize(textOf(doc));
      const headings=find(doc,node=>['h1','h2','h3'].includes(node.tag)).map(node=>normalize(textOf(node)));
      const punctuationFold=value=>normalize(value).replace(/[^\p{L}\p{N}]/gu,'');
-     if(job.employerKey==='white-case'&&(punctuationFold(visible).includes('saudilawtraineeprogram2027')||headings.some(title=>/^saudilawtraineeprogram(?:me)?/.test(punctuationFold(title)))&&/\b2027\b/.test(visible)))throw new Error('withdrawn_listing_suppressed');
+     if(!bundleReview&&job.employerKey==='white-case'&&(punctuationFold(visible).includes('saudilawtraineeprogram2027')||headings.some(title=>/^saudilawtraineeprogram(?:me)?/.test(punctuationFold(title)))&&/\b2027\b/.test(visible)))throw new Error('withdrawn_listing_suppressed');
      const city=normalize(job.sourceIdentity.locationEn.split(',')[0]).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),locationObserved=new RegExp(`(?:^|[^\\p{L}\\p{N}])${city}(?:$|[^\\p{L}\\p{N}])`,'u').test(visible);
-     if(headings.includes(normalize(job.sourceIdentity.roleTitleEn))&&locationObserved)roleObserved=true;
+     const profile=whiteCaseIdentityProfileFor(job);
+     if(headings.includes(normalize(profile?.programmeHeading??job.sourceIdentity.roleTitleEn))&&locationObserved)roleObserved=true;
     }
     if(source.role==='application')verifyApplication(doc,job.applicationResult,observed.resumeUploadConfirmed===true);
-    const checkedAt=new Date(checkClock(clock)).toISOString();
+    const checkedAt=observed.checkedAt??new Date(checkClock(clock)).toISOString();
     proofs.push({url:source.url,finalUrl:observed.finalUrl,kind:source.kind,status:200,checkedAt,bodySha256,bodyBytes});
     }catch(error){evidenceProblem??=error;}
    }
@@ -146,7 +159,7 @@ export async function compileOwnerJobFeed({jobs,retrieve,browser,onSourceObserve
    if(typeof onQuarantined!=='function')throw Error('owner_job_upcoming_date');
    for(const item of finalPartition.quarantined)await onQuarantined(item);
  }
- for(const item of observations)if(item.sourceStatus==='verified')item.expiresAt=new Date(Math.min(expires,timestamp(item.checkedAt)+168*HOUR,item.job.editorialCutoffAt===null?Infinity:timestamp(item.job.editorialCutoffAt),item.job.availability?.status==='upcoming'?Date.parse(item.job.availability.opensOn+'T00:00:00Z')-3*HOUR:Infinity)).toISOString();
+ for(const item of observations)if(item.sourceStatus==='verified')item.expiresAt=new Date(Math.min(expires,timestamp(item.checkedAt)+(recorded?12:168)*HOUR,item.job.editorialCutoffAt===null?Infinity:timestamp(item.job.editorialCutoffAt),item.job.availability?.status==='upcoming'?Date.parse(item.job.availability.opensOn+'T00:00:00Z')-3*HOUR:Infinity)).toISOString();
  const payload={schema:OWNER_JOB_FEED_SCHEMA,generatedAt:new Date(generated).toISOString(),expiresAt:new Date(expires).toISOString(),publicationEnabled:false,jobs:observations};
  const feed={...payload,sha256:digest(payload)};
  validateOwnerJobFeed(feed,{now:generated});return JSON.parse(canonical(feed));
