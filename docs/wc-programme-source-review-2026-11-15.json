@@ -1,0 +1,102 @@
+{
+  "schema": "saudilaw-programme-source-review/v1",
+  "reviewedAt": "2026-11-15T07:43:06.242Z",
+  "sources": [
+    {
+      "url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+      "finalUrl": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
+      "status": 200,
+      "checkedAt": "2026-11-15T07:32:46.944556+00:00",
+      "bodySha256": "3c06c9502749a8a99b151b8c1dc83dfaeec476a11ae0c03436f79f56532f4033",
+      "bodyBytes": 156882,
+      "projection": "saudilaw-http-visible-text/v1",
+      "visibleSha256": "9b49c5aa6013f07b9d15fa46ae44ca44b7bac514b851c22cb6410b628104d262",
+      "visibleBytes": 8485
+    },
+    {
+      "url": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law",
+      "finalUrl": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law",
+      "status": 200,
+      "checkedAt": "2026-11-15T07:32:53.029795+00:00",
+      "bodySha256": "ad40f5d50e1b3c1a28c9c93758ab397e9aa98089961c38bd0826607c7a21a306",
+      "bodyBytes": 164150,
+      "projection": "saudilaw-http-visible-text/v1",
+      "visibleSha256": "72553d43db3a234f126aacf7c42ebea3c50597412baa67f231b583e34e15a15a",
+      "visibleBytes": 11927
+    },
+    {
+      "url": "https://whitecase.grad.allhires.com/app/",
+      "finalUrl": "https://whitecase.grad.allhires.com/app/",
+      "status": 200,
+      "checkedAt": "2026-11-15T07:34:57.456717+00:00",
+      "bodySha256": "3706483c49103c907b2cf52065e20c1c9cfcdf2af0554805facd0bdbec399364",
+      "bodyBytes": 15232,
+      "projection": "saudilaw-http-visible-text/v1",
+      "visibleSha256": "8ab74c417cfe7281ea302caad7731e1421d1b2cf1e5440488f24fb97922bf5b6",
+      "visibleBytes": 1559
+    },
+    {
+      "url": "https://www.whitecase.com/locations/emea/riyadh",
+      "finalUrl": "https://www.whitecase.com/locations/emea/riyadh",
+      "status": 200,
+      "checkedAt": "2026-11-15T07:34:22.464277+00:00",
+      "bodySha256": "313c463c613e121bdf6c7a5f3095e771b951f5d09756ad6867059330552c1cd5",
+      "bodyBytes": 137110,
+      "projection": "saudilaw-http-visible-text/v1",
+      "visibleSha256": "550a8b2ef2103a83832fd2a8270756b86c4edf4d773af061a9d418bbed9e3749",
+      "visibleBytes": 4120
+    },
+    {
+      "url": "https://www.whitecase.com/news/press-release/white-case-advises-thakher-development-company-sale-novotel-thakher-makkah",
+      "finalUrl": "https://www.whitecase.com/news/press-release/white-case-advises-thakher-development-company-sale-novotel-thakher-makkah",
+      "status": 200,
+      "checkedAt": "2026-11-15T07:33:46.463830+00:00",
+      "bodySha256": "7d2359cf3b4ce34e1a54764990d50c3aeec83b813b005c9065ed131005bacfd2",
+      "bodyBytes": 171709,
+      "projection": "saudilaw-http-visible-text/v1",
+      "visibleSha256": "af4df5e766e04c54eeb464120e30e9d2d131e6f040c3c74eae20068069ae4e8c",
+      "visibleBytes": 5888
+    }
+  ],
+  "publicationEnabled": false,
+  "nativeSuppressionPreserved": true,
+  "liveCheck": {
+    "generatedAt": "2026-11-15T07:39:46.836Z",
+    "result": "held",
+    "transportFailures": [
+      {
+        "url": "https://whitecase.grad.allhires.com/app/",
+        "status": null,
+        "reason": "request_timeout"
+      },
+      {
+        "url": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law",
+        "status": null,
+        "reason": "request_timeout"
+      },
+      {
+        "url": "https://whitecase.grad.allhires.com/app/",
+        "status": null,
+        "reason": "request_timeout"
+      },
+      {
+        "url": "https://www.whitecase.com/careers/locations/saudi-arabia/gcc-english-law",
+        "status": null,
+        "reason": "request_timeout"
+      },
+      {
+        "url": "https://whitecase.grad.allhires.com/app/",
+        "status": null,
+        "reason": "request_timeout"
+      }
+    ]
+  },
+  "integrationReplay": {
+    "result": "three_members_validated_against_captured_source_bodies",
+    "liveNetworkCheck": false,
+    "publishableEvidence": false
+  },
+  "note": "Source captures were individually retrieved and inspected. Actual bounded live producer checks subsequently timed out; no fresh feed was published. Original Saudi native record and identity hashes are preserved. Raw bodies are not committed because the application response contains per-session form tokens.",
+  "inputSha256": "d8dde47d666659e96b029a41a8f2e222deef8f7ca8975a920889220e0c257caf",
+  "provenanceTrust": "operator_reviewed_capture_not_provider_signed"
+}

@@ -6,6 +6,13 @@ on:
     paths:
       - 'config/saudilaw-owner-jobs.json'
       - 'scripts/pipeline/owner-job-feed.mjs'
+      - 'config/saudilaw-owner-bundles.json'
+      - 'scripts/pipeline/owner-bundle-feed.mjs'
+      - 'scripts/check-owner-bundles.mjs'
+      - 'scripts/publish-owner-bundles.mjs'
+      - 'contracts/owner-bundle.mjs'
+      - 'contracts/programme-bundle.mjs'
+      - 'contracts/white-case-identity.mjs'
   schedule:
     # Multiple opportunities to prepare review within the 7-day (168-hour) evidence window.
     # GitHub schedules are best effort and may still be delayed or skipped.
@@ -63,6 +70,7 @@ jobs:
       - name: Verify the three reviewed employers and prepare pending bilingual samples
         run: node scripts/check-source-coverage.mjs "$RUNNER_TEMP/source-coverage"
       - name: Renew only the nonpublishing coverage artifact
+        id: coverage_write
         env:
           SOURCE_COVERAGE_DIRECTORY: ${{ runner.temp }}/source-coverage
           SOURCE_CANDIDATE_DIRECTORY: ${{ runner.temp }}/review-candidate
@@ -88,6 +96,25 @@ jobs:
         with:
           name: owner-job-evidence-${{ github.run_id }}
           path: ${{ runner.temp }}/owner-jobs/
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Independently verify every member of reviewed programme bundles
+        id: bundle_check
+        if: ${{ !cancelled() && steps.coverage_write.outcome == 'success' }}
+        run: node scripts/check-owner-bundles.mjs "$RUNNER_TEMP/owner-bundles"
+      - name: Renew only the nonpublishing programme bundle evidence feed
+        if: ${{ !cancelled() && steps.bundle_check.outcome == 'success' }}
+        env:
+          OWNER_BUNDLE_DIRECTORY: ${{ runner.temp }}/owner-bundles
+          OWNER_JOB_DIRECTORY: ${{ runner.temp }}/owner-jobs
+          SOURCE_COVERAGE_DIRECTORY: ${{ runner.temp }}/source-coverage
+        run: node scripts/publish-owner-bundles.mjs
+      - name: Preserve programme bundle source evidence and positive write receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: owner-bundle-evidence-${{ github.run_id }}
+          path: ${{ runner.temp }}/owner-bundles/
           retention-days: 7
           if-no-files-found: warn
       - name: Validate the proposed feed and browser journeys before changing a branch

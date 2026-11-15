@@ -1,0 +1,52 @@
+name: Release reviewed recorded programme evidence
+on:
+  workflow_dispatch:
+    inputs:
+      feed_json:
+        description: Exact sanitized recorded owner-bundle feed JSON generated from current main
+        required: true
+        type: string
+      report_json:
+        description: Exact sanitized recorded check report with original capture provenance
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: verified-opportunity-refresh
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.repository == 'mrmohaamd-cmyk/Legal-Market-Monitor' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Materialize only bounded sanitized data, never shell input
+        env:
+          RECORDED_FEED_JSON: ${{ inputs.feed_json }}
+          RECORDED_REPORT_JSON: ${{ inputs.report_json }}
+        run: |
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs/promises';
+          import path from 'node:path';
+          const feed=process.env.RECORDED_FEED_JSON,report=process.env.RECORDED_REPORT_JSON;
+          if(Buffer.byteLength(feed)>500000||Buffer.byteLength(report)>64000)throw Error('recorded_input_budget');
+          JSON.parse(feed);JSON.parse(report);
+          const directory=path.join(process.env.RUNNER_TEMP,'recorded-owner-bundle');
+          await fs.mkdir(directory,{recursive:true});
+          await fs.writeFile(path.join(directory,'owner-bundles.json'),feed);
+          await fs.writeFile(path.join(directory,'owner-bundle-recorded-check.json'),report);
+          JS
+      - name: Verify all invariants and release exact feed plus immutable-source receipt
+        env:
+          OWNER_BUNDLE_DIRECTORY: ${{ runner.temp }}/recorded-owner-bundle
+        run: node scripts/publish-owner-bundles-recorded.mjs
