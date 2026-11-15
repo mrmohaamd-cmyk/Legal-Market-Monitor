@@ -73,12 +73,12 @@ function validateContext(job,now){
 
 }
 export function ownerJobRecord(job){const e=OWNER_EMPLOYERS[job.employerKey];return {id:job.id,firm_name:e.name,firm_slug:job.employerKey,role_title:job.sourceIdentity.roleTitleEn+(job.sourceIdentity.intakeStartOn?' — intake '+job.sourceIdentity.intakeStartOn:''),location:job.sourceIdentity.locationEn,source_url:job.weekly.source_url,application_url:job.weekly.application_url,firm_careers_url:job.weekly.source_url};}
-export function validateOwnerJob(input,{now=Date.now()}={}){
+function validateOwnerJobStructure(input,{now=Date.now()}={}){
   clock(now);const j=clone(input);if(Buffer.byteLength(canonical(j))>65000)throw Error('owner_job_budget');
   exact(j,['schema','id','employerKey','sourceIdentity','weekly','context','contextLease','sources','applicationResult','editorialCutoffAt'],['availability','identityEvidenceProfile']);
   const employer=OWNER_EMPLOYERS[j.employerKey],identityProfile=whiteCaseIdentityProfileFor(j);
   const upcoming=j.availability?.status==='upcoming';
-  if(j.availability!==undefined){exact(j.availability,['status','opensOn']);if(!upcoming||!date(j.availability.opensOn)||Date.parse(j.availability.opensOn+'T00:00:00Z')-3*HOUR<=now)throw Error('owner_job_upcoming_date');}
+  if(j.availability!==undefined){exact(j.availability,['status','opensOn']);if(!upcoming||!date(j.availability.opensOn))throw Error('owner_job_upcoming_date');}
   if(j.schema!==OWNER_JOB_SCHEMA||!ID.test(j.id??'')||!employer)throw Error('owner_job_identity');
   const w=j.weekly;exact(w,['employer','role','location','category','eligibility_points','deadline','application_url','source_url'],['opportunity_summary','deadline_copy']);
   pair(w.employer,150);pair(w.role,250);pair(w.location,200);
@@ -105,6 +105,26 @@ export function validateOwnerJob(input,{now=Date.now()}={}){
   if(!identityProfile&&!j.sources.some(s=>['vacancy','programme'].includes(s.role)&&s.url===w.source_url&&s.requiredText.includes(j.sourceIdentity.roleTitleEn)))throw Error('owner_job_source_identity_assertion');
   if(upcoming&&(!j.sources.some(s=>s.role==='programme'&&s.url===w.source_url)||w.deadline.date!==null&&j.availability.opensOn>=w.deadline.date))throw Error('owner_job_upcoming_source');
   validateWhiteCaseIdentitySources(j);validateContext(j,now);return j;
+}
+// Strict consumer guard remains unchanged. Only the producer's partition may
+// retain a structurally valid, time-expired upcoming record as diagnostics.
+export function validateOwnerJob(input,{now=Date.now()}={}){
+  const job=validateOwnerJobStructure(input,{now});
+  if(job.availability && Date.parse(job.availability.opensOn+'T00:00:00Z')-3*HOUR<=now)throw Error('owner_job_upcoming_date');
+  return job;
+}
+export function partitionOwnerJobs(jobs,{now=Date.now()}={}){
+  clock(now);
+  if(!Array.isArray(jobs)||jobs.length>12)throw Error('producer_input');
+  const records=jobs.map(job=>validateOwnerJobStructure(job,{now}));
+  if(new Set(records.map(job=>job.id)).size!==records.length)throw Error('producer_duplicate_job');
+  const eligible=[],quarantined=[];
+  for(const job of records){
+    if(job.availability && Date.parse(job.availability.opensOn+'T00:00:00Z')-3*HOUR<=now)
+      quarantined.push({job,sha256:digest(job),reason:'owner_job_upcoming_date',observedAt:new Date(now).toISOString(),publicationEnabled:false});
+    else eligible.push(job);
+  }
+  return {eligible,quarantined};
 }
 export function ownerJobDigest(job){return digest(job);}
 export function validateOwnerJobFeed(input,{now=Date.now()}={}){

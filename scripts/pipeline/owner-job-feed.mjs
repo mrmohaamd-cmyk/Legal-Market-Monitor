@@ -2,7 +2,7 @@
 // form fills, arbitrary scripts, redirects or Reddit publication are supported.
 import {createHash} from 'node:crypto';
 import {canonical,digest,timestamp} from '../../contracts/reviewed-content.mjs';
-import {OWNER_JOB_FEED_SCHEMA,validateOwnerJob,validateOwnerJobFeed,ownerSourceFinalUrlAllowed} from '../../contracts/owner-job.mjs';
+import {OWNER_JOB_FEED_SCHEMA,partitionOwnerJobs,validateOwnerJobFeed,ownerSourceFinalUrlAllowed} from '../../contracts/owner-job.mjs';
 import {readHtml,textOf,find} from '../html-evidence.mjs';
 import {enabled,unavailable} from '../coverage-proof.mjs';
 import {projectVisibleHtml} from '../coverage-browser-dom.mjs';
@@ -99,9 +99,9 @@ export function compileOwnerJobFeed(options={}){return compileEvidence(options,f
 // Source review only: does not clear native ledger suppression or enable publishing.
 export function compileOwnerBundleEvidence(options={}){return compileEvidence(options,true);}
 export function compileOwnerBundleRecordedEvidence(options={}){return compileEvidence(options,true,true);}
-async function compileEvidence({jobs,retrieve,browser,onSourceObserved,clock=Date.now}={},bundleReview,recorded=false){
+async function compileEvidence({jobs,retrieve,browser,onSourceObserved,onQuarantined,clock=Date.now}={},bundleReview,recorded=false){
  if(!Array.isArray(jobs)||jobs.length>MAX_JOBS||typeof retrieve!=='function')throw new Error('producer_input');
- const started=checkClock(clock),reviewed=jobs.map(job=>validateOwnerJob(job,{now:started,allowExpired:true}));
+ const started=checkClock(clock),snapshot=JSON.parse(canonical(jobs)),reviewed=partitionOwnerJobs(snapshot,{now:started}).eligible;
  if(new Set(reviewed.map(job=>job.id)).size!==reviewed.length)throw new Error('producer_duplicate_job');
  let requests=0,lastNow=started;
  const remaining=()=>{lastNow=Math.max(lastNow,checkClock(clock));const left=started+MAX_RUN_MS-lastNow;if(left<=0)throw new Error('run_budget');return left;};
@@ -151,6 +151,14 @@ async function compileEvidence({jobs,retrieve,browser,onSourceObserved,clock=Dat
   }catch(error){observations.push({job,sourceStatus:'attention_required',checkedAt:null,expiresAt:null,applicationResult:null,proofs:[],reason:reason(error)});}
  }
  const generated=checkClock(clock),expires=generated+12*HOUR;
+ // Recheck at sealing time: a fetch may have crossed midnight Riyadh.
+ const finalPartition=partitionOwnerJobs(snapshot,{now:generated});
+ const eligibleIds=new Set(finalPartition.eligible.map(job=>job.id));
+ for(let i=observations.length-1;i>=0;i--)if(!eligibleIds.has(observations[i].job.id))observations.splice(i,1);
+ if(finalPartition.quarantined.length){
+   if(typeof onQuarantined!=='function')throw Error('owner_job_upcoming_date');
+   for(const item of finalPartition.quarantined)await onQuarantined(item);
+ }
  for(const item of observations)if(item.sourceStatus==='verified')item.expiresAt=new Date(Math.min(expires,timestamp(item.checkedAt)+(recorded?12:168)*HOUR,item.job.editorialCutoffAt===null?Infinity:timestamp(item.job.editorialCutoffAt),item.job.availability?.status==='upcoming'?Date.parse(item.job.availability.opensOn+'T00:00:00Z')-3*HOUR:Infinity)).toISOString();
  const payload={schema:OWNER_JOB_FEED_SCHEMA,generatedAt:new Date(generated).toISOString(),expiresAt:new Date(expires).toISOString(),publicationEnabled:false,jobs:observations};
  const feed={...payload,sha256:digest(payload)};

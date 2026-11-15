@@ -38,3 +38,28 @@ The workflow uses its existing GitHub credential and concurrency group. It makes
 Adding, reapproving or deleting a data entry never clears permanent record/identity claims, the historical withdrawal, consumed slots, unresolved attempts or the initialization marker. The removed White & Case opening must remain suppressed under its original legacy identity and record hash. A formatting fixture must never be copied into this input to replay it.
 
 Implementation tests and source preparation do not prove deployment, live production configuration or public publication. Keep publication paused until the tested engine is installed and its exact saved state is independently observed. An empty or malformed new configuration never activates posting. Schedule authorization and content approval are separate owner actions; neither renews the other.
+
+### Upcoming-record boundary quarantine
+
+At the announced Riyadh opening date, a reviewed `upcoming` record is no
+longer eligible. Time passing is not evidence that applications opened.
+The producer partitions these structurally valid records into the check
+report's `quarantined` array, with exact original record, digest, reason
+and observation time. They are omitted from the renewable feed, not
+converted to open or silently discarded. Input configuration and history
+remain unchanged. The CLI prints affected IDs/reasons and the existing
+workflow preserves the report as evidence.
+
+All structural, origin, integrity and duplicate-ID checks still fail closed.
+The public feed validator still rejects expired upcoming records. Producers
+without a quarantine diagnostic sink still fail at this boundary. A second
+partition at sealing prevents a check spanning midnight from renewing a stale
+upcoming record. Independent eligible jobs can continue their own source
+checks. A quarantined record requires fresh official application evidence and
+normal reviewed configuration changes before re-entry; do not merely remove
+its upcoming flag or retry publication. No publication permission is granted.
+
+Incident reference: workflow run 43648664946 failed at 2026-11-14T22:34Z
+because the Pinsent upcoming boundary (21:00Z) aborted the entire input batch.
+This repair isolates that lifecycle condition; it does not establish that
+Pinsent applications are open.
