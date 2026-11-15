@@ -13,12 +13,12 @@
         "en": "Saudi qualification, English-law qualification and a short spring placement: three opportunities with distinct requirements."
       },
       "constraint": {
-        "ar": "تتيح البوابة طلباً واحداً لبرنامج تدريب خلال الإجازة أو عقد تدريب في دورة التوظيف. راجع شروط البرنامج قبل اختيار طلبك.",
-        "en": "The portal permits one vacation-scheme or training-contract application per recruitment cycle. Check your chosen programme requirements."
+        "ar": "تنص بوابة التقديم على الاكتفاء بطلب واحد لأحد برامج التدريب القصير (Vacation Scheme) أو عقود التدريب (Training Contract) خلال دورة التوظيف الواحدة. اختر المسار المناسب لك قبل التقديم.",
+        "en": "The application portal limits applicants to one vacation-scheme or training-contract vacancy per recruitment cycle. Choose the route that suits you before applying."
       },
       "metadata": {
-        "ar": "الرياض؛ وفرصتا الخليج تشملان دبي وأبوظبي أيضاً",
-        "en": "Riyadh; the two GCC opportunities also cover Dubai and Abu Dhabi"
+        "ar": "الرياض؛ والتدريب الربيعي متاح أيضاً في دبي وأبوظبي",
+        "en": "Riyadh; the spring vacation scheme is also available in Dubai and Abu Dhabi"
       },
       "deadline": {
         "ar": "8 يناير 2027",
@@ -52,15 +52,15 @@
             },
             "category": "trainee",
             "opportunity_summary": {
-              "ar": "في الرياض، للراغبين في التأهل للمحاماة في السعودية. تدريب تحت الإشراف مع أربع دورات عمل، قد تُخفض إلى ثلاث لحملة الماجستير. مدة البرنامج والأجر غير محددين.",
+              "ar": "في الرياض، للراغبين في التأهل للمحاماة في السعودية. تدريب تحت الإشراف يتضمن أربع فترات تدريب في مجالات عمل مختلفة، وقد تُخفض إلى ثلاث لحملة ماجستير القانون (LLM). مدة البرنامج والأجر غير محددين.",
               "en": "Riyadh, March 2027: a Saudi-qualification route with supervised work and four seats, potentially three for LLM holders. Duration and pay are not stated."
             },
             "eligibility_points": {
               "ar": [
-                "طلاب وخريجو القانون من جامعة سعودية ممن يسعون إلى الحصول على رخصة مزاولة المحاماة في السعودية.",
+                "طلاب وخريجو بكالوريوس القانون (LLB) من جامعة سعودية ممن يسعون إلى الحصول على رخصة مزاولة المحاماة في السعودية.",
                 "معدل لا يقل عن 3.5 من 4 أو 4.5 من 5.",
                 "العربية لغة أم، مع إجادتها كتابة وتحدثاً.",
-                "الالتزام بمسار قانوني دولي، بما يشمل ماجستير في القانون من برنامج دولي قبل النظر في التعيين بصفة محامٍ مساعد."
+                "الالتزام بمسار قانوني دولي، بما يشمل الحصول على ماجستير في القانون وفق وصف المكتب «international LLM» قبل النظر في التعيين بوظيفة محامٍ (Associate)."
               ],
               "en": [
                 "Saudi-university LLB students and graduates seeking a Saudi licence to practise.",
@@ -216,8 +216,8 @@
             },
             "category": "trainee",
             "opportunity_summary": {
-              "ar": "دراسة وتأهيل مهني في لندن، ثم عقد تدريب لمدة سنتين في الرياض أو دبي أو أبوظبي. تتضمن الدراسة SQE1 وSQE2 وSQE Plus؛ ويحتاج غير خريجي القانون إلى PGDL أولاً.",
-              "en": "Study and qualification in London, then a two-year training contract in Riyadh, Dubai or Abu Dhabi. Studies include SQE1, SQE2 and SQE Plus; non-law graduates first complete the PGDL."
+              "ar": "دراسة وتأهيل مهني في لندن، ثم عقد تدريب لمدة سنتين في الرياض يبدأ في مارس أو سبتمبر 2029، مع أربع فترات تدريب إحداها في لندن. تشمل الدراسة SQE1 وSQE2 وSQE Plus؛ ويكمل غير خريجي القانون برنامج PGDL أولاً.",
+              "en": "Study and qualification in London, followed by a two-year training contract in Riyadh starting in March or September 2029, with four seats including one in London. Studies include SQE1, SQE2 and SQE Plus; non-law graduates first complete the PGDL."
             },
             "eligibility_points": {
               "ar": [
