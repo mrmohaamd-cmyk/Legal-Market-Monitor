@@ -543,9 +543,9 @@
       }
     }
   ],
-  "expiresAt": "2026-11-16T18:44:40.467Z",
-  "generatedAt": "2026-11-16T06:44:40.467Z",
+  "expiresAt": "2026-11-17T10:16:33.816Z",
+  "generatedAt": "2026-11-16T22:16:33.816Z",
   "publicationEnabled": false,
   "schema": "saudilaw-owner-bundle-feed/v1",
-  "sha256": "38a9e3a6e7a9abbf8335ac0b95b6b3edcb278ed0eb18dda972c44ac6be22e8ff"
+  "sha256": "aa424c60ac39f34f8589efb5cf65d8085d1a4c2fad2f26c3cebd56d81b67b222"
 }
