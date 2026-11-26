@@ -1,0 +1,91 @@
+{
+  "schema": "saudilaw-aramco-source/v1",
+  "checkedAt": "2026-11-26T10:04:33.400Z",
+  "catalogueSha256": "e2d9e39188e2ca140419857cb86fa204bbe04e15fc92a0c87ebf2a82aa8bbc55",
+  "roles": [
+    {
+      "reqId": "16783",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Counsel-General-Corporate-and-Commercial-Contracts/857013023/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "f990928c88da8bc3d98310134a9dbef70fafdc8e8498a5a8d07523c6ea974932"
+    },
+    {
+      "reqId": "16840",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Sr-Counsel/857034923/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "2612b5ddffd18eac2d050352047ad76ce9113e88f56ad13dcc94be0e8874ef07"
+    },
+    {
+      "reqId": "17755",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Sr-Counsel/857142623/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "c830e7905dac7056d918d063d8b0b8cd6b1409e1c2c7a258981ad0b09b88f2ca"
+    },
+    {
+      "reqId": "16801",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Sr-Counsel-I/857085023/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "6201d9251d1a34937d5844cfed363a910b41f3ee8cc7e46085c29d2cecb8bcce"
+    },
+    {
+      "reqId": "16814",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Senior-Counsel-Corporate-%26-Project-Finance/857034323/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "1fe9e33c5d3e7975476b04048eef7697c1edecea1463ba2272c3e9913fc2fb45"
+    },
+    {
+      "reqId": "16815",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Senior-Counsel-Joint-Venture-Development/857034423/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "b7b44b7fed06493d5f8eecf40114870009384874c055b3fe58adb947c32aac43"
+    },
+    {
+      "reqId": "16816",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Senior-Counsel-Venture-Capital/857034523/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "f7a323272cb17cd14e5080f42f8130e1c6e4ac03946900d79bb1686df87761ff"
+    },
+    {
+      "reqId": "16818",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Litigation-Counsel/857120423/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "a5d55e2dc7ddbbd5f066f644402a7ee0488b14140373f5730a9a445ea249b35f"
+    },
+    {
+      "reqId": "16822",
+      "sourceUrl": "https://careers.aramco.com/expat_us/job/Compliance-Counsel/857119823/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "f818e495d43b864ca46315ee0b5ca33da28ff54ee416eff8756279ffeb023904"
+    },
+    {
+      "reqId": "16811",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Intellectual-Property-Counsel/857034823/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "4859c170975f7849b4428b963f8e05457eec79adc15d896e620d4d1156ddda82"
+    },
+    {
+      "reqId": "16806",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Tax-Counsel/857034223/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "7796dcdfb83c771d56b5763bb5d5da28bc78ac059bb524da1fc72ad891da1a16"
+    },
+    {
+      "reqId": "16865",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Senior-Counsel-Chemicals-%26-Retail/857013923/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "31cad5a2348ff3bf04af3f60b07468691cb7d4f0319f84bdf1f924c6e6a07d5f"
+    },
+    {
+      "reqId": "16874",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Sr-Legal-Counsel-Unconventional-Gas/857013823/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "e3aac9aade38e1727aedc490a24cb25ee02923339a9f9ac6f7ab742fc55308c5"
+    },
+    {
+      "reqId": "16877",
+      "sourceUrl": "https://careers.aramco.com/expat_uk/job/Senior-Counsel/857144023/",
+      "postingEndOn": "2026-12-31",
+      "sourceBodySha256": "d33213767ec232afd4c3be94e46f4db63dcd5edb64f77a7c610acff1c71a43c8"
+    }
+  ]
+}
