@@ -3,9 +3,9 @@
   "catalogue_version": "saudilaw-upstream-v1",
   "publication_enabled": false,
   "accepted": [],
-  "upstream_sha256": "37d99321b16e5958053a80ee9a2b32e7dc391ec1d71dd87403e4286e257088f8",
-  "generated_at": "2026-11-27T08:44:44.764Z",
-  "expires_at": "2026-11-27T20:44:43.724Z",
+  "upstream_sha256": "3853892ea9483da14bf25b97ed3c3f59633f50bf2afa6c606714586e08a05049",
+  "generated_at": "2026-11-27T21:25:05.098Z",
+  "expires_at": "2026-11-28T09:25:03.776Z",
   "candidates": [
     {
       "record_id": "white-case-saudi-law-trainee-2027",
@@ -14,7 +14,7 @@
       "translation_sha256": "5c170396c18c8bc5db285af0dd8ed4b1f7f5c76127d9cfe24d08ce779a8a7cfd",
       "translation_status": "pending",
       "content": {
-        "content_sha256": "0b6ab33fdb9dfb9f8210dc2b4f402f8ccfcb2b4a6f37b29eb8f58fa48cd8da25",
+        "content_sha256": "544eab6b8fac39df8a292000bca19aa47d8dd2419f0a64a8ec37d592a3b09932",
         "fact_ids": [
           "role",
           "location",
@@ -29,29 +29,29 @@
           "entry",
           "notice"
         ],
-        "text": "**العربية**\n\nالرياض، المملكة العربية السعودية\n\n- بداية البرنامج: مارس 2027.\n- بحث قانوني ومراجعة مستندات واجتماعات وعمل بإشراف مهني عبر أقسام التدريب.\n- بكالوريوس قانون من جامعة سعودية، والسعي للحصول على ترخيص مزاولة المحاماة في السعودية.\n- الحد الأدنى للمعدل: 3.5 من 4.0 أو 4.5 من 5.0.\n- العربية لغة أم مع إجادتها تحدثًا وكتابةً.\n- الالتزام بمسار مهني قانوني دولي، بما فيه الحصول على درجة ماجستير في القانون وفق وصف جهة العمل «international LLM» قبل النظر في الانتقال إلى وظيفة محامٍ مشارك. الانتقال غير مضمون.\n- نمط العمل والراتب ومدة البرنامج غير محددة في هذه البيانات المراجعة.\n- آخر موعد معلن: 8 يناير 2027. وقت الإغلاق والمنطقة الزمنية غير محددين.\n- تم التحقق من نموذج إدخال البريد الإلكتروني العام فقط؛ لم يتم اختبار تسجيل الدخول أو اختيار البرنامج بعد الدخول أو إرسال طلب.\n- ملخص آلي لبيانات جهة العمل. قد تتغير الإتاحة؛ التقديم لدى جهة العمل مباشرة، والبوت لا يستقبل طلبات أو بيانات المتقدمين.\n\n**English**\n\nRiyadh, Saudi Arabia\n\n- Programme intake: March 2027.\n- Legal research, document checking, meetings and supervised work across training seats.\n- LLB from a Saudi university; seeking a Saudi licence to practise.\n- Minimum GPA: 3.5/4.0 or 4.5/5.0.\n- Native Arabic, fluent in writing and speech.\n- Commitment to an international legal career, including an international LLM before associate consideration. Progression is not guaranteed.\n- Work model, pay and programme duration are not specified in these reviewed facts.\n- Advertised application deadline: 8 January 2027. Closing time and timezone are unspecified.\n- Only the public email-entry form was checked; authentication, programme selection after login and submission were not tested.\n- Automated summary of employer information. Availability may change; apply directly to the employer. The bot does not accept applications or collect applicant information.\n\n[التقديم / Apply](https://whitecase.grad.allhires.com/app/) | [المصدر / Source](https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program)\n\nوقت التحقق / Checked: 2026-11-27T08:44:43.724Z\n\nالمرجع / Reference: white-case-saudi-law-trainee-2027",
+        "text": "**العربية**\n\nالرياض، المملكة العربية السعودية\n\n- بداية البرنامج: مارس 2027.\n- بحث قانوني ومراجعة مستندات واجتماعات وعمل بإشراف مهني عبر أقسام التدريب.\n- بكالوريوس قانون من جامعة سعودية، والسعي للحصول على ترخيص مزاولة المحاماة في السعودية.\n- الحد الأدنى للمعدل: 3.5 من 4.0 أو 4.5 من 5.0.\n- العربية لغة أم مع إجادتها تحدثًا وكتابةً.\n- الالتزام بمسار مهني قانوني دولي، بما فيه الحصول على درجة ماجستير في القانون وفق وصف جهة العمل «international LLM» قبل النظر في الانتقال إلى وظيفة محامٍ مشارك. الانتقال غير مضمون.\n- نمط العمل والراتب ومدة البرنامج غير محددة في هذه البيانات المراجعة.\n- آخر موعد معلن: 8 يناير 2027. وقت الإغلاق والمنطقة الزمنية غير محددين.\n- تم التحقق من نموذج إدخال البريد الإلكتروني العام فقط؛ لم يتم اختبار تسجيل الدخول أو اختيار البرنامج بعد الدخول أو إرسال طلب.\n- ملخص آلي لبيانات جهة العمل. قد تتغير الإتاحة؛ التقديم لدى جهة العمل مباشرة، والبوت لا يستقبل طلبات أو بيانات المتقدمين.\n\n**English**\n\nRiyadh, Saudi Arabia\n\n- Programme intake: March 2027.\n- Legal research, document checking, meetings and supervised work across training seats.\n- LLB from a Saudi university; seeking a Saudi licence to practise.\n- Minimum GPA: 3.5/4.0 or 4.5/5.0.\n- Native Arabic, fluent in writing and speech.\n- Commitment to an international legal career, including an international LLM before associate consideration. Progression is not guaranteed.\n- Work model, pay and programme duration are not specified in these reviewed facts.\n- Advertised application deadline: 8 January 2027. Closing time and timezone are unspecified.\n- Only the public email-entry form was checked; authentication, programme selection after login and submission were not tested.\n- Automated summary of employer information. Availability may change; apply directly to the employer. The bot does not accept applications or collect applicant information.\n\n[التقديم / Apply](https://whitecase.grad.allhires.com/app/) | [المصدر / Source](https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program)\n\nوقت التحقق / Checked: 2026-11-27T21:25:03.776Z\n\nالمرجع / Reference: white-case-saudi-law-trainee-2027",
         "title": "[تدريب | Trainee] White & Case — برنامج التدريب في القانون السعودي لعام 2027 / Saudi Law Trainee Program 2027"
       },
       "evidence": {
-        "checked_at": "2026-11-27T08:44:43.724Z",
-        "expires_at": "2026-11-27T20:44:43.724Z",
+        "checked_at": "2026-11-27T21:25:03.776Z",
+        "expires_at": "2026-11-28T09:25:03.776Z",
         "application_result": "login_required",
         "provenance": [
           {
             "request_url": "https://whitecase.grad.allhires.com/app/",
             "final_url": "https://whitecase.grad.allhires.com/app/",
             "status": 200,
-            "checked_at": "2026-11-27T08:44:43.724Z",
-            "body_sha256": "6342256a94cb9468e21ada38816b331efa7d1031102e6ead3e82db7793fe6e3d",
+            "checked_at": "2026-11-27T21:25:03.776Z",
+            "body_sha256": "de4d5d477798151390e197b5b8133e348f7b26c9d86c9d2de8b1eb15691b99db",
             "body_bytes": 15237
           },
           {
             "request_url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
             "final_url": "https://www.whitecase.com/careers/locations/saudi-arabia/saudi-law-trainee-program",
             "status": 200,
-            "checked_at": "2026-11-27T08:44:43.724Z",
-            "body_sha256": "589799b284410296433f65153238ac8b6a0d6eec64a6f627dfe7fecc0df990d6",
-            "body_bytes": 158539
+            "checked_at": "2026-11-27T21:25:03.776Z",
+            "body_sha256": "cf20813a4989fd892b26e6afb9cc6a53a0d638827f072b65104ad341782d1394",
+            "body_bytes": 159157
           }
         ]
       }
@@ -91,5 +91,5 @@
       "reason": "translation_review_pending"
     }
   ],
-  "sha256": "e0420a52d53c5fe27b43abd8098c4e917f674879f1bbba321db5a81bc77d3e2b"
+  "sha256": "cb5656a77794222e438aaf8612328ffd89081d28d2797b844f7ae28b6171b30b"
 }
