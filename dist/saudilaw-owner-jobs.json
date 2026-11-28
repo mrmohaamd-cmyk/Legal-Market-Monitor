@@ -1,6 +1,6 @@
 {
-  "expiresAt": "2026-11-28T09:26:52.191Z",
-  "generatedAt": "2026-11-27T21:26:52.191Z",
+  "expiresAt": "2026-11-28T19:59:45.648Z",
+  "generatedAt": "2026-11-28T07:59:45.648Z",
   "jobs": [
     {
       "applicationResult": null,
@@ -151,8 +151,8 @@
     },
     {
       "applicationResult": "form_available",
-      "checkedAt": "2026-11-27T21:26:51.171Z",
-      "expiresAt": "2026-11-28T09:26:52.191Z",
+      "checkedAt": "2026-11-28T07:59:44.655Z",
+      "expiresAt": "2026-11-28T19:59:45.648Z",
       "job": {
         "applicationResult": "form_available",
         "context": {
@@ -296,7 +296,7 @@
         {
           "bodyBytes": 9350,
           "bodySha256": "060ca6246db61e11a9a207007b52713f84cd81b304114fe154c65f366a1073cf",
-          "checkedAt": "2026-11-27T21:26:51.171Z",
+          "checkedAt": "2026-11-28T07:59:44.655Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/jobs/student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -305,7 +305,7 @@
         {
           "bodyBytes": 9603,
           "bodySha256": "d25c30ff71255e1751cbe4bff0b3c0c2b1d44d57fce66eaee8b17e5cc9ddab69",
-          "checkedAt": "2026-11-27T21:26:52.191Z",
+          "checkedAt": "2026-11-28T07:59:45.648Z",
           "finalUrl": "https://www.segal.com.sa/en/careers/apply?job=student-intern",
           "kind": "browser_dom",
           "status": 200,
@@ -318,5 +318,5 @@
   ],
   "publicationEnabled": false,
   "schema": "saudilaw-owner-job-feed/v1",
-  "sha256": "ee9a0ef18014ef354b648c601c20c48366a870fdc4049c65082c4fe13c1375cd"
+  "sha256": "0afc61e28039f96c035b3e9fa1fa1671f0763148741c94c56873d943a75b76dc"
 }
